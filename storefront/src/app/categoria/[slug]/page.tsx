@@ -1,0 +1,78 @@
+import { products, categories } from "@/data/products"
+import { notFound } from "next/navigation"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
+
+function formatPrice(n: number | null) {
+  if (n === null) return null
+  return n.toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 })
+}
+
+const categoryIcons: Record<string, string> = {
+  "Accesorios": "🎒", "Bicicletas": "🚲", "Celulares": "📱", "Cocinas/Hornos/Microondas": "🍳",
+  "Combos": "📦", "Deportes": "⚽", "Gaming": "🎮", "Heladeras/Freezers": "❄️",
+  "Herramientas": "🔧", "Hogar/Baño": "🛁", "Lavarropas/Secarropas": "🌀",
+  "Outdoor/Playa": "🏖️", "Pequeños Electrodomésticos": "🍳", "TVs": "📺",
+  "Tablets": "📱", "Varios": "📦",
+}
+
+export function generateStaticParams() {
+  return categories.map((c) => ({ slug: c.slug }))
+}
+
+export default async function CategoriaPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const category = categories.find((c) => c.slug === slug)
+  if (!category) notFound()
+
+  const catProducts = products.filter((p) => p.category === category.name)
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Link href="/productos" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6">
+          <ArrowLeft className="w-4 h-4" />
+          Volver al catálogo
+        </Link>
+
+        <div className="mb-8">
+          <span className="text-4xl">{categoryIcons[category.name] || "📦"}</span>
+          <h1 className="text-3xl font-bold text-gray-900 mt-2">{category.name}</h1>
+          <p className="text-gray-600 mt-1">{catProducts.length} productos</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {catProducts.map((p) => (
+            <Link
+              key={p.sku}
+              href={`/producto/${p.slug}`}
+              className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-300 transition-all duration-300"
+            >
+              <div className="h-48 bg-gray-100 flex items-center justify-center text-5xl">
+                {categoryIcons[p.category] || "📦"}
+              </div>
+              <div className="p-4">
+                <h3 className="font-semibold text-gray-900 line-clamp-2 text-sm">{p.name}</h3>
+                {p.prices.precio_lista && (
+                  <p className="text-xs text-gray-400 line-through mt-1">
+                    Lista: {formatPrice(p.prices.precio_lista)}
+                  </p>
+                )}
+                {p.prices.precio_efectivo && (
+                  <p className="text-lg font-bold text-green-600 mt-1">
+                    {formatPrice(p.prices.precio_efectivo)}
+                  </p>
+                )}
+                {p.prices.cuotas && p.prices.cuota_valor && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    {p.prices.cuotas}x {formatPrice(p.prices.cuota_valor)} sin interés
+                  </p>
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
