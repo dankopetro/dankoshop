@@ -1,29 +1,13 @@
-import { getProduct, getProducts } from "@/lib/medusa"
 import { notFound } from "next/navigation"
 import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { format } from "@/lib/utils"
-import { ShoppingCart, Truck, Shield, RotateCcw, Banknote, CreditCard, Users, Tag, Check } from "lucide-react"
 import Link from "next/link"
-import AddToCartButton from "@/components/add-to-cart-button"
-
-export async function generateStaticParams() {
-  try {
-    const { products } = await getProducts({ limit: 100 })
-    return products.map((product: any) => ({
-      slug: product.handle,
-    }))
-  } catch {
-    return []
-  }
-}
+import { format } from "@/lib/utils"
+import { ShoppingCart, Truck, Shield, RotateCcw, Banknote, CreditCard, Users, Tag } from "lucide-react"
+import { getProduct } from "@/lib/medusa"
 
 export default async function ProductoPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  let product: any
+  let product: any = null
 
   try {
     product = await getProduct(slug)
@@ -31,7 +15,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
     notFound()
   }
 
-  const precioLista = product.metadata?.precio_lista || product.variants[0]?.prices[0]?.amount || 0
+  if (!product) notFound()
+
+  const precioLista = product.metadata?.precio_lista || product.variants?.[0]?.prices?.[0]?.amount || 0
   const precioEfectivo = product.metadata?.precio_efectivo || Math.round(precioLista * 0.85)
   const precioTransferencia = product.metadata?.precio_transferencia || Math.round(precioLista * 0.90)
   const precioMayorista = product.metadata?.precio_mayorista || Math.round(precioLista * 0.83)
@@ -42,21 +28,18 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Breadcrumb */}
-        <nav className="mb-6 text-sm">
-          <ol className="flex items-center gap-2 text-gray-500">
-            <li><Link href="/" className="hover:text-gray-700">Inicio</Link></li>
-            <li><ChevronIcon /></li>
-            <li><Link href="/productos" className="hover:text-gray-700">Productos</Link></li>
-            {product.categories?.[0] && (
-              <>
-                <li><ChevronIcon /></li>
-                <li><Link href={`/categoria/${product.categories[0].handle}`} className="hover:text-gray-700">{product.categories[0].name}</Link></li>
-              </>
-            )}
-            <li><ChevronIcon /></li>
-            <li className="text-gray-900 font-medium truncate">{product.title}</li>
-          </ol>
+        <nav className="mb-6 text-sm flex items-center gap-2 text-gray-500">
+          <Link href="/" className="hover:text-gray-700">Inicio</Link>
+          <span>/</span>
+          <Link href="/productos" className="hover:text-gray-700">Productos</Link>
+          {product.categories?.[0] && (
+            <>
+              <span>/</span>
+              <Link href={`/categoria/${product.categories[0].handle}`} className="hover:text-gray-700">{product.categories[0].name}</Link>
+            </>
+          )}
+          <span>/</span>
+          <span className="text-gray-900 font-medium truncate">{product.title}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -64,20 +47,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
           <div className="space-y-4">
             <div className="aspect-square overflow-hidden rounded-2xl bg-white border border-gray-200">
               {images[0] ? (
-                <Image
-                  src={images[0].url}
-                  alt={product.title}
-                  width={600}
-                  height={600}
-                  className="w-full h-full object-cover"
-                  priority
-                />
+                <Image src={images[0].url} alt={product.title} width={600} height={600} className="w-full h-full object-cover" priority />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-gray-300">
-                  <svg className="w-24 h-24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
+                <div className="w-full h-full flex items-center justify-center text-gray-300 text-6xl">📦</div>
               )}
             </div>
             {images.length > 1 && (
@@ -95,7 +67,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
           <div className="space-y-6">
             <div>
               {product.categories?.[0] && (
-                <Badge variant="outline" className="mb-3">{product.categories[0].name}</Badge>
+                <span className="inline-block px-3 py-1 text-sm font-medium text-gray-600 bg-gray-100 rounded-full mb-3">
+                  {product.categories[0].name}
+                </span>
               )}
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.title}</h1>
               {product.variants?.[0]?.sku && (
@@ -104,50 +78,59 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
             </div>
 
             {/* Prices */}
-            <Card className="p-6 space-y-4">
+            <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
               <div className="flex items-baseline gap-3">
-                <span className="text-3xl font-bold text-gray-900">${format(precioLista)}</span>
-                {precioEfectivo < precioLista && (
-                  <span className="text-lg text-gray-400 line-through">${format(precioEfectivo)}</span>
-                )}
+                <span className="text-3xl font-bold text-gray-900">{format(precioLista)}</span>
               </div>
 
-              <Separator />
+              <hr className="border-gray-200" />
 
               <div className="space-y-3">
-                {precioEfectivo && precioEfectivo < precioLista && (
+                {precioEfectivo > 0 && precioEfectivo < precioLista && (
                   <div className="flex items-center gap-3 text-green-700">
                     <Banknote className="w-5 h-5" />
-                    <span className="font-medium">Efectivo: ${format(precioEfectivo)}</span>
-                    <Badge className="bg-green-600 text-white text-xs">15% OFF</Badge>
+                    <span className="font-medium">Efectivo: {format(precioEfectivo)}</span>
+                    <span className="ml-auto text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">15% OFF</span>
                   </div>
                 )}
-                {precioTransferencia && precioTransferencia !== precioEfectivo && (
+                {precioTransferencia > 0 && precioTransferencia !== precioEfectivo && (
                   <div className="flex items-center gap-3 text-blue-700">
                     <CreditCard className="w-5 h-5" />
-                    <span className="font-medium">Transferencia: ${format(precioTransferencia)}</span>
-                    <Badge className="bg-blue-600 text-white text-xs">10% OFF</Badge>
+                    <span className="font-medium">Transferencia: {format(precioTransferencia)}</span>
+                    <span className="ml-auto text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">10% OFF</span>
                   </div>
                 )}
-                {precioMayorista && precioMayorista < precioLista && (
+                {precioMayorista > 0 && precioMayorista < precioLista && (
                   <div className="flex items-center gap-3 text-purple-700">
                     <Users className="w-5 h-5" />
-                    <span className="font-medium">Mayorista (3+ unidades): ${format(precioMayorista)}</span>
-                    <Badge className="bg-purple-600 text-white text-xs">17% OFF</Badge>
+                    <span className="font-medium">Mayorista (3+): {format(precioMayorista)}</span>
+                    <span className="ml-auto text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">17% OFF</span>
                   </div>
                 )}
-                {cuotas && cuotaValor && (
+                {cuotas && cuotaValor > 0 && (
                   <div className="flex items-center gap-3 text-gray-700">
                     <Tag className="w-5 h-5" />
-                    <span>{cuotas} cuotas sin interés de <strong>${format(cuotaValor)}</strong></span>
+                    <span>{cuotas} cuotas sin interés de <strong>{format(cuotaValor)}</strong></span>
                   </div>
                 )}
               </div>
 
-              <Separator />
+              <hr className="border-gray-200" />
 
-              <AddToCartButton product={product} />
-            </Card>
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-600">Cantidad:</span>
+                <div className="flex items-center border border-gray-300 rounded-lg">
+                  <button className="h-8 w-8 flex items-center justify-center hover:bg-gray-100 rounded-l-lg">-</button>
+                  <span className="w-12 text-center font-medium">1</span>
+                  <button className="h-8 w-8 flex items-center justify-center hover:bg-gray-100 rounded-r-lg">+</button>
+                </div>
+              </div>
+
+              <button className="w-full py-3 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center justify-center gap-2">
+                <ShoppingCart className="w-5 h-5" />
+                Agregar al carrito
+              </button>
+            </div>
 
             {/* Benefits */}
             <div className="grid grid-cols-3 gap-4">
@@ -173,28 +156,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                 </div>
               </div>
             )}
-
-            {/* Specs from metadata */}
-            {product.metadata?.specs && (
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Especificaciones</h3>
-                <ul className="space-y-2">
-                  {product.metadata.specs.split("\n").filter((s: string) => s.trim()).map((spec: string, idx: number) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                      <Check className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span>{spec.replace(/^[✅✔️]\s*/, '')}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
         </div>
       </div>
     </div>
   )
-}
-
-function ChevronIcon() {
-  return <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
 }
