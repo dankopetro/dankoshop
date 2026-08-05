@@ -1,9 +1,9 @@
 [build]
-builder = "NIXPACKS"
-buildCommand = "cd medusa-backend && npm install -g pnpm@9.15.9 turbo@2.0.14 && pnpm install && pnpm build"
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "cd medusa-backend/apps/backend && npx medusa start"
+startCommand = "sh -c 'cd /app/medusa-backend && pnpm --filter=@dtc/backend start'"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
