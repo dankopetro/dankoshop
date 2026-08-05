@@ -1,0 +1,16 @@
+{
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "install": {
+    "env": {
+      "NODE_VERSION": "20"
+    }
+  },
+  "build": {
+    "env": {
+      "NODE_VERSION": "20"
+    }
+  }
+}
