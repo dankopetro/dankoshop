@@ -12,4 +12,4 @@ RUN pnpm build
 
 WORKDIR /app/medusa-backend/apps/backend
 EXPOSE 9000
-CMD ["./node_modules/.bin/medusa", "start"]
+CMD ["sh", "-c", "ls -la .medusa/server/ && cat .medusa/server/medusa-config.js | head -5 && exec ./node_modules/.bin/medusa start"]
