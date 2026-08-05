@@ -32,7 +32,7 @@ export const products: Product[] = [
     category: "Accesorios",
     prices: { precio_lista: 4783, precio_efectivo: 4066, precio_transferencia: 4305, precio_mayorista: 3984, cuotas: 3, cuota_valor: 1594 },
     images: [],
-    slug: "bolsa-de-box-+-guantes-chico-de-boca-para-chicos",
+    slug: "bolsa-de-box-guantes-chico-de-boca-para-chicos",
   },
   {
     sku: "6140",
@@ -41,7 +41,7 @@ export const products: Product[] = [
     category: "Gaming",
     prices: { precio_lista: 130513, precio_efectivo: 110936, precio_transferencia: 117461, precio_mayorista: 108326, cuotas: 3, cuota_valor: 43504 },
     images: [],
-    slug: "silla-gamer-ultrom-negro-verde-n°6140",
+    slug: "silla-gamer-ultrom-negro-verde-n6140",
   },
   {
     sku: "6232",
@@ -59,7 +59,7 @@ export const products: Product[] = [
     category: "Celulares",
     prices: { precio_lista: 166108, precio_efectivo: 141192, precio_transferencia: 149497, precio_mayorista: 137870, cuotas: 3, cuota_valor: 55369 },
     images: [],
-    slug: "celular-moto-e14-lavanda-2+2+64gb-n°5448",
+    slug: "celular-moto-e14-lavanda-2264gb-n5448",
   },
   {
     sku: "9347",
@@ -77,7 +77,7 @@ export const products: Product[] = [
     category: "Tablets",
     prices: { precio_lista: 213568, precio_efectivo: 181533, precio_transferencia: 192212, precio_mayorista: 177261, cuotas: 3, cuota_valor: 71190 },
     images: [],
-    slug: "𝐓𝐚𝐛𝐥𝐞𝐭-𝐔𝐥𝐭𝐫𝐨𝐦-𝐀𝐥𝐩𝐡𝐚-𝟏𝟎.𝟏\-𝟏𝟐𝟖𝐆𝐁-𝐍°𝟔𝟖𝟔𝟓",
+    slug: "",
   },
   {
     sku: "6865",
@@ -86,7 +86,7 @@ export const products: Product[] = [
     category: "Tablets",
     prices: { precio_lista: 213568, precio_efectivo: 181533, precio_transferencia: 192212, precio_mayorista: 177261, cuotas: 3, cuota_valor: 71190 },
     images: [],
-    slug: "tablet-ultrom-alpha-10.1\-128gb-4ram-n°6865",
+    slug: "tablet-ultrom-alpha-101-128gb-4ram-n6865",
   },
   {
     sku: "5751",
@@ -95,7 +95,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 23813, precio_efectivo: 20241, precio_transferencia: 21432, precio_mayorista: 19765, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "sillón-playero-mor-plegable-5751",
+    slug: "silln-playero-mor-plegable-5751",
   },
   {
     sku: "5752",
@@ -104,7 +104,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 33298, precio_efectivo: 28303, precio_transferencia: 29968, precio_mayorista: 27637, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "reposera-8-posiciones-mor-de-aluminio-n°5752",
+    slug: "reposera-8-posiciones-mor-de-aluminio-n5752",
   },
   {
     sku: "6737",
@@ -113,7 +113,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 54708, precio_efectivo: 46502, precio_transferencia: 49237, precio_mayorista: 45408, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "carrito-de-playa-negro-de-aluminio-mor-n°6737",
+    slug: "carrito-de-playa-negro-de-aluminio-mor-n6737",
   },
   {
     sku: "6736",
@@ -122,7 +122,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 63119, precio_efectivo: 53651, precio_transferencia: 56807, precio_mayorista: 52389, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "carrito-de-playa-c--extensión-p--conservadora-mor-n°6736---n",
+    slug: "carrito-de-playa-c-extensin-p-conservadora-mor-n6736-n6738",
   },
   {
     sku: "9479",
@@ -131,7 +131,7 @@ export const products: Product[] = [
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 373343, precio_efectivo: 317342, precio_transferencia: 336009, precio_mayorista: 309875, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "lavarropas-drean-semiautomático-8-kg-gris-ltdr87sgo-n°9479",
+    slug: "lavarropas-drean-semiautomtico-8-kg-gris-ltdr87sgo-n9479",
   },
   {
     sku: "6231",
@@ -140,7 +140,7 @@ export const products: Product[] = [
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 422183, precio_efectivo: 358856, precio_transferencia: 366033, precio_mayorista: 350412, cuotas: 3, cuota_valor: 140728 },
     images: [],
-    slug: "lavarropas-enova-carga-superior-6kg-blanco-n°6231",
+    slug: "lavarropas-enova-carga-superior-6kg-blanco-n6231",
   },
   {
     sku: "8575",
@@ -149,7 +149,7 @@ export const products: Product[] = [
     category: "TVs",
     prices: { precio_lista: 1117199, precio_efectivo: 949619, precio_transferencia: 1005479, precio_mayorista: 927275, cuotas: 3, cuota_valor: 372400 },
     images: [],
-    slug: "𝗦𝗠𝗔𝗥𝗧-𝗧𝗩-𝗛𝗬𝗨𝗡𝗗𝗔𝗜-𝟲𝟱”-𝗤𝗟𝗘𝗗-𝗚𝗢𝗢𝗚𝗟𝗘-𝗧𝗩---cod.8575",
+    slug: "cod8575",
   },
   {
     sku: "9449",
@@ -158,7 +158,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 19871, precio_efectivo: 16890, precio_transferencia: 17884, precio_mayorista: 16493, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "set-de-vajillas-durax-12-piezas-gema-+-lunita-n°9449",
+    slug: "set-de-vajillas-durax-12-piezas-gema-lunita-n9449",
   },
   {
     sku: "9448",
@@ -167,7 +167,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 3794, precio_efectivo: 3225, precio_transferencia: 3415, precio_mayorista: 3149, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "vaso-durax-fourpack-facetado-400cc-n°9448",
+    slug: "vaso-durax-fourpack-facetado-400cc-n9448",
   },
   {
     sku: "9447",
@@ -176,7 +176,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 3131, precio_efectivo: 2661, precio_transferencia: 2818, precio_mayorista: 2599, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "vaso-durax-sixpack-point-n°9447",
+    slug: "vaso-durax-sixpack-point-n9447",
   },
   {
     sku: "9446",
@@ -185,7 +185,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 800, precio_efectivo: 680, precio_transferencia: 720, precio_mayorista: 664, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "plato-durax-hondo-fénix-blanco-n°9446",
+    slug: "plato-durax-hondo-fnix-blanco-n9446",
   },
   {
     sku: "9445",
@@ -194,7 +194,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 800, precio_efectivo: 680, precio_transferencia: 720, precio_mayorista: 664, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "plato-durax-playo-fénix-blanco-n°9445",
+    slug: "plato-durax-playo-fnix-blanco-n9445",
   },
   {
     sku: "9430",
@@ -203,7 +203,7 @@ export const products: Product[] = [
     category: "Varios",
     prices: { precio_lista: 20648, precio_efectivo: 17551, precio_transferencia: 18583, precio_mayorista: 17138, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "escurridor-cool-bazar-cuadrado-negro-a1248-n°9430",
+    slug: "escurridor-cool-bazar-cuadrado-negro-a1248-n9430",
   },
   {
     sku: "9614",
@@ -212,7 +212,7 @@ export const products: Product[] = [
     category: "Heladeras/Freezers",
     prices: { precio_lista: 902047, precio_efectivo: 766740, precio_transferencia: 811842, precio_mayorista: 748699, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "heladera-drean-no-frost-inverter-356-l-inox-rzn356fxarx0-n°9",
+    slug: "heladera-drean-no-frost-inverter-356-l-inox-rzn356fxarx0-n96",
   },
   {
     sku: "AUTO-20260801144718-294",
@@ -239,7 +239,7 @@ export const products: Product[] = [
     category: "Bicicletas",
     prices: { precio_lista: 69528, precio_efectivo: 59099, precio_transferencia: 62575, precio_mayorista: 57708, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-minnie",
+    slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-minnie-",
   },
   {
     sku: "6323",
@@ -302,7 +302,7 @@ export const products: Product[] = [
     category: "Bicicletas",
     prices: { precio_lista: 264216, precio_efectivo: 224584, precio_transferencia: 237794, precio_mayorista: 219299, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "bicicleta-fiat-500-r29\-marrón-topo-naranja-n°9456",
+    slug: "bicicleta-fiat-500-r29-marrn-toponaranja-n9456",
   },
   {
     sku: "9457",
@@ -311,7 +311,7 @@ export const products: Product[] = [
     category: "Bicicletas",
     prices: { precio_lista: 264216, precio_efectivo: 224584, precio_transferencia: 237794, precio_mayorista: 219299, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "bicicleta-fiat-500-r29\-gris-l13q-2129001md-n°9457",
+    slug: "bicicleta-fiat-500-r29-gris-l13q-2129001md-n9457",
   },
   {
     sku: "6310",
@@ -338,7 +338,7 @@ export const products: Product[] = [
     category: "Bicicletas",
     prices: { precio_lista: 59323, precio_efectivo: 50425, precio_transferencia: 53391, precio_mayorista: 49416, cuotas: 3, cuota_valor: 19774 },
     images: [],
-    slug: "bicicleta-r12-fiat-negro--gris---n°5706",
+    slug: "bicicleta-r12-fiat-negro-gris---n5706",
   },
   {
     sku: "6324",
@@ -356,7 +356,7 @@ export const products: Product[] = [
     category: "Bicicletas",
     prices: { precio_lista: 175034, precio_efectivo: 148779, precio_transferencia: 157531, precio_mayorista: 145278, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "bicicleta-carrozada-rodado-16-n°2993---n°2992---n°3795",
+    slug: "bicicleta-carrozada-rodado-16-n2993-n2992-n3795",
   },
   {
     sku: "6290",
@@ -374,7 +374,7 @@ export const products: Product[] = [
     category: "Bicicletas",
     prices: { precio_lista: 201703, precio_efectivo: 171447, precio_transferencia: 181532, precio_mayorista: 167413, cuotas: 3, cuota_valor: 67234 },
     images: [],
-    slug: "bicicleta-corvo-infantil-paseo-16\-vit-16acecan",
+    slug: "bicicleta-corvo-infantil-paseo-16-vit-16acecan",
   },
   {
     sku: "7703",
@@ -410,7 +410,7 @@ export const products: Product[] = [
     category: "Celulares",
     prices: { precio_lista: 218433, precio_efectivo: 185668, precio_transferencia: 196590, precio_mayorista: 181299, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "celular-samsung-a07-64-gb-n°7695",
+    slug: "celular-samsung-a07-64-gb-n7695",
   },
   {
     sku: "8582",
@@ -419,7 +419,7 @@ export const products: Product[] = [
     category: "Celulares",
     prices: { precio_lista: 117646, precio_efectivo: 99999, precio_transferencia: 101999, precio_mayorista: 97646, cuotas: 3, cuota_valor: 39216 },
     images: [],
-    slug: "celular-enova-e10-3gb-ram---32gb-blanco",
+    slug: "celular-enova-e10-3gb-ram-32gb-blanco",
   },
   {
     sku: "AUTO-20260803133614-628",
@@ -428,7 +428,7 @@ export const products: Product[] = [
     category: "Deportes",
     prices: { precio_lista: 73528, precio_efectivo: 62499, precio_transferencia: 66175, precio_mayorista: 61199, cuotas: 3, cuota_valor: 24509 },
     images: [],
-    slug: "paleta-de-pádel-pro-cigio",
+    slug: "paleta-de-pdel-pro-cigio",
   },
   {
     sku: "6900",
@@ -437,7 +437,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 206428, precio_efectivo: 175400, precio_transferencia: 178973, precio_mayorista: 171335, cuotas: 3, cuota_valor: 68809 },
     images: [],
-    slug: "cama-elástica-1.8-mts-xplay-imz-180veps-n°6900",
+    slug: "cama-elstica-18-mts-xplay-imz-180veps-n6900",
   },
   {
     sku: "6902",
@@ -446,7 +446,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 274520, precio_efectivo: 233342, precio_transferencia: 247068, precio_mayorista: 227852, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cama-elástica-244-mts-xplay-imz-244veps-n°6902",
+    slug: "cama-elstica-244-mts-xplay-imz-244veps-n6902",
   },
   {
     sku: "6556",
@@ -455,7 +455,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 85020, precio_efectivo: 72267, precio_transferencia: 76518, precio_mayorista: 70567, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "juego-de-tobogán-rotomoldeado-3-escalones-xplay-nra-203s-n°6",
+    slug: "juego-de-tobogn-rotomoldeado-3-escalones-xplay-nra-203s-n655",
   },
   {
     sku: "6557",
@@ -464,7 +464,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 187025, precio_efectivo: 158971, precio_transferencia: 168322, precio_mayorista: 155231, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "juego-de-tobogán-rotomoldeado-4-escalones-xplay-n°6557",
+    slug: "juego-de-tobogn-rotomoldeado-4-escalones-xplay-n6557",
   },
   {
     sku: "6973",
@@ -473,7 +473,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 216154, precio_efectivo: 183731, precio_transferencia: 194539, precio_mayorista: 179408, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "tobogán-plegable-4-escalones-naranja-celeste-agua-nra-204-ag",
+    slug: "tobogn-plegable-4-escalones-naranja-celeste-agua-nra-204-agu",
   },
   {
     sku: "6899",
@@ -482,7 +482,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 133605, precio_efectivo: 113564, precio_transferencia: 120244, precio_mayorista: 110892, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cama-elástica-140-mts-xplay-imz-140mubb-n°6899",
+    slug: "cama-elstica-140-mts-xplay-imz-140mubb-n6899",
   },
   {
     sku: "6559",
@@ -491,7 +491,7 @@ export const products: Product[] = [
     category: "Outdoor/Playa",
     prices: { precio_lista: 114151, precio_efectivo: 97028, precio_transferencia: 102736, precio_mayorista: 94745, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "juego-de-hamaca-gemela-140-mts-xplay-n°6559",
+    slug: "juego-de-hamaca-gemela-140-mts-xplay-n6559",
   },
   {
     sku: "351",
@@ -500,7 +500,7 @@ export const products: Product[] = [
     category: "Heladeras/Freezers",
     prices: { precio_lista: 655142, precio_efectivo: 556871, precio_transferencia: 589628, precio_mayorista: 543768, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "heladera-auto-defrost-briket-bk2f-1310-blanca-257-l-n°351",
+    slug: "heladera-auto-defrost-briket-bk2f-1310-blanca-257-l-n351",
   },
   {
     sku: "6649",
@@ -509,7 +509,7 @@ export const products: Product[] = [
     category: "Heladeras/Freezers",
     prices: { precio_lista: 476313, precio_efectivo: 404866, precio_transferencia: 428682, precio_mayorista: 395340, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "heladera-telefunken-one-door-con-dispenser-260-l-silver-n°66",
+    slug: "heladera-telefunken-one-door-con-dispenser-260-l-silver-n664",
   },
   {
     sku: "2334",
@@ -518,7 +518,7 @@ export const products: Product[] = [
     category: "Heladeras/Freezers",
     prices: { precio_lista: 421048, precio_efectivo: 357891, precio_transferencia: 378943, precio_mayorista: 349470, cuotas: 3, cuota_valor: 140349 },
     images: [],
-    slug: "heladera-briket-bajo-mesada-bk1f-1010-blanca-n°2334",
+    slug: "heladera-briket-bajo-mesada-bk1f-1010-blanca-n2334",
   },
   {
     sku: "5671",
@@ -536,7 +536,7 @@ export const products: Product[] = [
     category: "Heladeras/Freezers",
     prices: { precio_lista: 445782, precio_efectivo: 378915, precio_transferencia: 401204, precio_mayorista: 369999, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "heladera-enova-freezer-sup.-de-frost-113lts-gris",
+    slug: "heladera-enova-freezer-sup-de-frost-113lts-gris",
   },
   {
     sku: "5952",
@@ -545,7 +545,7 @@ export const products: Product[] = [
     category: "Heladeras/Freezers",
     prices: { precio_lista: 631270, precio_efectivo: 536580, precio_transferencia: 568143, precio_mayorista: 523954, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freezer-horizontal-midea-inverter-194l-color-blanco-n°5952",
+    slug: "freezer-horizontal-midea-inverter-194l-color-blanco-n5952",
   },
   {
     sku: "5123",
@@ -554,7 +554,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 360096, precio_efectivo: 306082, precio_transferencia: 324086, precio_mayorista: 298880, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cocina-industrial-usman-win-compact-52cm-4h-p-v-n°5123",
+    slug: "cocina-industrial-usman-win-compact-52cm-4h-pv-n5123",
   },
   {
     sku: "2220",
@@ -563,7 +563,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 583484, precio_efectivo: 495961, precio_transferencia: 525136, precio_mayorista: 484292, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cocina-industrial-usman-irina-pta.-vidrio-550-2220-n°6870",
+    slug: "cocina-industrial-usman-irina-pta-vidrio-550-2220-n6870",
   },
   {
     sku: "6091",
@@ -572,7 +572,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 400120, precio_efectivo: 340102, precio_transferencia: 360108, precio_mayorista: 332100, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cocina-electrica-kanji-50x50-6091-6093",
+    slug: "cocina-electrica-kanji-50x50-60916093",
   },
   {
     sku: "5109",
@@ -581,7 +581,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 398857, precio_efectivo: 339028, precio_transferencia: 358971, precio_mayorista: 331051, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cocina-eléctrica-vitta-negra-50x50-vit-ekb001v-n°5109",
+    slug: "cocina-elctrica-vitta-negra-50x50-vit-ekb001v-n5109",
   },
   {
     sku: "8391",
@@ -599,7 +599,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 71340, precio_efectivo: 60639, precio_transferencia: 64206, precio_mayorista: 59212, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freidora-de-aire-vitta-6.5-lts-digital-afr-1501-n°5292",
+    slug: "freidora-de-aire-vitta-65-lts-digital-afr-1501-n5292",
   },
   {
     sku: "5709",
@@ -608,7 +608,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 178511, precio_efectivo: 151734, precio_transferencia: 160660, precio_mayorista: 148164, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freidora-de-aire-vitta-2200w-11.8l-doble-canasto-digital-neg",
+    slug: "freidora-de-aire-vitta-2200w-118l-doble-canasto-digital-negr",
   },
   {
     sku: "5947",
@@ -617,7 +617,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 120025, precio_efectivo: 102021, precio_transferencia: 108022, precio_mayorista: 99621, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freidora-de-aire-futura-home-9.1l-1700w-sin-aceite-digital-n",
+    slug: "freidora-de-aire-futura-home-91l-1700w-sin-aceite-digital-ne",
   },
   {
     sku: "6163",
@@ -635,7 +635,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 50053, precio_efectivo: 42545, precio_transferencia: 45048, precio_mayorista: 41544, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freidora-de-aire-sin-aceite-midow-3.5-lts-1200w-display-led",
+    slug: "freidora-de-aire-sin-aceite-midow-35-lts-1200w-display-led-b",
   },
   {
     sku: "6648",
@@ -644,7 +644,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 50053, precio_efectivo: 42545, precio_transferencia: 45048, precio_mayorista: 41544, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freidora-de-aire-sin-aceite-midow-3.5-lts-1200w-display-led",
+    slug: "freidora-de-aire-sin-aceite-midow-35-lts-1200w-display-led-n",
   },
   {
     sku: "9063",
@@ -653,7 +653,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 66092, precio_efectivo: 56178, precio_transferencia: 59483, precio_mayorista: 54856, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freidora-smartlife-de-aire-de-42l-digital-sl-af90001-n°9063",
+    slug: "freidora-smartlife-de-aire-de-42l-digital-sl-af90001-n9063",
   },
   {
     sku: "5290",
@@ -662,7 +662,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 80824, precio_efectivo: 68700, precio_transferencia: 72742, precio_mayorista: 67084, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "freidora-de-aire-vitta-8lts.-digital-afr-1701-n°5290",
+    slug: "freidora-de-aire-vitta-8lts-digital-afr-1701-n5290",
   },
   {
     sku: "5126",
@@ -671,7 +671,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 112123, precio_efectivo: 95305, precio_transferencia: 100911, precio_mayorista: 93062, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "microondas-vitta-mecánico-23l-vit-mw2xlx002-700w-blanco-n°51",
+    slug: "microondas-vitta-mecnico-23l-vit-mw2xlx002-700w-blanco-n5126",
   },
   {
     sku: "5127",
@@ -680,7 +680,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 113407, precio_efectivo: 96396, precio_transferencia: 102066, precio_mayorista: 94128, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "microondas-vitta-digital-23l-vit-mw2xlx001-1000w-blanco-n°51",
+    slug: "microondas-vitta-digital-23l-vit-mw2xlx001-1000w-blanco-n512",
   },
   {
     sku: "7097",
@@ -689,7 +689,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 119077, precio_efectivo: 101215, precio_transferencia: 107169, precio_mayorista: 98834, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "microondas-microsonic-digital-panel-táctil-23-lts.-1000w-n°7",
+    slug: "microondas-microsonic-digital-panel-tctil-23-lts-1000w-n7097",
   },
   {
     sku: "8392",
@@ -698,7 +698,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 212445, precio_efectivo: 180578, precio_transferencia: 191200, precio_mayorista: 176329, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "microondas-smartlife-29-litros-digital-c-grill-color-negro-s",
+    slug: "microondas-smartlife-29-litros-digital-cgrill-color-negro-sl",
   },
   {
     sku: "9428",
@@ -707,7 +707,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 17711, precio_efectivo: 15054, precio_transferencia: 15940, precio_mayorista: 14700, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "anafe-eurocook-1-hornalla-con-resistencia-1000w-n°9428",
+    slug: "anafe-eurocook-1-hornalla-con-resistencia-1000w-n9428",
   },
   {
     sku: "7200",
@@ -716,7 +716,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 552643, precio_efectivo: 469747, precio_transferencia: 497379, precio_mayorista: 458694, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "anafe-eléctrico-vitrocerámico-60-cm-negro-drean-aedr60cnv-n°",
+    slug: "anafe-elctrico-vitrocermico-60-cm-negro-drean-aedr60cnv-n720",
   },
   {
     sku: "1668",
@@ -725,7 +725,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 361300, precio_efectivo: 307105, precio_transferencia: 325170, precio_mayorista: 299879, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cocina-escorial-candor-s2-negra-gas-natural-candor-s2-n°1668",
+    slug: "cocina-escorial-candor-s2-negra-gas-natural-candor-s2-n1668",
   },
   {
     sku: "1669",
@@ -743,7 +743,7 @@ export const products: Product[] = [
     category: "Varios",
     prices: { precio_lista: 341040, precio_efectivo: 289884, precio_transferencia: 306936, precio_mayorista: 283063, cuotas: 3, cuota_valor: 113680 },
     images: [],
-    slug: "metegol-progol-clásico-profesional-rojo",
+    slug: "metegol-progol-clsico-profesional-rojo",
   },
   {
     sku: "6426",
@@ -761,7 +761,7 @@ export const products: Product[] = [
     category: "Hogar/Baño",
     prices: { precio_lista: 273230, precio_efectivo: 232246, precio_transferencia: 245907, precio_mayorista: 226781, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "colchon-de-resorte-vitta-oasis-2-plaza-140x190x23-blanco-n°6",
+    slug: "colchon-de-resorte-vitta-oasis-2-plaza-140x190x23-blanco-n66",
   },
   {
     sku: "8956",
@@ -770,7 +770,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 46347, precio_efectivo: 39395, precio_transferencia: 41712, precio_mayorista: 38468, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "inflador-portátil-midow-n°8956",
+    slug: "inflador-porttil-midow-n8956",
   },
   {
     sku: "5925",
@@ -788,7 +788,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 72499, precio_efectivo: 61624, precio_transferencia: 65249, precio_mayorista: 60174, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "rotomartillo-kanji-tools-800w-kit-rm8002pb-negro-n°5921",
+    slug: "rotomartillo-kanji-tools-800w-kit-rm8002pb-negro-n5921",
   },
   {
     sku: "6003",
@@ -806,7 +806,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 50923, precio_efectivo: 43285, precio_transferencia: 45831, precio_mayorista: 42266, cuotas: 3, cuota_valor: 16975 },
     images: [],
-    slug: "minitorno-konan-maletín-&-accesorios-180w-kmt-180-n°2490",
+    slug: "minitorno-konan-maletn-accesorios-180w-kmt180-n2490",
   },
   {
     sku: "5401",
@@ -815,7 +815,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 61152, precio_efectivo: 51979, precio_transferencia: 55037, precio_mayorista: 50756, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "termofusora-konan-1500w-ktef-1500-5401",
+    slug: "termofusora-konan-1500w-ktef1500-5401",
   },
   {
     sku: "5643",
@@ -833,7 +833,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 32771, precio_efectivo: 27855, precio_transferencia: 29494, precio_mayorista: 27200, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "taladro-percutor-konan-13-mm-750w-kc13e-n°6884",
+    slug: "taladro-percutor-konan-13-mm-750w-kc13e-n6884",
   },
   {
     sku: "7051",
@@ -842,7 +842,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 34830, precio_efectivo: 29606, precio_transferencia: 31347, precio_mayorista: 28909, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "amoladora-angular-konan-115-mm-720w-corte-y-desbaste-eléctri",
+    slug: "amoladora-angular-konan-115-mm-720w-corte-y-desbaste-elctric",
   },
   {
     sku: "6881",
@@ -851,7 +851,7 @@ export const products: Product[] = [
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 91678, precio_efectivo: 77926, precio_transferencia: 82510, precio_mayorista: 76093, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "hidrolavadora-konan-1300w-khi1300-n°6881",
+    slug: "hidrolavadora-konan-1300w-khi1300-n6881",
   },
   {
     sku: "6877",
@@ -860,7 +860,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 78611, precio_efectivo: 66819, precio_transferencia: 70750, precio_mayorista: 65247, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "aspiradora-sopladora-midow-1200w-15-lts-líquidos-y-polvo-mdw",
+    slug: "aspiradora-sopladora-midow-1200w-15-lts-lquidos-y-polvo-mdwa",
   },
   {
     sku: "5528",
@@ -869,7 +869,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 29714, precio_efectivo: 25257, precio_transferencia: 26743, precio_mayorista: 24663, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "equipo-pistola-para-pintar-látex-midow-650w-n°5528",
+    slug: "equipo-pistola-para-pintar-ltex-midow-650w-n5528",
   },
   {
     sku: "6880",
@@ -878,7 +878,7 @@ export const products: Product[] = [
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 86936, precio_efectivo: 73896, precio_transferencia: 78242, precio_mayorista: 72157, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "hidrolavadora-midow-1300w-105-bar-caudal-360-l-h-con-accesor",
+    slug: "hidrolavadora-midow-1300w-105-bar-caudal-360-lh-con-accesori",
   },
   {
     sku: "6749",
@@ -896,7 +896,7 @@ export const products: Product[] = [
     category: "Hogar/Baño",
     prices: { precio_lista: 109321, precio_efectivo: 92923, precio_transferencia: 98389, precio_mayorista: 90736, cuotas: 3, cuota_valor: 36440 },
     images: [],
-    slug: "bajomesada-vitta-2-puertas---3-cajones-6753",
+    slug: "bajomesada-vitta-2-puertas-3-cajones-6753",
   },
   {
     sku: "6748",
@@ -905,7 +905,7 @@ export const products: Product[] = [
     category: "Hogar/Baño",
     prices: { precio_lista: 39514, precio_efectivo: 33587, precio_transferencia: 35563, precio_mayorista: 32797, cuotas: 3, cuota_valor: 13171 },
     images: [],
-    slug: "mesa-de-luz-vitta-con-cajón-6748",
+    slug: "mesa-de-luz-vitta-con-cajn-6748",
   },
   {
     sku: "2058",
@@ -914,7 +914,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 220147, precio_efectivo: 187125, precio_transferencia: 198133, precio_mayorista: 182722, cuotas: 3, cuota_valor: 73383 },
     images: [],
-    slug: "termotanque-eléctrico-sirena-40lts-n°2058",
+    slug: "termotanque-elctrico-sirena-40lts-n2058",
   },
   {
     sku: "6167",
@@ -923,7 +923,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 100820, precio_efectivo: 85697, precio_transferencia: 90738, precio_mayorista: 83681, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "bomba-centrífuga-de-3-4-hp-konan-kbc34-n°6167",
+    slug: "bomba-centrfuga-de-34-hp-konan-kbc34-n6167",
   },
   {
     sku: "6168",
@@ -932,7 +932,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 98845, precio_efectivo: 84018, precio_transferencia: 88960, precio_mayorista: 82041, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "bomba-centrífuga-de-1-hp-konan-kbc1-n°6168",
+    slug: "bomba-centrfuga-de-1-hp-konan-kbc1-n6168",
   },
   {
     sku: "7006",
@@ -941,7 +941,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 264094, precio_efectivo: 224480, precio_transferencia: 237685, precio_mayorista: 219198, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "compresor-de-aire-con-kit-konan-40-l-2-hp-8-bar-135-l-min-do",
+    slug: "compresor-de-aire-con-kit-konan-40-l-2-hp-8-bar-135-lmin-dob",
   },
   {
     sku: "7007",
@@ -950,7 +950,7 @@ export const products: Product[] = [
     category: "Herramientas",
     prices: { precio_lista: 58686, precio_efectivo: 49883, precio_transferencia: 52817, precio_mayorista: 48709, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "set-taladro-konan-a-batería-12v-+-herramientas-kset12v-n°700",
+    slug: "set-taladro-konan-a-batera-12v-herramientas-kset12v-n7007",
   },
   {
     sku: "7039",
@@ -959,7 +959,7 @@ export const products: Product[] = [
     category: "Hogar/Baño",
     prices: { precio_lista: 31164, precio_efectivo: 26489, precio_transferencia: 27020, precio_mayorista: 25866, cuotas: 3, cuota_valor: 10388 },
     images: [],
-    slug: "grifería-para-baño-con-juego-de-ducha",
+    slug: "grifera-para-bao-con-juego-de-ducha",
   },
   {
     sku: "7043",
@@ -968,7 +968,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 52332, precio_efectivo: 44482, precio_transferencia: 45372, precio_mayorista: 43436, cuotas: 3, cuota_valor: 17444 },
     images: [],
-    slug: "grifería-cocina-monocomando-acero-inoxidable",
+    slug: "grifera-cocina-monocomando-acero-inoxidable",
   },
   {
     sku: "7044",
@@ -977,7 +977,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 27056, precio_efectivo: 22998, precio_transferencia: 23458, precio_mayorista: 22456, cuotas: 3, cuota_valor: 901867 },
     images: [],
-    slug: "grifería-cocina-monocomando",
+    slug: "grifera-cocina-monocomando",
   },
   {
     sku: "9017",
@@ -986,7 +986,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 21756, precio_efectivo: 18493, precio_transferencia: 18863, precio_mayorista: 18057, cuotas: 3, cuota_valor: 7252 },
     images: [],
-    slug: "grifería-cocina-monocomando-negra-ø35",
+    slug: "grifera-cocina-monocomando-negra-35",
   },
   {
     sku: "07221",
@@ -1004,7 +1004,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 30164, precio_efectivo: 25639, precio_transferencia: 27148, precio_mayorista: 25036, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "atornillador-inalámbrico-kanji-tools-12v-kit-at121pb-n°5923",
+    slug: "atornillador-inalmbrico-kanji-tools-12v-kit-at121pb-n5923",
   },
   {
     sku: "AUTO-20260804171115-1412",
@@ -1013,7 +1013,7 @@ export const products: Product[] = [
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 112940, precio_efectivo: 95999, precio_transferencia: 97919, precio_mayorista: 93740, cuotas: 3, cuota_valor: 37647 },
     images: [],
-    slug: "horno-eléctrico-smartlife-30-litros[9586",
+    slug: "horno-elctrico-smartlife-30-litros9586",
   },
   {
     sku: "7215",
@@ -1022,7 +1022,7 @@ export const products: Product[] = [
     category: "Hogar/Baño",
     prices: { precio_lista: 39999, precio_efectivo: 33999, precio_transferencia: 35999, precio_mayorista: 33199, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "cajonera-3x15l-negro-yute-plorpli303287-n°7215",
+    slug: "cajonera-3x15l-negro-yute-plorpli303287-n7215",
   },
   {
     sku: "4853",
@@ -1031,7 +1031,7 @@ export const products: Product[] = [
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 19899, precio_efectivo: 16914, precio_transferencia: 17909, precio_mayorista: 17511, cuotas: 3, cuota_valor: 6633 },
     images: [],
-    slug: "tostadora-vitta-verde-doble-n°4853",
+    slug: "tostadora-vitta-verde-doble-n4853",
   },
   {
     sku: "AUTO-20260804171537-1444",
@@ -1040,7 +1040,7 @@ export const products: Product[] = [
     category: "Celulares",
     prices: { precio_lista: 221204, precio_efectivo: 188023, precio_transferencia: 199084, precio_mayorista: 183599, cuotas: null, cuota_valor: null },
     images: [],
-    slug: "celular-motorola-g04-4-gb---64-gb",
+    slug: "celular-motorola-g04-4-gb-64-gb",
   },
 ]
 
@@ -1054,10 +1054,10 @@ export const categories = [
   { name: "Gaming", slug: "gaming", count: 2 },
   { name: "Heladeras/Freezers", slug: "heladeras-freezers", count: 7 },
   { name: "Herramientas", slug: "herramientas", count: 9 },
-  { name: "Hogar/Baño", slug: "hogar-baño", count: 7 },
+  { name: "Hogar/Baño", slug: "hogar-bao", count: 7 },
   { name: "Lavarropas/Secarropas", slug: "lavarropas-secarropas", count: 6 },
   { name: "Outdoor/Playa", slug: "outdoor-playa", count: 11 },
-  { name: "Pequeños Electrodomésticos", slug: "pequeños-electrodomésticos", count: 17 },
+  { name: "Pequeños Electrodomésticos", slug: "pequeos-electrodomsticos", count: 17 },
   { name: "TVs", slug: "tvs", count: 1 },
   { name: "Tablets", slug: "tablets", count: 2 },
   { name: "Varios", slug: "varios", count: 3 },
