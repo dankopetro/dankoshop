@@ -10,5 +10,6 @@ RUN pnpm install --frozen-lockfile
 COPY medusa-backend/ ./
 RUN pnpm build
 
+WORKDIR /app/medusa-backend/apps/backend
 EXPOSE 9000
-CMD ["sh", "-c", "cd /app/medusa-backend && pnpm --filter=@dtc/backend start"]
+CMD ["./node_modules/.bin/medusa", "start"]
