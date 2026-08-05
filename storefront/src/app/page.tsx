@@ -1,9 +1,5 @@
-import { getProducts, getCategories } from "@/lib/medusa"
-import { ProductCard } from "@/components/product-card"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowRight, Sparkles, Truck, Shield, RotateCcw, Headphones } from "lucide-react"
+import { ArrowRight, Truck, Shield, RotateCcw, Headphones } from "lucide-react"
 
 const benefits = [
   { icon: Truck, title: "Envío gratis", desc: "En compras superiores a $50.000" },
@@ -27,15 +23,7 @@ const categories = [
   { name: "Tablets", slug: "tablets", icon: "📱" },
 ]
 
-export default async function Home() {
-  let products: any[] = []
-  try {
-    const response = await getProducts({ limit: 8 })
-    products = response.products || []
-  } catch (error) {
-    console.error("Error fetching products:", error)
-  }
-
+export default function Home() {
   return (
     <div className="flex flex-col flex-1 bg-gray-50">
       {/* Hero Section */}
@@ -54,16 +42,12 @@ export default async function Home() {
               Precios de mayorista para minoristas. Envíos a todo el país.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/productos">
-                <Button size="lg" className="w-full sm:w-auto px-8 py-3 text-lg bg-white text-blue-600 hover:bg-blue-50 transition-colors">
-                  Ver productos
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
+              <Link href="/productos" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium bg-white text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                Ver productos
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
-              <Link href="/categorias">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 py-3 text-lg border-white text-white hover:bg-white/10 transition-colors">
-                  Categorías
-                </Button>
+              <Link href="/categorias" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium border border-white text-white hover:bg-white/10 rounded-lg transition-colors">
+                Categorías
               </Link>
             </div>
           </div>
@@ -95,64 +79,36 @@ export default async function Home() {
               <h2 className="text-3xl font-bold text-gray-900">Categorías</h2>
               <p className="text-gray-600 mt-1">Encuentra lo que necesitas</p>
             </div>
-            <Link href="/categorias">
-              <Button variant="ghost" className="gap-2">
-                Ver todas <ArrowRight className="w-4 h-4" />
-              </Button>
+            <Link href="/categorias" className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
+              Ver todas <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {categories.map((cat) => (
               <Link key={cat.slug} href={`/categoria/${cat.slug}`} className="group">
-                <Card className="h-full text-center p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                <div className="h-full text-center p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
                   <div className="text-4xl mb-3">{cat.icon}</div>
-                  <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{cat.name}</h3>
-                </Card>
+                  <h3 className="font-medium text-gray-900 group-hover:text-blue-600">{cat.name}</h3>
+                </div>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      {products.length > 0 && (
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900">Productos destacados</h2>
-                <p className="text-gray-600 mt-1">Lo más vendido esta semana</p>
-              </div>
-              <Link href="/productos">
-                <Button variant="ghost" className="gap-2">
-                  Ver catálogo completo <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* CTA Section */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto">
-            <Sparkles className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+            <div className="w-12 h-12 text-blue-400 mx-auto mb-4">✨</div>
             <h2 className="text-3xl font-bold text-white mb-4">¿Eres revendedor?</h2>
             <p className="text-gray-300 mb-8 text-lg">
               Accede a precios de mayorista comprando 3 unidades o más. 
               Registrate y empezá a ganar más con cada venta.
             </p>
-            <Link href="/registro-mayorista">
-              <Button size="lg" className="px-8 py-3 text-lg bg-blue-600 hover:bg-blue-700 text-white">
-                Quiero ser mayorista
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+            <Link href="/registro-mayorista" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+              Quiero ser mayorista
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </div>
         </div>

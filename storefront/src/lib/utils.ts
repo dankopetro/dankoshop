@@ -1,12 +1,5 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-
-export function format(amount: number | undefined | null, currency = "ARS"): string {
-  if (!amount) return "0"
+export const format = (amount: number | undefined | null, currency = "ARS"): string => {
+  if (!amount) return "$0"
   return new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency,
@@ -15,6 +8,6 @@ export function format(amount: number | undefined | null, currency = "ARS"): str
   }).format(amount)
 }
 
-export function formatNumber(num: number): string {
-  return new Intl.NumberFormat("es-AR").format(num)
+export function cn(...classes: (string | undefined | null | false)[]) {
+  return classes.filter(Boolean).join(" ")
 }
