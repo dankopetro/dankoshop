@@ -26,9 +26,7 @@ const categories = [
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 bg-gray-50">
-      {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="max-w-3xl">
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
@@ -54,7 +52,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Benefits */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -71,7 +68,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Categories */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
@@ -79,9 +75,6 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-gray-900">Categorías</h2>
               <p className="text-gray-600 mt-1">Encuentra lo que necesitas</p>
             </div>
-            <Link href="/categorias" className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1">
-              Ver todas <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {categories.map((cat) => (
@@ -96,11 +89,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto">
-            <div className="w-12 h-12 text-blue-400 mx-auto mb-4">✨</div>
+            <div className="text-4xl mb-4">✨</div>
             <h2 className="text-3xl font-bold text-white mb-4">¿Eres revendedor?</h2>
             <p className="text-gray-300 mb-8 text-lg">
               Accede a precios de mayorista comprando 3 unidades o más. 
