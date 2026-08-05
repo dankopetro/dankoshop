@@ -1,9 +1,9 @@
 [build]
 builder = "NIXPACKS"
-buildCommand = "cd medusa-backend && npm install -g pnpm@9.15.9 && pnpm install && pnpm build"
+buildCommand = "cd medusa-backend && npm install -g pnpm@9.15.9 turbo@2.0.14 && pnpm install && pnpm build"
 
 [deploy]
-startCommand = "cd medusa-backend && pnpm start"
+startCommand = "cd medusa-backend/apps/backend && npx medusa start"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
