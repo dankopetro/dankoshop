@@ -2,18 +2,11 @@ import { products } from "@/data/products"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, Truck, Shield, CreditCard } from "lucide-react"
+import ProductImage from "@/components/product-image"
 
 function formatPrice(n: number | null) {
   if (n === null) return null
   return n.toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 })
-}
-
-const categoryIcons: Record<string, string> = {
-  "Accesorios": "🎒", "Bicicletas": "🚲", "Celulares": "📱", "Cocinas/Hornos/Microondas": "🍳",
-  "Combos": "📦", "Deportes": "⚽", "Gaming": "🎮", "Heladeras/Freezers": "❄️",
-  "Herramientas": "🔧", "Hogar/Baño": "🛁", "Lavarropas/Secarropas": "🌀",
-  "Outdoor/Playa": "🏖️", "Pequeños Electrodomésticos": "🍳", "TVs": "📺",
-  "Tablets": "📱", "Varios": "📦",
 }
 
 export function generateStaticParams() {
@@ -35,13 +28,27 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-            <div className="h-72 lg:h-[500px] bg-gray-100 flex items-center justify-center text-8xl">
-              {categoryIcons[product.category] || "📦"}
+            <div className="relative">
+              {product.images.length > 0 ? (
+                <ProductImage
+                  images={product.images}
+                  name={product.name}
+                  className="h-72 lg:h-[500px]"
+                />
+              ) : (
+                <div className="h-72 lg:h-[500px] bg-gray-100 flex items-center justify-center text-8xl">
+                  📦
+                </div>
+              )}
+              {product.images.length > 1 && (
+                <div className="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
+                  📷 {product.images.length} fotos — Click para ampliar
+                </div>
+              )}
             </div>
 
             <div className="p-6 lg:p-8">
-              <span className="text-sm text-blue-600 font-medium">{product.category}</span>
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mt-2">{product.name}</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h1>
               <p className="text-sm text-gray-400 mt-1">SKU: {product.sku}</p>
 
               <div className="mt-6 space-y-2">
@@ -96,6 +103,22 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
             </div>
           </div>
         </div>
+
+        {product.images.length > 1 && (
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Más imágenes</h3>
+            <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
+              {product.images.map((img, i) => (
+                <ProductImage
+                  key={i}
+                  images={product.images}
+                  name={product.name}
+                  className="h-20"
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
