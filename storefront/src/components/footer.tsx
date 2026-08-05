@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Truck, Shield, RotateCcw, Headphones, Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "lucide-react"
+import { Truck, Shield, RotateCcw, Headphones, MapPin, Phone, Mail } from "lucide-react"
 
 const footerLinks = {
   "Información": [
