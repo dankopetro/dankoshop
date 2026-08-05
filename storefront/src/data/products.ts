@@ -1043,3 +1043,28 @@ export const products: Product[] = [
     slug: "celular-motorola-g04-4-gb-64-gb",
   },
 ];
+
+export interface Category {
+  name: string;
+  slug: string;
+  count: number;
+}
+
+export const categories: Category[] = [
+  { name: "Accesorios", slug: "accesorios", count: 2 },
+  { name: "Bicicletas", slug: "bicicletas", count: 18 },
+  { name: "Celulares", slug: "celulares", count: 4 },
+  { name: "Cocinas/Hornos/Microondas", slug: "cocinashornosmicroondas", count: 23 },
+  { name: "Combos", slug: "combos", count: 1 },
+  { name: "Deportes", slug: "deportes", count: 1 },
+  { name: "Gaming", slug: "gaming", count: 2 },
+  { name: "Heladeras/Freezers", slug: "heladerasfreezers", count: 7 },
+  { name: "Herramientas", slug: "herramientas", count: 9 },
+  { name: "Hogar/Baño", slug: "hogarbano", count: 7 },
+  { name: "Lavarropas/Secarropas", slug: "lavarropassecarropas", count: 6 },
+  { name: "Outdoor/Playa", slug: "outdoorplaya", count: 11 },
+  { name: "Pequeños Electrodomésticos", slug: "pequenos-electrodomesticos", count: 17 },
+  { name: "TVs", slug: "tvs", count: 1 },
+  { name: "Tablets", slug: "tablets", count: 2 },
+  { name: "Varios", slug: "varios", count: 3 }
+];
