@@ -22,7 +22,7 @@ export const products: Product[] = [
     description: "",
     category: "Accesorios",
     prices: { precio_lista: 4763, precio_efectivo: 4049, precio_transferencia: 4287, precio_mayorista: 3968, cuotas: 3, cuota_valor: 1588 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965902/dankoshop/AUTO-20260731111239-1_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260731111239-1_1.jpg"],
     slug: "bolsa-de-box-con-guantes-chicos-de-hulk-para-chicos",
   },
   {
@@ -31,7 +31,7 @@ export const products: Product[] = [
     description: "TAMBIÉN DISPONIBLE EN:\n- IRON MAN\n- HOMBRE ARAÑA\n- CAPITAN AMÉRICA",
     category: "Accesorios",
     prices: { precio_lista: 4783, precio_efectivo: 4066, precio_transferencia: 4305, precio_mayorista: 3984, cuotas: 3, cuota_valor: 1594 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965903/dankoshop/AUTO-20260731111239-13_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260731111239-13_1.jpg"],
     slug: "bolsa-de-box-guantes-chico-de-boca-para-chicos",
   },
   {
@@ -40,7 +40,7 @@ export const products: Product[] = [
     description: "",
     category: "Gaming",
     prices: { precio_lista: 130513, precio_efectivo: 110936, precio_transferencia: 117461, precio_mayorista: 108326, cuotas: 3, cuota_valor: 43504 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965905/dankoshop/6140_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965905/dankoshop/6140_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965907/dankoshop/6140_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965909/dankoshop/6140_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968371/dankoshop/6140_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_7.jpg"],
     slug: "silla-gamer-ultrom-negro-verde-n6140",
   },
   {
@@ -49,7 +49,7 @@ export const products: Product[] = [
     description: "",
     category: "Gaming",
     prices: { precio_lista: 124528, precio_efectivo: 105848, precio_transferencia: 107965, precio_mayorista: 103358, cuotas: 3, cuota_valor: 41509 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965912/dankoshop/6232_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965913/dankoshop/6232_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965915/dankoshop/6232_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965916/dankoshop/6232_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965918/dankoshop/6232_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965919/dankoshop/6232_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965920/dankoshop/6232_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965921/dankoshop/6232_8.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_8.jpg"],
     slug: "mesa-gamer-gt-2310-ultrom-6232",
   },
   {
@@ -58,7 +58,7 @@ export const products: Product[] = [
     description: "",
     category: "Celulares",
     prices: { precio_lista: 166108, precio_efectivo: 141192, precio_transferencia: 149497, precio_mayorista: 137870, cuotas: 3, cuota_valor: 55369 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965923/dankoshop/5448_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965925/dankoshop/5448_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965926/dankoshop/5448_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965929/dankoshop/5448_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965931/dankoshop/5448_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965932/dankoshop/5448_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965933/dankoshop/5448_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965936/dankoshop/5448_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965935/dankoshop/5448_8.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_13.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_14.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_15.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_16.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_17.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_18.jpg"],
     slug: "celular-moto-e14-lavanda-2264gb-n5448",
   },
   {
@@ -67,7 +67,7 @@ export const products: Product[] = [
     description: "(9347) Celular Motorola G06 4GB RAM + 128GB Azul",
     category: "Varios",
     prices: { precio_lista: 253012, precio_efectivo: 215060, precio_transferencia: 219362, precio_mayorista: 210000, cuotas: 3, cuota_valor: 84338 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965937/dankoshop/9347_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965938/dankoshop/9347_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965940/dankoshop/9347_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965942/dankoshop/9347_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965943/dankoshop/9347_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965945/dankoshop/9347_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965949/dankoshop/9347_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968415/dankoshop/9347_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9347_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9347_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9347_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9347_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9347_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9347_6.jpg"],
     slug: "potencia-espacio-y-estilo-en-la-palma-de-tu-mano",
   },
   {
@@ -76,7 +76,7 @@ export const products: Product[] = [
     description: "𝐏𝐚𝐧𝐭𝐚𝐥𝐥𝐚 𝟏𝟎.𝟏\" 𝐇𝐃 📱\n𝐀𝐧𝐝𝐫𝐨𝐢𝐝 𝟏𝟑 + 𝟒𝐆𝐁 𝐑𝐀𝐌 ⚙️\n𝐀𝐥𝐦𝐚𝐜𝐞𝐧𝐚𝐦𝐢𝐞𝐧𝐭𝐨 𝟏𝟐𝟖𝐆𝐁 💾\n𝐂á𝐦𝐚𝐫𝐚 𝟏𝟑𝐌𝐏 + 𝐟𝐫𝐨𝐧𝐭𝐚𝐥 𝟓𝐌𝐏 📸",
     category: "Tablets",
     prices: { precio_lista: 213568, precio_efectivo: 181533, precio_transferencia: 192212, precio_mayorista: 177261, cuotas: 3, cuota_valor: 71190 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965950/dankoshop/AUTO-20260731111240-80_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260731111240-80_1.jpg"],
     slug: "tablet-ultrom-alpha-101-128gb-n6865",
   },
   {
@@ -85,7 +85,7 @@ export const products: Product[] = [
     description: "",
     category: "Tablets",
     prices: { precio_lista: 213568, precio_efectivo: 181533, precio_transferencia: 192212, precio_mayorista: 177261, cuotas: 3, cuota_valor: 71190 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965951/dankoshop/6865_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965963/dankoshop/6865_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965952/dankoshop/6865_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965954/dankoshop/6865_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965957/dankoshop/6865_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965958/dankoshop/6865_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965959/dankoshop/6865_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965962/dankoshop/6865_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965951/dankoshop/6865_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965952/dankoshop/6865_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965954/dankoshop/6865_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965956/dankoshop/6865_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968395/dankoshop/6865_8.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6865_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6865_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6865_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6865_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6865_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6865_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6865_7.jpg"],
     slug: "tablet-ultrom-alpha-101-128gb-4ram-n6865",
   },
   {
@@ -94,7 +94,7 @@ export const products: Product[] = [
     description: "🪑 Sillón Playero MOR Plegable (5751)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 23813, precio_efectivo: 20241, precio_transferencia: 21432, precio_mayorista: 19765, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965968/dankoshop/5751_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965968/dankoshop/5751_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5751_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5751_2.jpg"],
     slug: "sillon-playero-mor-plegable-5751",
   },
   {
@@ -103,7 +103,7 @@ export const products: Product[] = [
     description: "",
     category: "Outdoor/Playa",
     prices: { precio_lista: 33298, precio_efectivo: 28303, precio_transferencia: 29968, precio_mayorista: 27637, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965970/dankoshop/5752_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965970/dankoshop/5752_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5752_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5752_2.jpg"],
     slug: "reposera-8-posiciones-mor-de-aluminio-n5752",
   },
   {
@@ -112,7 +112,7 @@ export const products: Product[] = [
     description: "📏 Medidas: 84 cm x 48,3 cm x 1,11 m\n🦾 Material: aluminio resistente",
     category: "Outdoor/Playa",
     prices: { precio_lista: 54708, precio_efectivo: 46502, precio_transferencia: 49237, precio_mayorista: 45408, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965972/dankoshop/6737_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6737_1.jpg"],
     slug: "carrito-de-playa-negro-de-aluminio-mor-n6737",
   },
   {
@@ -121,7 +121,7 @@ export const products: Product[] = [
     description: "🎨 Colores disponibles:\n🔵 Azul (N°6736)\n⚫ Negro (N°6738)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 63119, precio_efectivo: 53651, precio_transferencia: 56807, precio_mayorista: 52389, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965978/dankoshop/6736_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965979/dankoshop/6736_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965980/dankoshop/6736_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6736_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6736_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6736_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6736_4.jpg"],
     slug: "carrito-de-playa-c-extension-p-conservadora-mor-n6736-n6738",
   },
   {
@@ -130,7 +130,7 @@ export const products: Product[] = [
     description: "🛒 Lavarropas Drean Semiautomático 8 Kg Gris LTDR87SGO (N°9479)",
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 373343, precio_efectivo: 317342, precio_transferencia: 336009, precio_mayorista: 309875, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785965982/dankoshop/9479_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965982/dankoshop/9479_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965985/dankoshop/9479_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965986/dankoshop/9479_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965988/dankoshop/9479_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965990/dankoshop/9479_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965982/dankoshop/9479_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965984/dankoshop/9479_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965985/dankoshop/9479_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965988/dankoshop/9479_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785965990/dankoshop/9479_6.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9479_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9479_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9479_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9479_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9479_5.jpg"],
     slug: "lavarropas-drean-semiautomatico-8-kg-gris-ltdr87sgo-n9479",
   },
   {
@@ -139,7 +139,7 @@ export const products: Product[] = [
     description: "",
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 422183, precio_efectivo: 358856, precio_transferencia: 366033, precio_mayorista: 350412, cuotas: 3, cuota_valor: 140728 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966007/dankoshop/6231_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966011/dankoshop/6231_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966012/dankoshop/6231_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966014/dankoshop/6231_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966007/dankoshop/6231_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966008/dankoshop/6231_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966011/dankoshop/6231_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966012/dankoshop/6231_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966014/dankoshop/6231_5.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6231_10.jpg"],
     slug: "lavarropas-enova-carga-superior-6kg-blanco-n6231",
   },
   {
@@ -148,7 +148,7 @@ export const products: Product[] = [
     description: "📺✨ 𝗦𝗠𝗔𝗥𝗧 𝗧𝗩 𝗛𝗬𝗨𝗡𝗗𝗔𝗜 𝟲𝟱” 𝗤𝗟𝗘𝗗 𝗚𝗢𝗢𝗚𝗟𝗘 𝗧𝗩 - Cod.8575  ✨📺\n⚡ 𝗜𝗠𝗔𝗚𝗘𝗡 𝟰𝗞 𝗨𝗛𝗗 + 𝗖𝗢𝗟𝗢𝗥𝗘𝗦 𝗤𝗟𝗘𝗗\n🎙️ 𝗖𝗢𝗡𝗧𝗥𝗢𝗟 𝗣𝗢𝗥 𝗩𝗢𝗭\n📡 𝗪𝗜-𝗙𝗜 + 𝗕𝗟𝗨𝗘𝗧𝗢𝗢𝗧𝗛\n🎮 𝟯 𝗣𝗨𝗘𝗥𝗧𝗢𝗦 𝗛𝗗𝗠𝗜 + 𝗨𝗦𝗕\n🏷️ Llevando 3u IGUALES $985.370\n🏷️ Llevando 3u IGUALES $930.699",
     category: "TVs",
     prices: { precio_lista: 1117199, precio_efectivo: 949619, precio_transferencia: 1005479, precio_mayorista: 927275, cuotas: 3, cuota_valor: 372400 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966027/dankoshop/8575_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966027/dankoshop/8575_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8575_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8575_2.jpg"],
     slug: "smart-tv-hyundai-65-qled-google-tv-cod8575",
   },
   {
@@ -157,7 +157,7 @@ export const products: Product[] = [
     description: "🛒 Set de Vajillas Durax 12 Piezas Gema + Lunita (N°9449)",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 19871, precio_efectivo: 16890, precio_transferencia: 17884, precio_mayorista: 16493, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966030/dankoshop/9449_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966032/dankoshop/9449_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966034/dankoshop/9449_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966037/dankoshop/9449_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966039/dankoshop/9449_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966030/dankoshop/9449_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966032/dankoshop/9449_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966035/dankoshop/9449_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9449_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9449_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9449_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9449_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9449_5.jpg"],
     slug: "set-de-vajillas-durax-12-piezas-gema-lunita-n9449",
   },
   {
@@ -166,7 +166,7 @@ export const products: Product[] = [
     description: "🛒 Vaso Durax FourPack Facetado 400cc (N°9448)",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 3794, precio_efectivo: 3225, precio_transferencia: 3415, precio_mayorista: 3149, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966048/dankoshop/9448_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966053/dankoshop/9448_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966048/dankoshop/9448_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966051/dankoshop/9448_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9448_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9448_2.jpg"],
     slug: "vaso-durax-fourpack-facetado-400cc-n9448",
   },
   {
@@ -175,7 +175,7 @@ export const products: Product[] = [
     description: "🛒 Vaso Durax SixPack Point (N°9447)",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 3131, precio_efectivo: 2661, precio_transferencia: 2818, precio_mayorista: 2599, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966058/dankoshop/9447_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966060/dankoshop/9447_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966063/dankoshop/9447_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966058/dankoshop/9447_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9447_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9447_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9447_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9447_4.jpg"],
     slug: "vaso-durax-sixpack-point-n9447",
   },
   {
@@ -184,7 +184,7 @@ export const products: Product[] = [
     description: "🛒 Plato Durax Hondo Fénix Blanco (N°9446)",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 800, precio_efectivo: 680, precio_transferencia: 720, precio_mayorista: 664, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966067/dankoshop/9446_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966071/dankoshop/9446_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966067/dankoshop/9446_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966069/dankoshop/9446_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966071/dankoshop/9446_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9446_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9446_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9446_3.jpg"],
     slug: "plato-durax-hondo-fenix-blanco-n9446",
   },
   {
@@ -193,7 +193,7 @@ export const products: Product[] = [
     description: "🛒 Plato Durax Playo Fénix Blanco (N°9445)",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 800, precio_efectivo: 680, precio_transferencia: 720, precio_mayorista: 664, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966078/dankoshop/9445_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966080/dankoshop/9445_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966083/dankoshop/9445_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966078/dankoshop/9445_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966080/dankoshop/9445_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9445_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9445_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9445_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9445_4.jpg"],
     slug: "plato-durax-playo-fenix-blanco-n9445",
   },
   {
@@ -202,7 +202,7 @@ export const products: Product[] = [
     description: "🛒 Escurridor Cool Bazar Cuadrado Negro A1248 (N°9430)",
     category: "Varios",
     prices: { precio_lista: 20648, precio_efectivo: 17551, precio_transferencia: 18583, precio_mayorista: 17138, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966088/dankoshop/9430_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966088/dankoshop/9430_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966090/dankoshop/9430_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9430_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9430_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9430_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9430_4.jpg"],
     slug: "escurridor-cool-bazar-cuadrado-negro-a1248-n9430",
   },
   {
@@ -211,7 +211,7 @@ export const products: Product[] = [
     description: "🛒 Heladera Drean No Frost Inverter 356 L Inox RZN356FXARX0 (N°9614)",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 902047, precio_efectivo: 766740, precio_transferencia: 811842, precio_mayorista: 748699, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966095/dankoshop/9614_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966099/dankoshop/9614_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966095/dankoshop/9614_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966097/dankoshop/9614_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966099/dankoshop/9614_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966100/dankoshop/9614_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966104/dankoshop/9614_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966105/dankoshop/9614_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968432/dankoshop/9614_5.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_5.jpg"],
     slug: "heladera-drean-no-frost-inverter-356-l-inox-rzn356fxarx0-n9614",
   },
   {
@@ -220,7 +220,7 @@ export const products: Product[] = [
     description: "",
     category: "Hogar/Baño",
     prices: { precio_lista: 7987, precio_efectivo: 6789, precio_transferencia: 7188, precio_mayorista: 6629, cuotas: 3, cuota_valor: 2745 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966112/dankoshop/AUTO-20260801144718-294_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260801144718-294_1.jpg"],
     slug: "almohada-altior-soft-esencial",
   },
   {
@@ -229,7 +229,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 69528, precio_efectivo: 59099, precio_transferencia: 62575, precio_mayorista: 57708, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966114/dankoshop/6322_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966116/dankoshop/6322_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966114/dankoshop/6322_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966117/dankoshop/6322_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966119/dankoshop/6322_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966121/dankoshop/6322_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966122/dankoshop/6322_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966124/dankoshop/6322_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966114/dankoshop/6322_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966116/dankoshop/6322_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966117/dankoshop/6322_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6322_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6322_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6322_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6322_4.jpg"],
     slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-y-cantimplora-rosa-n6322",
   },
   {
@@ -238,7 +238,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 69528, precio_efectivo: 59099, precio_transferencia: 62575, precio_mayorista: 57708, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966136/dankoshop/5748_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966138/dankoshop/5748_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966140/dankoshop/5748_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966144/dankoshop/5748_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966146/dankoshop/5748_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966148/dankoshop/5748_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966136/dankoshop/5748_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966138/dankoshop/5748_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966140/dankoshop/5748_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968365/dankoshop/5748_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5748_13.jpg"],
     slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-minnie-rosa-n5748",
   },
   {
@@ -247,7 +247,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 69528, precio_efectivo: 59099, precio_transferencia: 62575, precio_mayorista: 57708, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966156/dankoshop/6323_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966158/dankoshop/6323_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966159/dankoshop/6323_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966161/dankoshop/6323_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966163/dankoshop/6323_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966167/dankoshop/6323_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966156/dankoshop/6323_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966158/dankoshop/6323_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966159/dankoshop/6323_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968381/dankoshop/6323_6.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6323_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6323_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6323_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6323_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6323_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6323_6.jpg"],
     slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-y-cantimplora-violeta-n6323",
   },
   {
@@ -256,7 +256,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 69528, precio_efectivo: 59099, precio_transferencia: 62575, precio_mayorista: 57708, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966174/dankoshop/6325_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966176/dankoshop/6325_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966178/dankoshop/6325_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966181/dankoshop/6325_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966183/dankoshop/6325_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966185/dankoshop/6325_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966187/dankoshop/6325_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966174/dankoshop/6325_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6325_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6325_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6325_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6325_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6325_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6325_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6325_7.jpg"],
     slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-y-cantimplora-negrorojo-n6325",
   },
   {
@@ -265,7 +265,7 @@ export const products: Product[] = [
     description: "🛒 Bicicleta Infantil Reforzada Nathor R12 con Rueditas y Cantimplora Fire Man (N°6518)",
     category: "Bicicletas",
     prices: { precio_lista: 69528, precio_efectivo: 59099, precio_transferencia: 62575, precio_mayorista: 57708, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966192/dankoshop/6518_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966194/dankoshop/6518_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966196/dankoshop/6518_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966192/dankoshop/6518_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966194/dankoshop/6518_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966196/dankoshop/6518_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966198/dankoshop/6518_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966201/dankoshop/6518_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966203/dankoshop/6518_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968383/dankoshop/6518_5.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6518_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6518_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6518_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6518_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6518_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6518_6.jpg"],
     slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-y-cantimplora-fire-man-n6518",
   },
   {
@@ -274,7 +274,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 59537, precio_efectivo: 50606, precio_transferencia: 53583, precio_mayorista: 49416, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966211/dankoshop/6866_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966213/dankoshop/6866_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966216/dankoshop/6866_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966218/dankoshop/6866_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966220/dankoshop/6866_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966222/dankoshop/6866_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966211/dankoshop/6866_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968397/dankoshop/6866_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6866_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6866_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6866_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6866_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6866_5.jpg"],
     slug: "bicicleta-fiat-500-rodado-12-con-ruedas-de-goma-y-cantimplora-azul-n6866",
   },
   {
@@ -283,7 +283,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 59537, precio_efectivo: 50606, precio_transferencia: 53583, precio_mayorista: 49416, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966225/dankoshop/6867_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966228/dankoshop/6867_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966230/dankoshop/6867_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966232/dankoshop/6867_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966234/dankoshop/6867_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966236/dankoshop/6867_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966225/dankoshop/6867_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6867_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6867_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6867_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6867_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6867_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6867_6.jpg"],
     slug: "bicicleta-fiat-500-rodado-12-con-ruedas-de-goma-y-cantimplora-rosa-n6867",
   },
   {
@@ -292,7 +292,7 @@ export const products: Product[] = [
     description: "🎨 Modelos disponibles:\n🔴 Negro/Rojo S600 (N°7815 / 8449)\n⚪ Negro/Blanco S600 (N°7792 / 7816 / 8448)\n🔵 Negro/Azul A600 (N°7708 / 7794 / 7814)⛔\n🌸 Negro/Rosa A600 (N°7813)⛔\n⚫ Gris/Negro A600 (N°7795 / 7812 / 7793)⛔",
     category: "Bicicletas",
     prices: { precio_lista: 230147, precio_efectivo: 195625, precio_transferencia: 207132, precio_mayorista: 191022, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966241/dankoshop/7815_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966257/dankoshop/7815_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966259/dankoshop/7815_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966261/dankoshop/7815_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966244/dankoshop/7815_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966246/dankoshop/7815_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966248/dankoshop/7815_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966250/dankoshop/7815_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966254/dankoshop/7815_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966256/dankoshop/7815_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966243/dankoshop/7815_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968404/dankoshop/7815_7.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7815_9.jpg"],
     slug: "bicicleta-anderson-aluminio-r29",
   },
   {
@@ -301,7 +301,7 @@ export const products: Product[] = [
     description: "🛒 Bicicleta Fiat 500 R29\" Marrón Topo/Naranja (N°9456)",
     category: "Bicicletas",
     prices: { precio_lista: 264216, precio_efectivo: 224584, precio_transferencia: 237794, precio_mayorista: 219299, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966263/dankoshop/9456_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966264/dankoshop/9456_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966265/dankoshop/9456_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966263/dankoshop/9456_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966280/dankoshop/9456_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966282/dankoshop/9456_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966264/dankoshop/9456_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966265/dankoshop/9456_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966267/dankoshop/9456_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966269/dankoshop/9456_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966270/dankoshop/9456_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966272/dankoshop/9456_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966274/dankoshop/9456_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966276/dankoshop/9456_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968428/dankoshop/9456_10.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9456_8.jpg"],
     slug: "bicicleta-fiat-500-r29-marron-toponaranja-n9456",
   },
   {
@@ -310,7 +310,7 @@ export const products: Product[] = [
     description: "🛒 Bicicleta Fiat 500 R29\" Gris L13Q 2129001MD (N°9457)",
     category: "Bicicletas",
     prices: { precio_lista: 264216, precio_efectivo: 224584, precio_transferencia: 237794, precio_mayorista: 219299, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966289/dankoshop/9457_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966290/dankoshop/9457_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966291/dankoshop/9457_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966289/dankoshop/9457_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966303/dankoshop/9457_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966305/dankoshop/9457_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966307/dankoshop/9457_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966290/dankoshop/9457_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966291/dankoshop/9457_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966293/dankoshop/9457_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966295/dankoshop/9457_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966298/dankoshop/9457_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966301/dankoshop/9457_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966302/dankoshop/9457_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966296/dankoshop/9457_6.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9457_11.jpg"],
     slug: "bicicleta-fiat-500-r29-gris-l13q-2129001md-n9457",
   },
   {
@@ -319,7 +319,7 @@ export const products: Product[] = [
     description: "🎨 Colores disponibles:\n⚫ Negro (6310)\n🟢  Verde agua\n🏷️ Unidad $166.360",
     category: "Bicicletas",
     prices: { precio_lista: 195718, precio_efectivo: 166360, precio_transferencia: 176146, precio_mayorista: 162446, cuotas: 3, cuota_valor: 65239 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966314/dankoshop/6310_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966314/dankoshop/6310_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966316/dankoshop/6310_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6310_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6310_2.jpg"],
     slug: "bicicleta-corvo-r27-playera",
   },
   {
@@ -328,7 +328,7 @@ export const products: Product[] = [
     description: "🔘 (6289) GRIS",
     category: "Bicicletas",
     prices: { precio_lista: 177973, precio_efectivo: 151277, precio_transferencia: 160175, precio_mayorista: 147718, cuotas: 3, cuota_valor: 59324 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966318/dankoshop/6289_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966334/dankoshop/6289_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966337/dankoshop/6289_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966320/dankoshop/6289_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966322/dankoshop/6289_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966324/dankoshop/6289_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966325/dankoshop/6289_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966327/dankoshop/6289_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966329/dankoshop/6289_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966332/dankoshop/6289_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968377/dankoshop/6289_8.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6289_9.jpg"],
     slug: "bicicleta-corvo-infantil-16",
   },
   {
@@ -337,7 +337,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 59323, precio_efectivo: 50425, precio_transferencia: 53391, precio_mayorista: 49416, cuotas: 3, cuota_valor: 19774 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966339/dankoshop/5706_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966339/dankoshop/5706_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966367/dankoshop/5706_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966370/dankoshop/5706_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966353/dankoshop/5706_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966355/dankoshop/5706_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966356/dankoshop/5706_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966358/dankoshop/5706_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966360/dankoshop/5706_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966362/dankoshop/5706_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966364/dankoshop/5706_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966366/dankoshop/5706_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968360/dankoshop/5706_11.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5706_10.jpg"],
     slug: "bicicleta-r12-fiat-negro-gris-n5706",
   },
   {
@@ -346,7 +346,7 @@ export const products: Product[] = [
     description: "",
     category: "Bicicletas",
     prices: { precio_lista: 70918, precio_efectivo: 60280, precio_transferencia: 63826, precio_mayorista: 58862, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966374/dankoshop/6324_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966390/dankoshop/6324_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966392/dankoshop/6324_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966376/dankoshop/6324_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966377/dankoshop/6324_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966379/dankoshop/6324_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966382/dankoshop/6324_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966383/dankoshop/6324_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966385/dankoshop/6324_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966387/dankoshop/6324_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966389/dankoshop/6324_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966374/dankoshop/6324_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6324_10.jpg"],
     slug: "bicicleta-infantil-reforzada-nathor-r12-con-rueditas-y-cantimplora-verde-n6324",
   },
   {
@@ -355,7 +355,7 @@ export const products: Product[] = [
     description: "🎨 Colores disponibles:\n🟢 Verde\n🔵 Azul\n🟡 Amarillo",
     category: "Bicicletas",
     prices: { precio_lista: 175034, precio_efectivo: 148779, precio_transferencia: 157531, precio_mayorista: 145278, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966398/dankoshop/2993_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966413/dankoshop/2993_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966415/dankoshop/2993_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966417/dankoshop/2993_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966400/dankoshop/2993_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966401/dankoshop/2993_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966403/dankoshop/2993_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966406/dankoshop/2993_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966408/dankoshop/2993_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966410/dankoshop/2993_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966412/dankoshop/2993_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966405/dankoshop/2993_5.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_13.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_14.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_15.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_16.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_17.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_18.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_19.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_20.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_21.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2993_22.jpg"],
     slug: "bicicleta-carrozada-rodado-16-n2993-n2992-n3795",
   },
   {
@@ -364,7 +364,7 @@ export const products: Product[] = [
     description: "⚪ (6290) BLANCA",
     category: "Bicicletas",
     prices: { precio_lista: 177973, precio_efectivo: 151277, precio_transferencia: 160175, precio_mayorista: 147718, cuotas: 3, cuota_valor: 59324 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966418/dankoshop/6290_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966434/dankoshop/6290_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966436/dankoshop/6290_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966437/dankoshop/6290_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966420/dankoshop/6290_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966421/dankoshop/6290_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966423/dankoshop/6290_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966425/dankoshop/6290_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966427/dankoshop/6290_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966429/dankoshop/6290_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966431/dankoshop/6290_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966433/dankoshop/6290_9.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6290_13.jpg"],
     slug: "bicicleta-corvo-infantil-16",
   },
   {
@@ -373,7 +373,7 @@ export const products: Product[] = [
     description: "🟢 Verde Agua (6291)",
     category: "Bicicletas",
     prices: { precio_lista: 201703, precio_efectivo: 171447, precio_transferencia: 181532, precio_mayorista: 167413, cuotas: 3, cuota_valor: 67234 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966439/dankoshop/6291_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966455/dankoshop/6291_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966457/dankoshop/6291_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966459/dankoshop/6291_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966441/dankoshop/6291_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966442/dankoshop/6291_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966446/dankoshop/6291_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966448/dankoshop/6291_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966450/dankoshop/6291_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966454/dankoshop/6291_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966439/dankoshop/6291_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966455/dankoshop/6291_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966457/dankoshop/6291_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966459/dankoshop/6291_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966441/dankoshop/6291_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966442/dankoshop/6291_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966446/dankoshop/6291_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966448/dankoshop/6291_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966450/dankoshop/6291_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966452/dankoshop/6291_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966454/dankoshop/6291_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966444/dankoshop/6291_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6291_10.jpg"],
     slug: "bicicleta-corvo-infantil-paseo-16-vit-16acecan",
   },
   {
@@ -382,7 +382,7 @@ export const products: Product[] = [
     description: "🎨 Modelos disponibles:\n⚫🔴 Negro/Rojo (N°7703/7705)\n⚫🔵 Negro/Azul (N°7701/7697)\n⚙️⚫ Gris/Negro (N°7700/7704/7707)\n⚫🌸 Negro/Rosa⛔ (N°7699/7706)\n⚫⚪ Negro/Blanco (N°7698/7702/7709)",
     category: "Bicicletas",
     prices: { precio_lista: 212443, precio_efectivo: 180577, precio_transferencia: 191199, precio_mayorista: 176328, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966482/dankoshop/7703_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966497/dankoshop/7703_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966499/dankoshop/7703_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966500/dankoshop/7703_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966484/dankoshop/7703_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966487/dankoshop/7703_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966489/dankoshop/7703_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966490/dankoshop/7703_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966492/dankoshop/7703_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966494/dankoshop/7703_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966496/dankoshop/7703_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966486/dankoshop/7703_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7703_11.jpg"],
     slug: "bicicleta-anderson-acero-s400-r29",
   },
   {
@@ -391,7 +391,7 @@ export const products: Product[] = [
     description: "",
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 225433, precio_efectivo: 191618, precio_transferencia: 202890, precio_mayorista: 187109, cuotas: 3, cuota_valor: 75144 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966502/dankoshop/AUTO-20260803113954-525_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260803113954-525_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260803113954-525_2.jpg"],
     slug: "secarropas-centrifigado-6kg-2800-rpm-vitta-silver",
   },
   {
@@ -400,7 +400,7 @@ export const products: Product[] = [
     description: "",
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 213568, precio_efectivo: 181533, precio_transferencia: 192211, precio_mayorista: 177261, cuotas: 3, cuota_valor: 71189 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966504/dankoshop/AUTO-20260803113954-537_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260803113954-537_1.jpg"],
     slug: "secarropas-centrifigado-6kg-2800-rpm-vitta-blanco",
   },
   {
@@ -409,7 +409,7 @@ export const products: Product[] = [
     description: "🛒 Celular Samsung A07 64 GB (N°7695)",
     category: "Celulares",
     prices: { precio_lista: 218433, precio_efectivo: 185668, precio_transferencia: 196590, precio_mayorista: 181299, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966506/dankoshop/7695_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966506/dankoshop/7695_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966507/dankoshop/7695_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966506/dankoshop/7695_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7695_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7695_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7695_3.jpg"],
     slug: "celular-samsung-a07-64-gb-n7695",
   },
   {
@@ -418,7 +418,7 @@ export const products: Product[] = [
     description: "(8582)",
     category: "Celulares",
     prices: { precio_lista: 117646, precio_efectivo: 99999, precio_transferencia: 101999, precio_mayorista: 97646, cuotas: 3, cuota_valor: 39216 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966515/dankoshop/8582_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966518/dankoshop/8582_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966519/dankoshop/8582_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966523/dankoshop/8582_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968411/dankoshop/8582_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8582_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8582_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8582_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8582_4.jpg"],
     slug: "celular-enova-e10-3gb-ram-32gb-blanco",
   },
   {
@@ -427,7 +427,7 @@ export const products: Product[] = [
     description: "",
     category: "Deportes",
     prices: { precio_lista: 73528, precio_efectivo: 62499, precio_transferencia: 66175, precio_mayorista: 61199, cuotas: 3, cuota_valor: 24509 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966525/dankoshop/AUTO-20260803133614-628_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260803133614-628_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260803133614-628_2.jpg"],
     slug: "paleta-de-padel-pro-cigio",
   },
   {
@@ -436,7 +436,7 @@ export const products: Product[] = [
     description: "🛒 Cama Elástica 1.8 Mts XPLAY IMZ-180VEPS (N°6900)\n🔒 Cierre en red de seguridad\n🛡️ Red de seguridad interna\n🔩 36 resortes reforzados\n🦵 3 patas de hierro resistentes",
     category: "Outdoor/Playa",
     prices: { precio_lista: 206428, precio_efectivo: 175400, precio_transferencia: 178973, precio_mayorista: 171335, cuotas: 3, cuota_valor: 68809 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966526/dankoshop/6900_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6900_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6900_2.jpg"],
     slug: "cama-elastica-18-mts-xplay-imz-180veps-n6900",
   },
   {
@@ -445,7 +445,7 @@ export const products: Product[] = [
     description: "🛒 Cama Elástica 2,44 Mts XPLAY IMZ-244VEPS (N°6902)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 274520, precio_efectivo: 233342, precio_transferencia: 247068, precio_mayorista: 227852, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966527/dankoshop/6902_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966527/dankoshop/6902_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6902_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6902_2.jpg"],
     slug: "cama-elastica-244-mts-xplay-imz-244veps-n6902",
   },
   {
@@ -454,7 +454,7 @@ export const products: Product[] = [
     description: "🛒 Juego de Tobogán Rotomoldeado 3 Escalones XPLAY NRA 203S (N°6556)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 85020, precio_efectivo: 72267, precio_transferencia: 76518, precio_mayorista: 70567, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966532/dankoshop/6556_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966532/dankoshop/6556_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6556_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6556_2.jpg"],
     slug: "juego-de-tobogan-rotomoldeado-3-escalones-xplay-nra-203s-n6556",
   },
   {
@@ -463,7 +463,7 @@ export const products: Product[] = [
     description: "🛒 Juego de Tobogán Rotomoldeado 4 Escalones XPLAY (N°6557)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 187025, precio_efectivo: 158971, precio_transferencia: 168322, precio_mayorista: 155231, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966537/dankoshop/6557_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966537/dankoshop/6557_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6557_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6557_2.jpg"],
     slug: "juego-de-tobogan-rotomoldeado-4-escalones-xplay-n6557",
   },
   {
@@ -472,7 +472,7 @@ export const products: Product[] = [
     description: "🛒 Tobogán Plegable 4 Escalones Naranja-Celeste Agua NRA-204-AGUA (N°6973)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 216154, precio_efectivo: 183731, precio_transferencia: 194539, precio_mayorista: 179408, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966542/dankoshop/6973_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966542/dankoshop/6973_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6973_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6973_2.jpg"],
     slug: "tobogan-plegable-4-escalones-naranja-celeste-agua-nra-204-agua-n6973",
   },
   {
@@ -481,7 +481,7 @@ export const products: Product[] = [
     description: "🛒 Cama Elástica 1,40 Mts XPLAY IMZ-140MUBB (N°6899)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 133605, precio_efectivo: 113564, precio_transferencia: 120244, precio_mayorista: 110892, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966549/dankoshop/6899_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966549/dankoshop/6899_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6899_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6899_2.jpg"],
     slug: "cama-elastica-140-mts-xplay-imz-140mubb-n6899",
   },
   {
@@ -490,7 +490,7 @@ export const products: Product[] = [
     description: "🛒 Juego de Hamaca Gemela 1,40 Mts XPLAY (N°6559)",
     category: "Outdoor/Playa",
     prices: { precio_lista: 114151, precio_efectivo: 97028, precio_transferencia: 102736, precio_mayorista: 94745, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966554/dankoshop/6559_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966554/dankoshop/6559_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6559_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6559_2.jpg"],
     slug: "juego-de-hamaca-gemela-140-mts-xplay-n6559",
   },
   {
@@ -499,7 +499,7 @@ export const products: Product[] = [
     description: "🛒 Heladera Auto Defrost Briket BK2F 1310 Blanca 257 L (N°351)",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 655142, precio_efectivo: 556871, precio_transferencia: 589628, precio_mayorista: 543768, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966560/dankoshop/351_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966560/dankoshop/351_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/351_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/351_2.jpg"],
     slug: "heladera-auto-defrost-briket-bk2f-1310-blanca-257-l-n351",
   },
   {
@@ -508,7 +508,7 @@ export const products: Product[] = [
     description: "",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 476313, precio_efectivo: 404866, precio_transferencia: 428682, precio_mayorista: 395340, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966566/dankoshop/6649_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966567/dankoshop/6649_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966570/dankoshop/6649_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966571/dankoshop/6649_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966572/dankoshop/6649_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966574/dankoshop/6649_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966566/dankoshop/6649_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966567/dankoshop/6649_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968391/dankoshop/6649_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6649_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6649_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6649_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6649_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6649_5.jpg"],
     slug: "heladera-telefunken-one-door-con-dispenser-260-l-silver-n6649",
   },
   {
@@ -517,7 +517,7 @@ export const products: Product[] = [
     description: "🛒 Heladera Briket Bajo Mesada BK1F 1010 Blanca (N°2334)",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 421048, precio_efectivo: 357891, precio_transferencia: 378943, precio_mayorista: 349470, cuotas: 3, cuota_valor: 140349 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966579/dankoshop/2334_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966581/dankoshop/2334_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966582/dankoshop/2334_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2334_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2334_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2334_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2334_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2334_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2334_6.jpg"],
     slug: "heladera-briket-bajo-mesada-bk1f-1010-blanca-n2334",
   },
   {
@@ -526,7 +526,7 @@ export const products: Product[] = [
     description: "🎨 Colores disponibles:\n⚪ Blanco (N°5671)\n⚫ Negro (N°5758)\n🔴 Rojo (N°5757)\n🔘 Gris (N°5756)\n🏷️ Minorista $198.809\n📲 11 6795-8796",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 220899, precio_efectivo: 187764, precio_transferencia: 198809, precio_mayorista: 194391, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966584/dankoshop/5671_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966586/dankoshop/5671_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966588/dankoshop/5671_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966590/dankoshop/5671_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966591/dankoshop/5671_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966593/dankoshop/5671_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966584/dankoshop/5671_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966586/dankoshop/5671_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_7.jpg"],
     slug: "frigobar-telefunken-50l-tfk-r50geb",
   },
   {
@@ -535,7 +535,7 @@ export const products: Product[] = [
     description: "🛒 Heladera Enova freezer sup. De-frost 113lts Gris",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 445782, precio_efectivo: 378915, precio_transferencia: 401204, precio_mayorista: 369999, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966599/dankoshop/AUTO-20260804094130-821_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260804094130-821_1.jpg"],
     slug: "heladera-enova-freezer-sup-de-frost-113lts-gris",
   },
   {
@@ -544,7 +544,7 @@ export const products: Product[] = [
     description: "🛒 Freezer Horizontal Midea Inverter 194l Color Blanco (N°5952)",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 631270, precio_efectivo: 536580, precio_transferencia: 568143, precio_mayorista: 523954, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966601/dankoshop/5952_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966601/dankoshop/5952_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966602/dankoshop/5952_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966604/dankoshop/5952_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966608/dankoshop/5952_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966609/dankoshop/5952_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968367/dankoshop/5952_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5952_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5952_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5952_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5952_4.jpg"],
     slug: "freezer-horizontal-midea-inverter-194l-color-blanco-n5952",
   },
   {
@@ -553,7 +553,7 @@ export const products: Product[] = [
     description: "🛒 Cocina Industrial Usman Win Compact 52CM 4H P/V (N°5123)",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 360096, precio_efectivo: 306082, precio_transferencia: 324086, precio_mayorista: 298880, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966615/dankoshop/5123_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966617/dankoshop/5123_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966619/dankoshop/5123_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966615/dankoshop/5123_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966617/dankoshop/5123_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966619/dankoshop/5123_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966620/dankoshop/5123_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5123_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5123_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5123_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5123_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5123_5.jpg"],
     slug: "cocina-industrial-usman-win-compact-52cm-4h-pv-n5123",
   },
   {
@@ -562,7 +562,7 @@ export const products: Product[] = [
     description: "📲 11 6795-8796\n📊 Post 85/60",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 583484, precio_efectivo: 495961, precio_transferencia: 525136, precio_mayorista: 484292, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966627/dankoshop/2220_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966628/dankoshop/2220_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966630/dankoshop/2220_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_6.jpg"],
     slug: "cocina-industrial-usman-irina-pta-vidrio-550-2220-n6870",
   },
   {
@@ -571,7 +571,7 @@ export const products: Product[] = [
     description: "📲 11 6795-8796",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 400120, precio_efectivo: 340102, precio_transferencia: 360108, precio_mayorista: 332100, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966633/dankoshop/6091_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966633/dankoshop/6091_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966636/dankoshop/6091_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966638/dankoshop/6091_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966633/dankoshop/6091_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968369/dankoshop/6091_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6091_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6091_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6091_3.jpg"],
     slug: "cocina-electrica-kanji-50x50-60916093",
   },
   {
@@ -580,7 +580,7 @@ export const products: Product[] = [
     description: "📲 11 6795-8796",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 398857, precio_efectivo: 339028, precio_transferencia: 358971, precio_mayorista: 331051, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966644/dankoshop/5109_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966646/dankoshop/5109_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966649/dankoshop/5109_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966644/dankoshop/5109_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968350/dankoshop/5109_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5109_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5109_2.jpg"],
     slug: "cocina-electrica-vitta-negra-50x50-vit-ekb001v-n5109",
   },
   {
@@ -589,7 +589,7 @@ export const products: Product[] = [
     description: "🛒 Microondas Smartlife 23 Litros Digital con Grill Color Negro SL-MVO23MDGB (N°8391)",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 194740, precio_efectivo: 165529, precio_transferencia: 175266, precio_mayorista: 161634, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966652/dankoshop/8391_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966655/dankoshop/8391_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966657/dankoshop/8391_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966652/dankoshop/8391_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966668/dankoshop/8391_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966670/dankoshop/8391_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966653/dankoshop/8391_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966655/dankoshop/8391_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966657/dankoshop/8391_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966660/dankoshop/8391_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966662/dankoshop/8391_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966664/dankoshop/8391_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966666/dankoshop/8391_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966659/dankoshop/8391_5.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8391_10.jpg"],
     slug: "microondas-smartlife-23-litros-digital-con-grill-color-negro-sl-mvo23mdgb-n8391",
   },
   {
@@ -598,7 +598,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 71340, precio_efectivo: 60639, precio_transferencia: 64206, precio_mayorista: 59212, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966680/dankoshop/5292_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966696/dankoshop/5292_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966698/dankoshop/5292_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966682/dankoshop/5292_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966683/dankoshop/5292_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966685/dankoshop/5292_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966687/dankoshop/5292_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966691/dankoshop/5292_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966692/dankoshop/5292_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966694/dankoshop/5292_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966680/dankoshop/5292_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966682/dankoshop/5292_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966683/dankoshop/5292_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966689/dankoshop/5292_6.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5292_11.jpg"],
     slug: "freidora-de-aire-vitta-65-lts-digital-afr-1501-n5292",
   },
   {
@@ -607,7 +607,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 178511, precio_efectivo: 151734, precio_transferencia: 160660, precio_mayorista: 148164, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966705/dankoshop/5709_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966721/dankoshop/5709_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966723/dankoshop/5709_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966707/dankoshop/5709_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966708/dankoshop/5709_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966710/dankoshop/5709_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966712/dankoshop/5709_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966714/dankoshop/5709_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966715/dankoshop/5709_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966719/dankoshop/5709_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966705/dankoshop/5709_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966707/dankoshop/5709_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966708/dankoshop/5709_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968363/dankoshop/5709_8.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5709_9.jpg"],
     slug: "freidora-de-aire-vitta-2200w-118l-doble-canasto-digital-negro-n5709",
   },
   {
@@ -616,7 +616,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 120025, precio_efectivo: 102021, precio_transferencia: 108022, precio_mayorista: 99621, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966731/dankoshop/5947_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966746/dankoshop/5947_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966748/dankoshop/5947_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966732/dankoshop/5947_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966734/dankoshop/5947_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966736/dankoshop/5947_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966738/dankoshop/5947_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966740/dankoshop/5947_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966741/dankoshop/5947_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966743/dankoshop/5947_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966745/dankoshop/5947_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966731/dankoshop/5947_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966732/dankoshop/5947_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966734/dankoshop/5947_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5947_11.jpg"],
     slug: "freidora-de-aire-futura-home-91l-1700w-sin-aceite-digital-negro-n5947",
   },
   {
@@ -625,7 +625,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 108749, precio_efectivo: 92437, precio_transferencia: 97874, precio_mayorista: 90262, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966757/dankoshop/6163_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966773/dankoshop/6163_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966775/dankoshop/6163_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966758/dankoshop/6163_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966760/dankoshop/6163_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966762/dankoshop/6163_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966764/dankoshop/6163_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966766/dankoshop/6163_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966768/dankoshop/6163_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966769/dankoshop/6163_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966757/dankoshop/6163_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966771/dankoshop/6163_9.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6163_10.jpg"],
     slug: "freidora-de-aire-vitta-sin-aceite-118-litros-1600-watts-gris-n6163",
   },
   {
@@ -634,7 +634,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 50053, precio_efectivo: 42545, precio_transferencia: 45048, precio_mayorista: 41544, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966779/dankoshop/6647_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966797/dankoshop/6647_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966798/dankoshop/6647_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966783/dankoshop/6647_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966785/dankoshop/6647_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966787/dankoshop/6647_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966789/dankoshop/6647_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966791/dankoshop/6647_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966793/dankoshop/6647_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966795/dankoshop/6647_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966779/dankoshop/6647_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968387/dankoshop/6647_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6647_9.jpg"],
     slug: "freidora-de-aire-sin-aceite-midow-35-lts-1200w-display-led-blanca-n6647",
   },
   {
@@ -643,7 +643,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 50053, precio_efectivo: 42545, precio_transferencia: 45048, precio_mayorista: 41544, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785966994/dankoshop/6648_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967012/dankoshop/6648_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967014/dankoshop/6648_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966996/dankoshop/6648_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966998/dankoshop/6648_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966999/dankoshop/6648_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967001/dankoshop/6648_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967003/dankoshop/6648_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967008/dankoshop/6648_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967010/dankoshop/6648_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785966994/dankoshop/6648_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968389/dankoshop/6648_7.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6648_9.jpg"],
     slug: "freidora-de-aire-sin-aceite-midow-35-lts-1200w-display-led-negro-n6648",
   },
   {
@@ -652,7 +652,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 66092, precio_efectivo: 56178, precio_transferencia: 59483, precio_mayorista: 54856, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967018/dankoshop/9063_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967034/dankoshop/9063_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967036/dankoshop/9063_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967020/dankoshop/9063_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967024/dankoshop/9063_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967026/dankoshop/9063_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967027/dankoshop/9063_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967029/dankoshop/9063_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967031/dankoshop/9063_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967033/dankoshop/9063_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967018/dankoshop/9063_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967022/dankoshop/9063_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9063_10.jpg"],
     slug: "freidora-smartlife-de-aire-de-42l-digital-sl-af90001-n9063",
   },
   {
@@ -661,7 +661,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 80824, precio_efectivo: 68700, precio_transferencia: 72742, precio_mayorista: 67084, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967040/dankoshop/5290_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967056/dankoshop/5290_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967042/dankoshop/5290_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967044/dankoshop/5290_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967045/dankoshop/5290_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967047/dankoshop/5290_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967049/dankoshop/5290_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967051/dankoshop/5290_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967052/dankoshop/5290_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967054/dankoshop/5290_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967040/dankoshop/5290_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5290_9.jpg"],
     slug: "freidora-de-aire-vitta-8lts-digital-afr-1701-n5290",
   },
   {
@@ -670,7 +670,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 112123, precio_efectivo: 95305, precio_transferencia: 100911, precio_mayorista: 93062, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967062/dankoshop/5126_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967062/dankoshop/5126_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967080/dankoshop/5126_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967064/dankoshop/5126_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967065/dankoshop/5126_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967067/dankoshop/5126_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967069/dankoshop/5126_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967071/dankoshop/5126_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967073/dankoshop/5126_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967074/dankoshop/5126_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967077/dankoshop/5126_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968351/dankoshop/5126_10.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_12.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_13.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_14.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_15.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_16.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_17.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_18.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5126_19.jpg"],
     slug: "microondas-vitta-mecanico-23l-vit-mw2xlx002-700w-blanco-n5126",
   },
   {
@@ -679,7 +679,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 113407, precio_efectivo: 96396, precio_transferencia: 102066, precio_mayorista: 94128, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967084/dankoshop/5127_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967084/dankoshop/5127_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967099/dankoshop/5127_10.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967101/dankoshop/5127_11.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967085/dankoshop/5127_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967087/dankoshop/5127_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967091/dankoshop/5127_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967092/dankoshop/5127_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967094/dankoshop/5127_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967096/dankoshop/5127_8.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967098/dankoshop/5127_9.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968353/dankoshop/5127_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5127_8.jpg"],
     slug: "microondas-vitta-digital-23l-vit-mw2xlx001-1000w-blanco-n5127",
   },
   {
@@ -688,7 +688,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 119077, precio_efectivo: 101215, precio_transferencia: 107169, precio_mayorista: 98834, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967104/dankoshop/7097_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967106/dankoshop/7097_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967104/dankoshop/7097_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967106/dankoshop/7097_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967108/dankoshop/7097_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967109/dankoshop/7097_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_7.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7097_8.jpg"],
     slug: "microondas-microsonic-digital-panel-tactil-23-lts-1000w-n7097",
   },
   {
@@ -697,7 +697,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 212445, precio_efectivo: 180578, precio_transferencia: 191200, precio_mayorista: 176329, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967116/dankoshop/8392_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967118/dankoshop/8392_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967120/dankoshop/8392_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967116/dankoshop/8392_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967118/dankoshop/8392_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967120/dankoshop/8392_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967122/dankoshop/8392_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968409/dankoshop/8392_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8392_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8392_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8392_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8392_4.jpg"],
     slug: "microondas-smartlife-29-litros-digital-cgrill-color-negro-sl-mvo29mdgb-n8392",
   },
   {
@@ -706,7 +706,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 17711, precio_efectivo: 15054, precio_transferencia: 15940, precio_mayorista: 14700, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967129/dankoshop/9428_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967132/dankoshop/9428_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967133/dankoshop/9428_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967135/dankoshop/9428_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967129/dankoshop/9428_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968427/dankoshop/9428_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9428_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9428_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9428_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9428_4.jpg"],
     slug: "anafe-eurocook-1-hornalla-con-resistencia-1000w-n9428",
   },
   {
@@ -715,7 +715,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 552643, precio_efectivo: 469747, precio_transferencia: 497379, precio_mayorista: 458694, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967138/dankoshop/7200_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967140/dankoshop/7200_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967143/dankoshop/7200_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967145/dankoshop/7200_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967138/dankoshop/7200_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968399/dankoshop/7200_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7200_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7200_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7200_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7200_4.jpg"],
     slug: "anafe-electrico-vitroceramico-60-cm-negro-drean-aedr60cnv-n7200",
   },
   {
@@ -724,7 +724,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 361300, precio_efectivo: 307105, precio_transferencia: 325170, precio_mayorista: 299879, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967149/dankoshop/1668_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967151/dankoshop/1668_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/1668_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/1668_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/1668_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/1668_4.jpg"],
     slug: "cocina-escorial-candor-s2-negra-gas-natural-candor-s2-n1668",
   },
   {
@@ -733,7 +733,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 354216, precio_efectivo: 301084, precio_transferencia: 318794, precio_mayorista: 293999, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967153/dankoshop/1669_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967153/dankoshop/1669_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/1669_1.jpg"],
     slug: "cocina-escorial-candor-gas-envasado-con-puerta-con-visor-color-blanco-n1669",
   },
   {
@@ -742,7 +742,7 @@ export const products: Product[] = [
     description: "🏆 Metegol PROGOL Clásico Profesional Rojo 🏆\n(7663)\n📏 Medidas :",
     category: "Varios",
     prices: { precio_lista: 341040, precio_efectivo: 289884, precio_transferencia: 306936, precio_mayorista: 283063, cuotas: 3, cuota_valor: 113680 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967158/dankoshop/7663_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967158/dankoshop/7663_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7663_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7663_2.jpg"],
     slug: "metegol-progol-clasico-profesional-rojo",
   },
   {
@@ -751,7 +751,7 @@ export const products: Product[] = [
     description: "🌀 Secarropas Centrifugado 6kg 2800 Rpm Vitta Blanco (N°6426)\n🌀 Lavarropas Semiautomático Superior 10 Kg 6 Programas Vitta Blanco (N°6611)",
     category: "Combos",
     prices: { precio_lista: 355946, precio_efectivo: 302554, precio_transferencia: 308606, precio_mayorista: 295435, cuotas: 3, cuota_valor: 118649 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967163/dankoshop/6426_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967163/dankoshop/6426_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6426_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6426_2.jpg"],
     slug: "combo-argentino",
   },
   {
@@ -760,7 +760,7 @@ export const products: Product[] = [
     description: "🛒 Colchon De Resorte Vitta Oasis 2 Plaza 140x190x23 Blanco (N°6618)",
     category: "Hogar/Baño",
     prices: { precio_lista: 273230, precio_efectivo: 232246, precio_transferencia: 245907, precio_mayorista: 226781, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967167/dankoshop/6618_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967167/dankoshop/6618_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6618_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6618_2.jpg"],
     slug: "colchon-de-resorte-vitta-oasis-2-plaza-140x190x23-blanco-n6618",
   },
   {
@@ -769,7 +769,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 46347, precio_efectivo: 39395, precio_transferencia: 41712, precio_mayorista: 38468, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967171/dankoshop/8956_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967171/dankoshop/8956_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967173/dankoshop/8956_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8956_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8956_2.jpg"],
     slug: "inflador-portatil-midow-n8956",
   },
   {
@@ -778,7 +778,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 47524, precio_efectivo: 40395, precio_transferencia: 42772, precio_mayorista: 39445, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967177/dankoshop/5925_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967177/dankoshop/5925_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967179/dankoshop/5925_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5925_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5925_2.jpg"],
     slug: "lijadora-profesional-orbital-kanji-tools-230w-kit-lo2302gb-negro-n5925",
   },
   {
@@ -787,7 +787,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 72499, precio_efectivo: 61624, precio_transferencia: 65249, precio_mayorista: 60174, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967184/dankoshop/5921_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967184/dankoshop/5921_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967186/dankoshop/5921_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5921_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5921_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5921_3.jpg"],
     slug: "rotomartillo-kanji-tools-800w-kit-rm8002pb-negro-n5921",
   },
   {
@@ -796,7 +796,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 35089, precio_efectivo: 29826, precio_transferencia: 31580, precio_mayorista: 29124, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967189/dankoshop/6003_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967189/dankoshop/6003_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967191/dankoshop/6003_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6003_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6003_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6003_3.jpg"],
     slug: "lijadora-profesional-orbital-rectangular-kanji-tools-200w-negro-n6003",
   },
   {
@@ -805,7 +805,7 @@ export const products: Product[] = [
     description: "⚙️ Velocidad: 5000 - 33000 RPM\n🔩 Capacidad de boquilla 3.2 mm\n⚡ Potencia 180W\n🧰 Incluye accesorios\n💰 Llevando 3u IGUALES $44.915\n💰 Llevando 3u IGUALES $42.499",
     category: "Herramientas",
     prices: { precio_lista: 50923, precio_efectivo: 43285, precio_transferencia: 45831, precio_mayorista: 42266, cuotas: 3, cuota_valor: 16975 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967195/dankoshop/2490_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2490_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2490_2.jpg"],
     slug: "minitorno-konan-maletin-accesorios-180w-kmt180-n2490",
   },
   {
@@ -814,7 +814,7 @@ export const products: Product[] = [
     description: "",
     category: "Herramientas",
     prices: { precio_lista: 61152, precio_efectivo: 51979, precio_transferencia: 55037, precio_mayorista: 50756, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967197/dankoshop/5401_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967202/dankoshop/5401_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968357/dankoshop/5401_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5401_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5401_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5401_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5401_4.jpg"],
     slug: "termofusora-konan-1500w-ktef1500-5401",
   },
   {
@@ -823,7 +823,7 @@ export const products: Product[] = [
     description: "",
     category: "Herramientas",
     prices: { precio_lista: 66982, precio_efectivo: 56935, precio_transferencia: 60284, precio_mayorista: 55595, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967203/dankoshop/5643_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967207/dankoshop/5643_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967209/dankoshop/5643_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967203/dankoshop/5643_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967205/dankoshop/5643_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5643_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5643_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5643_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5643_4.jpg"],
     slug: "combo-taladro-750w-y-amoladora-angular-115-mm-720w-konan-kckittae-n5643",
   },
   {
@@ -832,7 +832,7 @@ export const products: Product[] = [
     description: "",
     category: "Herramientas",
     prices: { precio_lista: 32771, precio_efectivo: 27855, precio_transferencia: 29494, precio_mayorista: 27200, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967215/dankoshop/6884_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967215/dankoshop/6884_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967216/dankoshop/6884_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967218/dankoshop/6884_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967220/dankoshop/6884_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6884_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6884_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6884_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6884_4.jpg"],
     slug: "taladro-percutor-konan-13-mm-750w-kc13e-n6884",
   },
   {
@@ -841,7 +841,7 @@ export const products: Product[] = [
     description: "",
     category: "Herramientas",
     prices: { precio_lista: 34830, precio_efectivo: 29606, precio_transferencia: 31347, precio_mayorista: 28909, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967223/dankoshop/7051_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967224/dankoshop/7051_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967226/dankoshop/7051_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967223/dankoshop/7051_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7051_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7051_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7051_3.jpg"],
     slug: "amoladora-angular-konan-115-mm-720w-corte-y-desbaste-electrica-amarillo-y-negro-kc115-n7051",
   },
   {
@@ -850,7 +850,7 @@ export const products: Product[] = [
     description: "",
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 91678, precio_efectivo: 77926, precio_transferencia: 82510, precio_mayorista: 76093, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967230/dankoshop/6881_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967230/dankoshop/6881_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967233/dankoshop/6881_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6881_1.jpg"],
     slug: "hidrolavadora-konan-1300w-khi1300-n6881",
   },
   {
@@ -859,7 +859,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 78611, precio_efectivo: 66819, precio_transferencia: 70750, precio_mayorista: 65247, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967238/dankoshop/6877_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967239/dankoshop/6877_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967238/dankoshop/6877_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6877_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6877_2.jpg"],
     slug: "aspiradora-sopladora-midow-1200w-15-lts-liquidos-y-polvo-mdwa15-n6877",
   },
   {
@@ -868,7 +868,7 @@ export const products: Product[] = [
     description: "",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 29714, precio_efectivo: 25257, precio_transferencia: 26743, precio_mayorista: 24663, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967245/dankoshop/5528_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967246/dankoshop/5528_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967248/dankoshop/5528_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967245/dankoshop/5528_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967246/dankoshop/5528_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5528_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5528_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5528_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5528_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5528_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5528_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5528_7.jpg"],
     slug: "equipo-pistola-para-pintar-latex-midow-650w-n5528",
   },
   {
@@ -877,7 +877,7 @@ export const products: Product[] = [
     description: "",
     category: "Lavarropas/Secarropas",
     prices: { precio_lista: 86936, precio_efectivo: 73896, precio_transferencia: 78242, precio_mayorista: 72157, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967255/dankoshop/6880_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967258/dankoshop/6880_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967259/dankoshop/6880_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967255/dankoshop/6880_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967256/dankoshop/6880_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967258/dankoshop/6880_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6880_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6880_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6880_3.jpg"],
     slug: "hidrolavadora-midow-1300w-105-bar-caudal-360-lh-con-accesorios-celeste-50-hz-n6880",
   },
   {
@@ -886,7 +886,7 @@ export const products: Product[] = [
     description: "",
     category: "Hogar/Baño",
     prices: { precio_lista: 97467, precio_efectivo: 82847, precio_transferencia: 87720, precio_mayorista: 80898, cuotas: 3, cuota_valor: 32489 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967266/dankoshop/6749_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967268/dankoshop/6749_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967271/dankoshop/6749_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967266/dankoshop/6749_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785968393/dankoshop/6749_3.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6749_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6749_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6749_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6749_4.jpg"],
     slug: "chifonier-3-cajones-6749",
   },
   {
@@ -895,7 +895,7 @@ export const products: Product[] = [
     description: "",
     category: "Hogar/Baño",
     prices: { precio_lista: 109321, precio_efectivo: 92923, precio_transferencia: 98389, precio_mayorista: 90736, cuotas: 3, cuota_valor: 36440 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967275/dankoshop/6753_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967275/dankoshop/6753_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967277/dankoshop/6753_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967279/dankoshop/6753_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967280/dankoshop/6753_4.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6753_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6753_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6753_3.jpg"],
     slug: "bajomesada-vitta-2-puertas-3-cajones-6753",
   },
   {
@@ -904,7 +904,7 @@ export const products: Product[] = [
     description: "📏 Medidas: 40 x 35,5 x 56,5 cm",
     category: "Hogar/Baño",
     prices: { precio_lista: 39514, precio_efectivo: 33587, precio_transferencia: 35563, precio_mayorista: 32797, cuotas: 3, cuota_valor: 13171 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967284/dankoshop/6748_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6748_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6748_2.jpg"],
     slug: "mesa-de-luz-vitta-con-cajon-6748",
   },
   {
@@ -913,7 +913,7 @@ export const products: Product[] = [
     description: "🛒 Termotanque Eléctrico Sirena 40LTS (N°2058)\n⚡ Soporte para colgar\n⚡ Aislación térmica alta densidad\n⚡ Conexión de agua superior e inferior\n⚡ Medidas: 45 x 45 cm",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 220147, precio_efectivo: 187125, precio_transferencia: 198133, precio_mayorista: 182722, cuotas: 3, cuota_valor: 73383 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967286/dankoshop/2058_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967286/dankoshop/2058_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2058_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2058_2.jpg"],
     slug: "termotanque-electrico-sirena-40lts-n2058",
   },
   {
@@ -922,7 +922,7 @@ export const products: Product[] = [
     description: "🛒 Bomba Centrífuga de 3/4 HP KONAN KBC34 (N°6167)",
     category: "Herramientas",
     prices: { precio_lista: 100820, precio_efectivo: 85697, precio_transferencia: 90738, precio_mayorista: 83681, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967291/dankoshop/6167_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967291/dankoshop/6167_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6167_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6167_2.jpg"],
     slug: "bomba-centrifuga-de-34-hp-konan-kbc34-n6167",
   },
   {
@@ -931,7 +931,7 @@ export const products: Product[] = [
     description: "📲 11 6795-8796",
     category: "Herramientas",
     prices: { precio_lista: 98845, precio_efectivo: 84018, precio_transferencia: 88960, precio_mayorista: 82041, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967295/dankoshop/6168_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6168_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6168_2.jpg"],
     slug: "bomba-centrifuga-de-1-hp-konan-kbc1-n6168",
   },
   {
@@ -940,7 +940,7 @@ export const products: Product[] = [
     description: "",
     category: "Herramientas",
     prices: { precio_lista: 264094, precio_efectivo: 224480, precio_transferencia: 237685, precio_mayorista: 219198, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967299/dankoshop/7006_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967299/dankoshop/7006_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967301/dankoshop/7006_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7006_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7006_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7006_3.jpg"],
     slug: "compresor-de-aire-con-kit-konan-40-l-2-hp-8-bar-135-lmin-doble-salida-n7006",
   },
   {
@@ -949,7 +949,7 @@ export const products: Product[] = [
     description: "🛒 Set Taladro Konan a Batería 12V + Herramientas KSET12V (N°7007)",
     category: "Herramientas",
     prices: { precio_lista: 58686, precio_efectivo: 49883, precio_transferencia: 52817, precio_mayorista: 48709, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967305/dankoshop/7007_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967305/dankoshop/7007_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7007_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7007_2.jpg"],
     slug: "set-taladro-konan-a-bateria-12v-herramientas-kset12v-n7007",
   },
   {
@@ -958,7 +958,7 @@ export const products: Product[] = [
     description: "(7039)",
     category: "Hogar/Baño",
     prices: { precio_lista: 31164, precio_efectivo: 26489, precio_transferencia: 27020, precio_mayorista: 25866, cuotas: 3, cuota_valor: 10388 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967311/dankoshop/7039_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7039_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7039_2.jpg"],
     slug: "griferia-para-bano-con-juego-de-ducha",
   },
   {
@@ -967,7 +967,7 @@ export const products: Product[] = [
     description: "(7043)",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 52332, precio_efectivo: 44482, precio_transferencia: 45372, precio_mayorista: 43436, cuotas: 3, cuota_valor: 17444 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967318/dankoshop/7043_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7043_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7043_2.jpg"],
     slug: "griferia-cocina-monocomando-acero-inoxidable",
   },
   {
@@ -976,7 +976,7 @@ export const products: Product[] = [
     description: "(7044)",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 27056, precio_efectivo: 22998, precio_transferencia: 23458, precio_mayorista: 22456, cuotas: 3, cuota_valor: 901867 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967321/dankoshop/7044_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7044_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7044_2.jpg"],
     slug: "griferia-cocina-monocomando",
   },
   {
@@ -985,7 +985,7 @@ export const products: Product[] = [
     description: "(9017)",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 21756, precio_efectivo: 18493, precio_transferencia: 18863, precio_mayorista: 18057, cuotas: 3, cuota_valor: 7252 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967324/dankoshop/9017_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9017_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9017_2.jpg"],
     slug: "griferia-cocina-monocomando-negra-35",
   },
   {
@@ -994,7 +994,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 301204, precio_efectivo: 256023, precio_transferencia: 271084, precio_mayorista: 249999, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967328/dankoshop/07221_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/07221_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/07221_2.jpg"],
     slug: "cocina-vitta-multigas-52-cm-puerta-y-respaldar-de-vidrio-07221-negro-multigas-n6032",
   },
   {
@@ -1003,7 +1003,7 @@ export const products: Product[] = [
     description: "💸 $30.164",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 30164, precio_efectivo: 25639, precio_transferencia: 27148, precio_mayorista: 25036, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967330/dankoshop/5923_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5923_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5923_2.jpg"],
     slug: "atornillador-inalambrico-kanji-tools-12v-kit-at121pb-n5923",
   },
   {
@@ -1012,7 +1012,7 @@ export const products: Product[] = [
     description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 112940, precio_efectivo: 95999, precio_transferencia: 97919, precio_mayorista: 93740, cuotas: 3, cuota_valor: 37647 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967335/dankoshop/AUTO-20260804171115-1412_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260804171115-1412_1.jpg"],
     slug: "horno-electrico-smartlife-30-litros9586",
   },
   {
@@ -1021,7 +1021,7 @@ export const products: Product[] = [
     description: "🗄️ Posee 3 cajones amplios\n🧱 Material plástico resistente\n📏 Medidas: 40 x 30 x 60 cm\n🪶 Diseño práctico y liviano\n💸 $39.999",
     category: "Hogar/Baño",
     prices: { precio_lista: 39999, precio_efectivo: 33999, precio_transferencia: 35999, precio_mayorista: 33199, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967337/dankoshop/7215_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967337/dankoshop/7215_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967340/dankoshop/7215_2.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7215_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7215_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7215_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/7215_4.jpg"],
     slug: "cajonera-3x15l-negro-yute-plorpli303287-n7215",
   },
   {
@@ -1030,7 +1030,7 @@ export const products: Product[] = [
     description: "🏷️ Minorista $17.909\n📲 11 6795-8796",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 19899, precio_efectivo: 16914, precio_transferencia: 17909, precio_mayorista: 17511, cuotas: 3, cuota_valor: 6633 },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967345/dankoshop/4853_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/v1785967345/dankoshop/4853_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/4853_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/4853_2.jpg"],
     slug: "tostadora-vitta-verde-doble-n4853",
   },
   {
@@ -1039,7 +1039,7 @@ export const products: Product[] = [
     description: "🛒 Celular Motorola G04 4 GB / 64 GB",
     category: "Celulares",
     prices: { precio_lista: 221204, precio_efectivo: 188023, precio_transferencia: 199084, precio_mayorista: 183599, cuotas: None, cuota_valor: None },
-    images: ["https://res.cloudinary.com/xjuisove/image/upload/v1785967349/dankoshop/AUTO-20260804171537-1444_1.jpg"],
+    images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260804171537-1444_1.jpg"],
     slug: "celular-motorola-g04-4-gb-64-gb",
   },
 ];
