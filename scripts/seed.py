@@ -19,14 +19,14 @@ IMAGES_BASE = Path("/home/claudio/Descargas/dankoshop/data/organized_images")
 
 
 def get_admin_token():
-    """Login to Medusa admin and get token"""
+    """Login to Medusa admin and get token (v2 API)"""
     resp = requests.post(
-        f"{MEDUSA_URL}/admin/auth",
+        f"{MEDUSA_URL}/auth/user/emailpass",
         json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD},
         timeout=10
     )
     if resp.status_code == 200:
-        return resp.json().get("access_token")
+        return resp.json().get("token")
     print(f"Login failed: {resp.text}")
     return None
 
@@ -118,18 +118,17 @@ def seed_products():
             "thumbnail": None,
             "images": [],
             "categories": [{"id": category_id}] if category_id else [],
+            "options": [{"title": "Default", "values": ["Default"]}],
             "variants": [{
-                "title": product["name"],
+                "title": "Default",
                 "sku": sku,
                 "manage_inventory": True,
-                "inventory_quantity": 100,
                 "allow_backorder": False,
                 "prices": [
                     {"amount": price_lista, "currency_code": "ars"},
                 ],
-                "options": [],
+                "options": {"Default": "Default"},
             }],
-            "options": [],
             "metadata": {
                 "precio_lista": prices.get("precio_lista") or product.get("precio_lista"),
                 "precio_efectivo": prices.get("precio_efectivo") or product.get("precio_efectivo"),
