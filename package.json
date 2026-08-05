@@ -3,19 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "medusa-backend",
+    "medusa-backend/apps/backend",
     "storefront",
     "scripts"
   ],
   "scripts": {
-    "dev:backend": "npm run dev --workspace=medusa-backend",
+    "dev:backend": "npm run dev --workspace=medusa-backend/apps/backend",
     "dev:store": "npm run dev --workspace=storefront",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:store\"",
     "build": "npm run build --workspaces",
-    "build:backend": "npm run build --workspace=medusa-backend",
+    "build:backend": "npm run build --workspace=medusa-backend/apps/backend",
     "build:store": "npm run build --workspace=storefront",
-    "sync:excel": "npm run sync --workspace=scripts",
-    "seed": "npm run seed --workspace=medusa-backend",
+    "sync:excel": "python3 scripts/sync_excel.py",
+    "parse:chat": "python3 scripts/parse_chat.py",
+    "seed": "npm run seed --workspace=medusa-backend/apps/backend",
     "lint": "npm run lint --workspaces",
     "typecheck": "npm run typecheck --workspaces"
   },
