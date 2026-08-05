@@ -2,4 +2,7 @@
 ignore = true
 
 [phases.build]
-cmds = ["cd medusa-backend && npm install -g pnpm@9.15.9 turbo@2.0.14 && pnpm install && pnpm build"]
+cmds = ["cd medusa-backend && npm install -g pnpm@9.15.9 && pnpm install && pnpm build"]
+
+[start]
+cmd = "cd medusa-backend/apps/backend && npx medusa start"
