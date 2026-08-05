@@ -1,0 +1,27 @@
+{
+  "name": "dankoshop",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "medusa-backend",
+    "storefront",
+    "scripts"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=medusa-backend",
+    "dev:store": "npm run dev --workspace=storefront",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:store\"",
+    "build": "npm run build --workspaces",
+    "build:backend": "npm run build --workspace=medusa-backend",
+    "build:store": "npm run build --workspace=storefront",
+    "sync:excel": "npm run sync --workspace=scripts",
+    "seed": "npm run seed --workspace=medusa-backend",
+    "lint": "npm run lint --workspaces",
+    "typecheck": "npm run typecheck --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "turbo": "^2.0.0"
+  },
+  "packageManager": "npm@10.8.0"
+}
