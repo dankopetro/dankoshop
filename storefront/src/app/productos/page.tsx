@@ -66,8 +66,19 @@ export default function ProductosPage() {
               href={`/producto/${p.slug}`}
               className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg hover:border-blue-300 transition-all duration-300"
             >
-              <div className="h-48 bg-gray-100 flex items-center justify-center text-5xl">
-                {categoryIcons[p.category] || "📦"}
+              <div className="h-48 bg-gray-100 overflow-hidden">
+                {p.images.length > 0 ? (
+                  <img
+                    src={p.images[0]}
+                    alt={p.name}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-5xl">
+                    {categoryIcons[p.category] || "📦"}
+                  </div>
+                )}
               </div>
               <div className="p-4">
                 <span className="text-xs text-blue-600 font-medium">{p.category}</span>
