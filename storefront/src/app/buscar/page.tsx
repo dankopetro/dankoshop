@@ -1,10 +1,9 @@
-import { products } from "@/data/products"
+import { getProducts } from "@/lib/medusa"
 import ProductCard from "@/components/product-card"
 
 export default async function BuscarPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const { q } = await searchParams
-  const query = (q || "").toLowerCase()
-  const results = products.filter(p => p.name.toLowerCase().includes(query) || p.sku.toLowerCase().includes(query) || p.category.toLowerCase().includes(query))
+  const { products: results } = await getProducts({ q: q || "", limit: "100" })
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

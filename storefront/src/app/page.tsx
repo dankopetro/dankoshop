@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ArrowRight, Truck, Shield, RotateCcw, Headphones } from "lucide-react"
+import { getCategories } from "@/lib/medusa"
 
 const benefits = [
   { icon: Truck, title: "Envío gratis", desc: "En compras superiores a $50.000" },
@@ -8,22 +9,17 @@ const benefits = [
   { icon: Headphones, title: "Soporte 24/7", desc: "CARLA nuestra IA te atiende siempre" },
 ]
 
-const categories = [
-  { name: "Celulares", slug: "celulares", icon: "📱" },
-  { name: "TVs", slug: "tvs", icon: "📺" },
-  { name: "Lavarropas/Secarropas", slug: "lavarropas-secarropas", icon: "🌀" },
-  { name: "Heladeras/Freezers", slug: "heladeras-freezers", icon: "❄️" },
-  { name: "Cocinas/Hornos", slug: "cocinas-hornos-microondas", icon: "🍳" },
-  { name: "Pequeños Electrodomésticos", slug: "pequenos-electrodomesticos", icon: "🍟" },
-  { name: "Bicicletas", slug: "bicicletas", icon: "🚲" },
-  { name: "Outdoor/Playa", slug: "outdoor-playa", icon: "🏖️" },
-  { name: "Herramientas", slug: "herramientas", icon: "🔧" },
-  { name: "Hogar/Baño", slug: "hogar-bano", icon: "🛁" },
-  { name: "Gaming", slug: "gaming", icon: "🎮" },
-  { name: "Tablets", slug: "tablets", icon: "📱" },
-]
+const categoryIcons: Record<string, string> = {
+  "Accesorios": "🎒", "Bicicletas": "🚲", "Celulares": "📱", "Cocinas/Hornos/Microondas": "🍳",
+  "Combos": "📦", "Deportes": "⚽", "Gaming": "🎮", "Heladeras/Freezers": "❄️",
+  "Herramientas": "🔧", "Hogar/Baño": "🛁", "Lavarropas/Secarropas": "🌀",
+  "Outdoor/Playa": "🏖️", "Pequeños Electrodomésticos": "🍳", "TVs": "📺",
+  "Tablets": "📱", "Varios": "📦",
+}
 
-export default function Home() {
+export default async function Home() {
+  const categories = await getCategories()
+
   return (
     <div className="flex flex-col flex-1 bg-gray-50">
       <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
@@ -80,7 +76,7 @@ export default function Home() {
             {categories.map((cat) => (
               <Link key={cat.slug} href={`/categoria/${cat.slug}`} className="group">
                 <div className="h-full text-center p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
-                  <div className="text-4xl mb-3">{cat.icon}</div>
+                  <div className="text-4xl mb-3">{categoryIcons[cat.name] || "📦"}</div>
                   <h3 className="font-medium text-gray-900 group-hover:text-blue-600">{cat.name}</h3>
                 </div>
               </Link>

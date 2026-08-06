@@ -1,4 +1,4 @@
-import { categories } from "@/data/products"
+import { getCategories } from "@/lib/medusa"
 import Link from "next/link"
 
 const categoryIcons: Record<string, string> = {
@@ -9,7 +9,9 @@ const categoryIcons: Record<string, string> = {
   "Tablets": "📱", "Varios": "📦",
 }
 
-export default function CategoriasPage() {
+export default async function CategoriasPage() {
+  const categories = await getCategories()
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

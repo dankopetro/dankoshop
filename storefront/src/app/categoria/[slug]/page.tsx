@@ -1,4 +1,4 @@
-import { products, categories } from "@/data/products"
+import { getCategories, getProducts } from "@/lib/medusa"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -16,16 +16,13 @@ const categoryIcons: Record<string, string> = {
   "Tablets": "📱", "Varios": "📦",
 }
 
-export function generateStaticParams() {
-  return categories.map((c) => ({ slug: c.slug }))
-}
-
 export default async function CategoriaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const categories = await getCategories()
   const category = categories.find((c) => c.slug === slug)
   if (!category) notFound()
 
-  const catProducts = products.filter((p) => p.category === category.name)
+  const { products: catProducts } = await getProducts({ category_id: category.id, limit: "1000" })
 
   return (
     <div className="min-h-screen bg-gray-50">
