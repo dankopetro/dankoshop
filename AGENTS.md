@@ -117,7 +117,7 @@ NODE_ENV=production
 - Proyecto: dankoshop-backend
 - Servicios: dankoshop-api (GitHub repo dankopetro/dankoshop), Postgres, Redis
 - Login CLI: ya logueado como Dankopetro
-- **PROBLEMA ACTUAL: El admin build no se encuentra al hacer `medusa start`. El build funciona (index.html se crea en apps/backend/.medusa/server/public/admin/index.html) pero `medusa start` lo busca en la raíz del proyecto (/app/medusa-backend/.medusa/server/public/admin/index.html).**
+- **SOLUCION APLICADA: En Dockerfile se agregó `RUN cp -r /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa` y en CMD se ejecuta `pnpm exec medusa start`.**
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)
