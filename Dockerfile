@@ -8,10 +8,8 @@ COPY medusa-backend/apps/backend/package.json ./apps/backend/
 RUN pnpm install --frozen-lockfile
 
 COPY medusa-backend/ ./
-RUN pnpm build
+RUN NODE_OPTIONS="--max-old-space-size=2048" pnpm build
 
 WORKDIR /app/medusa-backend/apps/backend
-COPY ../../entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 EXPOSE 9000
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["sh", "-c", "pnpm exec medusa db:migrate 2>&1 && exec ./node_modules/.bin/medusa start"]
