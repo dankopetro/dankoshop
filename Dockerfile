@@ -12,4 +12,4 @@ RUN NODE_OPTIONS="--max-old-space-size=2048" pnpm build
 
 WORKDIR /app/medusa-backend/apps/backend
 EXPOSE 9000
-CMD ["sh", "-c", "pnpm exec medusa db:migrate 2>&1 && exec ./node_modules/.bin/medusa start"]
+CMD ["sh", "-c", "echo '=== Starting migration ===' && pnpm exec medusa db:migrate 2>&1 && echo '=== Migration done, starting server ===' && exec ./node_modules/.bin/medusa start"]
