@@ -1,0 +1,17 @@
+{
+  "title": "Preguntas Frecuentes",
+  "items": [
+    {
+      "question": "¿Cuáles son los medios de pago disponibles?",
+      "answer": "Aceptamos efectivo en el local, transferencia bancaria con descuento y tarjetas de crédito en cuotas."
+    },
+    {
+      "question": "¿Cómo hago para comprar?",
+      "answer": "Agregás los productos al carrito y hacés click en finalizar compra para enviar el pedido directamente por WhatsApp a nuestro asesor."
+    },
+    {
+      "question": "¿Dónde están ubicados?",
+      "answer": "Nuestro local está en Calle 26 Número 207, La Plata, Buenos Aires."
+    }
+  ]
+}

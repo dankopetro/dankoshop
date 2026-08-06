@@ -88,7 +88,8 @@ export default function Footer() {
             © {new Date().getFullYear()} DankoShop. Todos los derechos reservados.
           </p>
           <p className="text-sm text-gray-500">
-            Desarrollado con Next.js + MedusaJS
+            Desarrollado con Next.js + MedusaJS ·{" "}
+            <Link href="/admin-contenido" className="hover:text-gray-300">Admin</Link>
           </p>
         </div>
       </div>
