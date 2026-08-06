@@ -131,87 +131,80 @@ NODE_ENV=production
 8. ✅ Docker PostgreSQL + Redis corriendo
 9. ✅ products.ts con 114 productos + 16 categorías (export `categories` incluido)
 10. ✅ Build de Next.js pasa local y en Vercel (fix de `categories` export + quotes escaping + None→null)
+11. ✅ **Backend Medusa v2 desplegado y ONLINE en Railway** (`https://dankoshop-api-production.up.railway.app`)
 
-## Lo que falta
+## Solución del Deploy en Railway (COMPLETADO)
+El despliegue de Medusa en Railway presentaba dos problemas principales:
 
-### Urgente
-1. **🔴 Arreglar deploy de Medusa en Railway** - Estado actual:
-   - ✅ Build funciona (index.html se genera en apps/backend/.medusa/server/public/admin/index.html)
-   - ✅ Migración DB corre
-   - ✅ DB connection OK (DATABASE_URL y REDIS_URL seteados)
-   - ❌ `medusa start` falla: "Could not find index.html in the admin build directory"
-   - **CAUSA RAÍZ**: `medusa start` busca el admin build en `/app/medusa-backend/.medusa/server/public/admin/index.html` pero el build lo genera en `/app/medusa-backend/apps/backend/.medusa/server/public/admin/index.html`
-   - **Dockerfile actual**: WORKDIR `/app/medusa-backend/apps/backend` para build y runtime, pero `medusa start` espera ejecutarse desde la raíz del proyecto (`/app/medusa-backend`)
+1. **Admin Build Output (Causa Raíz):**
+   - `@medusajs/admin-bundler` busca los archivos compilados del Dashboard Admin en `./public/admin` respecto al `rootDirectory` detectado por Medusa.
+   - `medusa build` en el monorepo generaba los archivos en `/app/medusa-backend/apps/backend/.medusa/server/public/admin/index.html`.
+   - **Solución:** Se agregaron comandos en el `Dockerfile` para copiar la salida del build de admin (`public` y `.medusa`) a todas las rutas posibles del proyecto (`apps/backend/public`, `/app/medusa-backend/public` y `/app/medusa-backend/.medusa`), garantizando que cualquier proceso de Medusa encuentre `index.html`.
 
-### Lo que se probó (y falló)
-| Intento | Qué se hizo | Resultado |
-|---------|-------------|-----------|
-| 1 | Dockerfile con WORKDIR apps/backend | Build OK, start falla (busca admin en raíz) |
-| 2 | WORKDIR raíz, build desde apps/backend | Build falla "medusa not found" |
-| 3 | Build desde raíz con `cd apps/backend && pnpm exec medusa build` | Build OK, start falla (busca admin en raíz) |
-| 4 | Build en Dockerfile RUN, start en CMD | Build OK, start falla (mismo problema) |
-| 5 | WORKDIR apps/backend para todo | Build OK, start falla (busca admin en raíz) |
-| 6 | Build en root, start desde apps/backend | Build OK, start falla (mismo problema) |
+2. **Health Check Endpoint (`railway.toml`):**
+   - La ruta configurada previamente (`/store/custom`) requería la cabecera `x-publishable-api-key`, devolviendo `HTTP 400 Bad Request` a Railway.
+   - **Solución:** Se actualizó `healthcheckPath = "/health"` en `railway.toml`, el cual retorna `HTTP 200 OK`.
 
-### Qué probar a continuación (en orden de prioridad)
-1. **Opción A - Copiar build output a raíz en Dockerfile RUN** (recomendada):
-   ```dockerfile
-   RUN cd /app/medusa-backend/apps/backend && NODE_OPTIONS="--max-old-space-size=3072" pnpm exec medusa build 2>&1
-   RUN cp -r /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa
-   WORKDIR /app/medusa-backend
-   CMD ["sh", "-c", "... && exec ./apps/backend/node_modules/.bin/medusa start"]
-   ```
+---
 
-2. **Opción B - Symlink en runtime**:
-   ```dockerfile
-   CMD ["sh", "-c", "ln -sf /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa && ..."]
-   ```
+## Pasos para finalizar el proyecto (Roadmap)
 
-3. **Opción C - Usar `medusa start --directory` o variable de entorno** (ver docs Medusa v2)
+### Paso 1: Cargar catálogo inicial de datos en la DB de Railway (Seed)
+- Ejecutar el script `seed.py` configurado apuntando a la base de datos PostgreSQL de producción en Railway (`DATABASE_URL`).
+- Verificar que los 114 productos y categorías queden cargados en el backend de Railway.
 
-4. **Opción D - Ejecutar todo desde raíz pero con PATH modificado**:
-   ```dockerfile
-   ENV PATH="/app/medusa-backend/apps/backend/node_modules/.bin:$PATH"
-   WORKDIR /app/medusa-backend
-   CMD ["sh", "-c", "cd apps/backend && pnpm exec medusa db:migrate && cd .. && exec ./apps/backend/node_modules/.bin/medusa start"]
-   ```
+### Paso 2: Conectar el Frontend en Vercel con el Backend en Railway
+- Configurar en Vercel la variable de entorno:
+  `NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app`
+- Modificar las páginas del storefront (`src/app/productos`, `src/app/categoria`, etc.) para consultar la API pública de Medusa en lugar de importar `products.ts` hardcodeado.
 
-### Después (cuando Railway funcione)
-2. ❌ Conectar frontend Vercel con backend Railway (fetch a API en vez de products.ts hardcodeado)
-3. ❌ Corregir imágenes de productos (muchos productos tienen fotos de otros productos)
-4. ❌ Configurar MercadoPago (pagos)
-5. ❌ Variables de entorno de Vercel (NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME etc.)
-6. ❌ GitHub Actions secrets para CI/CD
-7. ❌ Dominio propio
+### Paso 3: Revisión y corrección manual de imágenes
+- Acceder al Panel de Administración de Medusa: [https://dankoshop-api-production.up.railway.app/app](https://dankoshop-api-production.up.railway.app/app)
+- Credenciales: `admin@dankoshop.com` / `supersecret`.
+- Revisar y reasignar las imágenes de los productos que requieran ajuste manual.
 
-## Imágenes - Estado actual
-- **Carpeta products_images/** → 270 SKUs, 744 archivos únicos (sin duplicados por hash)
-- **image_urls.json** → 270 SKUs, 744 URLs de Cloudinary
-- **CLOUDINARY:** Hay ~951 imágenes subidas (algunas viejas de subidas anteriores que ya no se referencian)
-- **PROBLEMA CONOCIDO:** Muchas imágenes pertenecen a productos equivocados (match por timestamp del WhatsApp, no por contenido). El usuario sabe esto y va a revisar manualmente desde el admin de Medusa una vez que esté deployado.
+### Paso 4: Integración de la pasarela de pagos (MercadoPago)
+- Instalar el módulo de pagos de MercadoPago (`@medusajs/payment-mercadopago` o proveedor correspondiente).
+- Configurar las variables en Railway:
+  - `MERCADOPAGO_ACCESS_TOKEN`
+  - `MERCADOPAGO_PUBLIC_KEY`
+  - `MERCADOPAGO_WEBHOOK_SECRET`
 
-## Estado actual archivos Railway
+### Paso 5: Publicación final y Dominio propio
+- Configurar las variables de entorno definitivas de producción (Cloudinary, JWT, Cookies secrets).
+- Configurar el dominio custom del cliente en Vercel y Railway.
+
+---
+
+## Estado actual de los archivos de Railway
+
 ### Dockerfile (`/home/claudio/Descargas/dankoshop/Dockerfile`)
 ```dockerfile
 FROM node:20-slim
+
 ENV NODE_OPTIONS="--max-old-space-size=3072"
 ENV HOST=0.0.0.0
 ENV PORT=9000
 
 RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
 
+# 1. Install workspace deps at root
 WORKDIR /app/medusa-backend
-
 COPY medusa-backend/package.json medusa-backend/pnpm-lock.yaml medusa-backend/pnpm-workspace.yaml medusa-backend/turbo.json medusa-backend/.npmrc ./
 COPY medusa-backend/apps/backend/package.json ./apps/backend/
 RUN pnpm install --frozen-lockfile
 
+# 2. Copy source and build FROM apps/backend
 COPY medusa-backend/ ./
-WORKDIR /app/medusa-backend
+WORKDIR /app/medusa-backend/apps/backend
 RUN NODE_OPTIONS="--max-old-space-size=3072" pnpm exec medusa build 2>&1
+RUN cp -r /app/medusa-backend/apps/backend/.medusa/server/public /app/medusa-backend/apps/backend/public
+RUN cp -r /app/medusa-backend/apps/backend/.medusa/server/public /app/medusa-backend/public
+RUN cp -r /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa
 
+# 3. Runtime from apps/backend
 EXPOSE 9000
-CMD ["sh", "-c", "echo '=== Waiting for DB ===' && sleep 5 && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && echo '=== Starting server on 0.0.0.0:9000 ===' && exec ./node_modules/.bin/medusa start"]
+CMD ["sh", "-c", "echo '=== Waiting for DB ===' && sleep 5 && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && echo '=== Starting server on 0.0.0.0:9000 ===' && exec pnpm exec medusa start"]
 ```
 
 ### railway.toml (`/home/claudio/Descargas/dankoshop/railway.toml`)
@@ -221,7 +214,8 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-healthcheckPath = "/store/custom"
+# NO startCommand - let Dockerfile CMD handle it
+healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
@@ -232,15 +226,10 @@ PORT = "9000"
 ```
 
 ## Notas importantes
-- El frontend muestra productos HARD CODEADOS en products.ts, NO se conecta al backend todavía
-- Las imágenes son de Cloudinary, NO están en el repo
-- Medusa v2 usa auth diferente: /auth/user/emailpass (no /admin/auth)
-- package.json del backend tiene "packageManager": "pnpm@9.15.9"
-- pnpm funciona con Node 22, npm necesita mirror registry (registry.npmmirror.com)
-- El .npmrc en la raíz del repo configura el mirror para evitar 429 de npm
-- products.ts se genera desde products.json + image_urls.json con script Python
-- El script gen_products_ts.py escapa " en nombres y convierte Python None a JS null
-- La página /categorias fue creada para arreglar un 404
-- El Dockerfile usa Node 20-slim + corepack + pnpm 9.15.9
-- Railway project: dankoshop-backend, service: dankoshop-api
-- Variables seteadas en Railway: DATABASE_URL, REDIS_URL, HOST, PORT, STORE_CORS, ADMIN_CORS, AUTH_CORS, JWT_SECRET, COOKIE_SECRET, NODE_ENV=production
+- El frontend en Vercel muestra productos hardcodeados en `products.ts` de forma provisional.
+- Las imágenes están alojadas en Cloudinary.
+- Medusa v2 usa autenticación en `/auth/user/emailpass`.
+- package.json del backend utiliza `packageManager`: `pnpm@9.15.9`.
+- Railway project: `dankoshop-backend`, service: `dankoshop-api`.
+- Backend URL activa: `https://dankoshop-api-production.up.railway.app`
+- Admin Dashboard URL activa: `https://dankoshop-api-production.up.railway.app/app`
