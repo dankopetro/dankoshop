@@ -1,8 +1,19 @@
 #!/bin/sh
-set -x
+set -e
+
+echo "=== Waiting for DB ==="
+sleep 5
+
 echo "=== Running migration ==="
 pnpm exec medusa db:migrate 2>&1
-echo "=== Migration done, building admin with increased memory ==="
-NODE_OPTIONS="--max-old-space-size=2048" pnpm exec medusa build 2>&1
-echo "=== Admin build done, starting server ==="
+
+echo "=== Checking/Creating admin user ==="
+# Try to create admin user (will fail silently if exists)
+pnpm exec medusa user --email admin@dankoshop.com --password supersecret 2>&1 || true
+
+echo "=== Seeding products if empty ==="
+# Run custom seed script
+node /app/seed-products.js 2>&1 || true
+
+echo "=== Starting server on 0.0.0.0:9000 ==="
 exec ./node_modules/.bin/medusa start
