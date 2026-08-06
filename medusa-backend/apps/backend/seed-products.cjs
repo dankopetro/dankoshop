@@ -3,6 +3,7 @@ const {
   createProductCategoriesWorkflow,
   createProductOptionsWorkflow,
   createProductsWorkflow,
+  createUserAccountWorkflow,
 } = require("@medusajs/medusa/core-flows")
 const fs = require("fs")
 
@@ -22,6 +23,19 @@ function slugify(input) {
 module.exports = {
   default: async function seedProducts({ container }) {
     console.log("=== Starting product seeding ===")
+
+    console.log("=== Ensuring admin user exists ===")
+    try {
+      await createUserAccountWorkflow(container).run({
+        input: {
+          email: "admin@dankoshop.com",
+          password: "supersecret",
+        },
+      })
+      console.log("Admin user created: admin@dankoshop.com")
+    } catch (e) {
+      console.log("Admin user already exists or skipped:", e.message)
+    }
 
     const productModule = container.resolve(Modules.PRODUCT)
     const regionModule = container.resolve(Modules.REGION)
