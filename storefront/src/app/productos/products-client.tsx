@@ -1,7 +1,9 @@
-import { getCategories, getProducts } from "@/lib/medusa"
-import { notFound } from "next/navigation"
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { Search } from "lucide-react"
+import { Product, Category } from "@/lib/medusa"
 
 function formatPrice(n: number | null) {
   if (n === null) return null
@@ -16,30 +18,49 @@ const categoryIcons: Record<string, string> = {
   "Tablets": "📱", "Varios": "📦",
 }
 
-export default async function CategoriaPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const categories = await getCategories()
-  const category = categories.find((c) => c.slug === slug)
-  if (!category) notFound()
+export default function ProductsClient({ products, categories }: { products: Product[]; categories: Category[] }) {
+  const [search, setSearch] = useState("")
+  const [selectedCat, setSelectedCat] = useState("")
 
-  const { products: catProducts } = await getProducts({ category_id: category.id, limit: "1000" })
+  const filtered = products.filter((p) => {
+    const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.sku.includes(search)
+    const matchCat = !selectedCat || p.category === selectedCat
+    return matchSearch && matchCat
+  })
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/productos" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6">
-          <ArrowLeft className="w-4 h-4" />
-          Volver al catálogo
-        </Link>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <span className="text-4xl">{categoryIcons[category.name] || "📦"}</span>
-          <h1 className="text-3xl font-bold text-gray-900 mt-2">{category.name}</h1>
-          <p className="text-gray-600 mt-1">{catProducts.length} productos</p>
+          <h1 className="text-3xl font-bold text-gray-900">Catálogo de productos</h1>
+          <p className="text-gray-600 mt-1">{products.length} productos disponibles</p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Buscar por nombre o SKU..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <select
+            value={selectedCat}
+            onChange={(e) => setSelectedCat(e.target.value)}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+          >
+            <option value="">Todas las categorías</option>
+            {categories.map((c) => (
+              <option key={c.slug} value={c.name}>{c.name} ({c.count})</option>
+            ))}
+          </select>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {catProducts.map((p) => (
+          {filtered.map((p) => (
             <Link
               key={p.sku}
               href={`/producto/${p.slug}`}
@@ -60,7 +81,8 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
                 )}
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-gray-900 line-clamp-2 text-sm">{p.name}</h3>
+                <span className="text-xs text-blue-600 font-medium">{p.category}</span>
+                <h3 className="font-semibold text-gray-900 mt-1 line-clamp-2 text-sm">{p.name}</h3>
                 {p.prices.precio_lista && (
                   <p className="text-xs text-gray-400 line-through mt-1">
                     Lista: {formatPrice(p.prices.precio_lista)}
@@ -80,6 +102,13 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
             </Link>
           ))}
         </div>
+
+        {filtered.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-500 text-lg">No se encontraron productos</p>
+            <p className="text-sm text-gray-400 mt-1">Intenta con otros filtros</p>
+          </div>
+        )}
       </div>
     </div>
   )

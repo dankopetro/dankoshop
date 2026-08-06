@@ -22,7 +22,7 @@ function slugify(input) {
 
 module.exports = {
   default: async function seedProducts({ container }) {
-    console.log("=== Starting product seeding ===")
+    console.log("=== Starting product seeding (upsert) ===")
 
     console.log("=== Ensuring admin user exists ===")
     try {
@@ -42,20 +42,7 @@ module.exports = {
     const currencyModule = container.resolve(Modules.CURRENCY)
     const salesChannelModule = container.resolve(Modules.SALES_CHANNEL)
 
-    console.log("Modules resolved")
-
     const productsData = JSON.parse(fs.readFileSync(PRODUCTS_FILE, "utf-8"))
-    const firstHandle = slugify(productsData[0].sku)
-    const existing = await productModule.listProducts(
-      { handle: firstHandle },
-      { take: 1 }
-    )
-    if (existing.length > 0) {
-      console.log(`Products with handle ${firstHandle} already exist, skipping seed`)
-      return
-    }
-
-    console.log("No DankoShop products found, seeding...")
 
     let imageUrls = {}
     try {
@@ -64,7 +51,8 @@ module.exports = {
       console.warn("Could not load image_urls.json, falling back to local paths:", e.message)
     }
 
-    let region = (await regionModule.listRegions({}, { take: 1 }))[0]
+    // --- Ensure Argentina region with ARS (pesos) ---
+    let region = (await regionModule.listRegions({ currency_code: "ars" }, { take: 1 }))[0]
     if (!region) {
       const [created] = await regionModule.createRegions([{
         name: "Argentina",
@@ -73,9 +61,12 @@ module.exports = {
         payment_providers: [],
       }])
       region = created
+      console.log("Created Argentina region:", region.id)
+    } else {
+      console.log("Argentina region found:", region.id)
     }
-    console.log("Using region:", region.id)
 
+    // --- Ensure sales channel ---
     let salesChannel = (await salesChannelModule.listSalesChannels({}, { take: 1 }))[0]
     if (!salesChannel) {
       const [created] = await salesChannelModule.createSalesChannels([{
@@ -86,6 +77,7 @@ module.exports = {
     }
     console.log("Using sales channel:", salesChannel.id)
 
+    // --- Ensure ARS currency ---
     const currencyExists = await currencyModule.listCurrencies({ code: "ars" }, { take: 1 })
     if (currencyExists.length === 0) {
       await currencyModule.createCurrencies([{
@@ -94,10 +86,9 @@ module.exports = {
         name: "Argentine Peso",
       }])
       console.log("Created currency: ars")
-    } else {
-      console.log("Currency ars already exists")
     }
 
+    // --- Categories ---
     const categoryMap = {}
     const categoriesToCreate = [...new Set(productsData.map((p) => p.category).filter(Boolean))]
     const existingCategories = await productModule.listProductCategories({}, { take: 200 })
@@ -106,81 +97,127 @@ module.exports = {
     }
     const missingCategories = categoriesToCreate.filter((name) => !categoryMap[name])
     if (missingCategories.length > 0) {
-      const { result } = await createProductCategoriesWorkflow(container).run({
-        input: {
-          product_categories: missingCategories.map((name) => ({
-            name,
-            description: name,
-            is_active: true,
-          })),
-        },
-      })
-      for (const c of result) {
-        categoryMap[c.name] = c.id
-        console.log(`Created category: ${c.name}`)
+      try {
+        const { result } = await createProductCategoriesWorkflow(container).run({
+          input: {
+            product_categories: missingCategories.map((name) => ({
+              name,
+              description: name,
+              is_active: true,
+            })),
+          },
+        })
+        for (const c of result) {
+          categoryMap[c.name] = c.id
+          console.log(`Created category: ${c.name}`)
+        }
+      } catch (e) {
+        console.warn("Some categories already exist, refreshing map:", e.message)
+        const refreshed = await productModule.listProductCategories({}, { take: 200 })
+        for (const c of refreshed) {
+          categoryMap[c.name] = c.id
+        }
       }
     }
 
-    const { result: optionResult } = await createProductOptionsWorkflow(container).run({
-      input: {
-        product_options: [
-          {
-            title: "Default",
-            values: ["Default"],
-          },
-        ],
-      },
-    })
-    const defaultOption = optionResult[0]
-    console.log("Created default product option:", defaultOption.id)
-
-    console.log(`Seeding ${productsData.length} products...`)
-
-    let createdCount = 0
-    let failedCount = 0
-
-    for (const product of productsData) {
+    // --- Default option (reuse if already exists) ---
+    let defaultOption = (await productModule.listProductOptions({ title: "Default" }, { take: 1 }))[0]
+    if (!defaultOption) {
       try {
-        const images = (imageUrls[product.sku] || (Array.isArray(product.images) ? product.images : [])).slice(0, 10)
-        const handle = slugify(product.sku)
-
-        const { result } = await createProductsWorkflow(container).run({
+        const { result: optionResult } = await createProductOptionsWorkflow(container).run({
           input: {
-            products: [
+            product_options: [
               {
-                title: product.name,
-                subtitle: product.description || "",
-                description: product.description || "",
-                handle,
-                status: "published",
-                thumbnail: images[0] || null,
-                images: images.map((url) => ({ url })),
-                category_ids: product.category ? [categoryMap[product.category]] : undefined,
-                sales_channels: [{ id: salesChannel.id }],
-                options: [{ id: defaultOption.id }],
-                variants: [
-                  {
-                    title: "Default",
-                    sku: product.sku,
-                    options: { Default: "Default" },
-                    prices: [
-                      { amount: product.prices.precio_lista || 0, currency_code: "ars", region_id: region.id },
-                    ],
-                  },
-                ],
+                title: "Default",
+                values: ["Default"],
               },
             ],
           },
         })
+        defaultOption = optionResult[0]
+      } catch (e) {
+        console.warn("Default option may already exist:", e.message)
+        defaultOption = (await productModule.listProductOptions({ title: "Default" }, { take: 1 }))[0]
+      }
+    }
+    console.log("Using default option:", defaultOption.id)
 
-        console.log(`Created product: ${result[0].title} (${result[0].id})`)
-        createdCount++
+    // --- Load existing products by handle ---
+    const existingProducts = await productModule.listProducts({}, { take: 500, select: ["id", "handle", "title"] })
+    const existingByHandle = {}
+    for (const p of existingProducts) {
+      existingByHandle[p.handle] = p.id
+    }
+    console.log(`Found ${Object.keys(existingByHandle).length} existing products in Medusa`)
+
+    let createdCount = 0
+    let updatedCount = 0
+    let failedCount = 0
+
+    for (const product of productsData) {
+      try {
+        const sku = product.sku
+        const handle = slugify(sku)
+        const images = (imageUrls[sku] || (Array.isArray(product.images) ? product.images : [])).slice(0, 10)
+        const prices = product.prices || {}
+
+        const metadata = {
+          precio_lista: prices.precio_lista ?? null,
+          precio_efectivo: prices.precio_efectivo ?? null,
+          precio_transferencia: prices.precio_transferencia ?? null,
+          precio_mayorista: prices.precio_mayorista ?? null,
+          precio_mayorista_transferencia: prices.precio_mayorista_transferencia ?? null,
+          cuotas: prices.cuotas ?? null,
+          cuota_valor: prices.cuota_valor ?? null,
+        }
+        Object.keys(metadata).forEach((k) => {
+          if (metadata[k] === null || metadata[k] === "") delete metadata[k]
+        })
+
+        const categoryIds = product.category && categoryMap[product.category] ? [categoryMap[product.category]] : []
+
+        const baseProduct = {
+          title: product.name,
+          subtitle: product.description || "",
+          description: product.description || "",
+          handle,
+          status: "published",
+          thumbnail: images[0] || null,
+          images: images.map((url) => ({ url })),
+          category_ids: categoryIds,
+          sales_channels: [{ id: salesChannel.id }],
+          options: [{ id: defaultOption.id }],
+          metadata,
+          variants: [
+            {
+              title: "Default",
+              sku,
+              options: { Default: "Default" },
+              prices: [
+                { amount: Math.round(Number(prices.precio_lista) || 0), currency_code: "ars", region_id: region.id },
+              ],
+            },
+          ],
+        }
+
+        if (existingByHandle[handle]) {
+          // Update existing product metadata only (variant already exists)
+          await productModule.updateProducts({ id: existingByHandle[handle] }, { metadata })
+          updatedCount++
+          console.log(`Updated metadata: ${product.name} (${handle})`)
+        } else {
+          const { result } = await createProductsWorkflow(container).run({
+            input: { products: [baseProduct] },
+          })
+          console.log(`Created product: ${result[0].title} (${result[0].id})`)
+          createdCount++
+        }
       } catch (error) {
-        console.error(`Error creating product ${product.name}:`, error.message)
+        console.error(`Error processing product ${product.name}:`, error.message)
         failedCount++
       }
     }
 
-    console.log(`=== Seeding completed: ${createdCount} created, ${failedCount} failed ===`)
+    console.log(`=== Seeding completed: ${createdCount} created, ${updatedCount} updated, ${failedCount} failed ===`)
   },
 }
