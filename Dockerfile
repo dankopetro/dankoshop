@@ -16,5 +16,7 @@ COPY medusa-backend/ ./
 RUN NODE_OPTIONS="--max-old-space-size=3072" pnpm build
 
 WORKDIR /app/medusa-backend/apps/backend
+RUN NODE_OPTIONS="--max-old-space-size=3072" pnpm exec medusa build 2>&1
+
 EXPOSE 9000
 CMD ["sh", "-c", "echo '=== Waiting for DB ===' && sleep 5 && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && echo '=== Starting server on 0.0.0.0:9000 ===' && exec ./node_modules/.bin/medusa start"]
