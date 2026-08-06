@@ -10,18 +10,22 @@ Categorías: Celulares, TVs, Lavarropas, Heladeras, Bicicletas, Gaming, Herramie
 dankoshop/
 ├── storefront/          → Next.js 16 + Tailwind (frontend público)
 │   ├── src/app/         → Páginas (App Router)
-│   │   ├── page.tsx     → Home
-│   │   ├── productos/   → Catálogo con búsqueda/filtro
-│   │   ├── categorias/  → Listado de categorías
-│   │   ├── categoria/   → Productos por categoría (SSG)
-│   │   └── producto/    → Detalle de producto con galería
+│   │   ├── page.tsx     → Home (categorías en vivo de Medusa)
+│   │   ├── productos/   → Catálogo con búsqueda/filtro (data en vivo)
+│   │   ├── categorias/  → Listado de categorías (en vivo)
+│   │   ├── categoria/   → Productos por categoría (en vivo)
+│   │   ├── producto/    → Detalle de producto con galería (en vivo)
+│   │   ├── admin-contenido/ → Editor de contenido (JSON + GitHub)
+│   │   └── api/contenido/route.ts → Guarda contenido vía GitHub API
 │   ├── src/components/  → header, footer, product-image (zoom/modal)
-│   └── src/data/        → products.ts (114 productos + 16 categorías, hardcodeados)
+│   ├── src/content/     → *.json editables (nosotros, envios, faq, pagos,
+│   │                      terminos, privacidad, contacto)
+│   └── src/lib/medusa.ts → Cliente Medusa store API (publishable key + ARS)
 ├── medusa-backend/      → MedusaJS v2.18 (admin de productos, pedidos, pagos)
-│   └── apps/backend/    → Backend principal
-├── scripts/             → Scripts Python (sync, seed, parse_chat, upload_cloudinary, dedup_images)
+│   └── apps/backend/    → Backend principal (seed-products.cjs = upsert)
+├── scripts/             → Scripts Python (sync_excel v2, seed.py, etc.)
 ├── data/                → products.json, image_urls.json, organized_images/, products_images/
-├── excel/               → Excel maestro de productos
+├── excel/               → Productos_Maestro.xlsx (maestro de precios, versionado)
 ├── Dockerfile           → Docker build para Railway (Node 20 + pnpm)
 └── railway.toml         → Config Railway (DOCKERFILE builder)
 ```
@@ -30,8 +34,8 @@ dankoshop/
 - **Frontend:** Next.js 16, React 19, Tailwind CSS 4, lucide-react
 - **Backend:** MedusaJS v2.18, Node.js 22, PostgreSQL 16, Redis 7
 - **Imágenes:** Cloudinary (cloud_name: xjuisove, api_key: 645939449555487)
-- **Hosting frontend:** Vercel (https://dankoshop-storefront.vercel.app, redirige desde dankoshop.vercel.app)
-- **Hosting backend:** Railway (https://railway.com/project/43f44001-29b4-4bf8-ac5b-faceff49a9dc) - **EN PROCESO**
+- **Hosting frontend:** Vercel (dankoshop-storefront, redirige desde dankoshop.vercel.app) - **faltan env vars**
+- **Hosting backend:** Railway (https://railway.com/project/43f44001-29b4-4bf8-ac5b-faceff49a9dc) - **ONLINE**
 - **DB:** Docker local (dankoshop-postgres, dankoshop-redis en network dankoshop-net)
 - **Package manager:** pnpm 9.15.9 (monorepo con pnpm-workspace.yaml)
 
@@ -66,6 +70,13 @@ nvm use 20 && cd storefront && npm run dev
 # Backend (Node 22 + pnpm)
 nvm use 22 && cd medusa-backend && pnpm exec medusa develop
 
+# Sync Excel → Medusa v2 (REST API)
+MEDUSA_BACKEND_URL=http://localhost:9000 python3 scripts/sync_excel.py
+
+# Sync contra producción Railway
+MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app python3 scripts/sync_excel.py
+
+# Seed upsert de productos (migración Medusa, corre en cada deploy)
 # Docker
 docker ps
 docker exec dankoshop-postgres psql -U dankoshop -d dankoshop -c "SELECT 1;"
@@ -75,17 +86,18 @@ python3 scripts/upload_cloudinary.py
 
 # Dedup imágenes
 python3 scripts/dedup_images.py
-
-# Seed productos a Medusa
-python3 scripts/seed.py
-
-# Generar products.ts desde products.json + image_urls.json
-python3 /tmp/gen_products_ts.py  # (script temporal, copiar a scripts/ si se necesita permanente)
 ```
 
 ## Variables de entorno
-### Frontend (Vercel)
-No tiene variables de entorno configuradas todavía.
+### Frontend (Vercel) - PENDIENTE DE CONFIGURAR
+Se necesitan 4 variables (Settings → Environment Variables, marcar Production+Preview):
+```
+NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
+NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
+GITHUB_TOKEN=<token GitHub con scope repo>          # para editor /admin-contenido
+CONTENT_ADMIN_PASSWORD=<contraseña del editor>       # ej: danko-admin-2026
+```
+Hay un script de ayuda: scripts/vercel-env.sh
 
 ### Backend local (.env)
 ```
@@ -112,13 +124,25 @@ NODE_ENV=production
 - User: dankopetro (dankopetro@hotmail.com)
 - Branch: main
 - Railway project: dankoshop-backend (https://railway.com/project/43f44001-29b4-4bf8-ac5b-faceff49a9dc)
+- Vercel project: dankoshop-storefront
+
+## Vercel (STOREFRONT ONLINE)
+- Proyecto: dankoshop-storefront
+- URL producción: https://dankoshop.vercel.app
+- Env vars configuradas:
+  - NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
+  - NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
+  - CONTENT_ADMIN_PASSWORD=danko-admin-2026
+  - GITHUB_TOKEN=**PENDIENTE** (necesario para editor /admin-contenido)
 
 ## Railway Setup (COMPLETADO Y ONLINE)
 - Proyecto: dankoshop-backend
 - Servicios: dankoshop-api (GitHub repo dankopetro/dankoshop), Postgres, Redis
 - URL Backend: https://dankoshop-api-production.up.railway.app
 - Admin Dashboard URL: https://dankoshop-api-production.up.railway.app/app
-- **ESTADO: ✅ ONLINE y funcionando correctamente.**
+- Publishable Key: pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
+- Región Argentina (ARS): reg_01KZCDHFKD3X8KMZ45NPV8HKZF
+- **ESTADO: ✅ ONLINE con 114 productos, metadata de precios, y región ARS.**
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)
@@ -129,9 +153,14 @@ NODE_ENV=production
 6. ✅ Páginas: home, productos, categorías, categoría, detalle con zoom/modal
 7. ✅ Medusa backend funcionando local con 113 productos
 8. ✅ Docker PostgreSQL + Redis corriendo
-9. ✅ products.ts con 114 productos + 16 categorías (export `categories` incluido)
-10. ✅ Build de Next.js pasa local y en Vercel (fix de `categories` export + quotes escaping + None→null)
-11. ✅ **Backend Medusa v2 desplegado y ONLINE en Railway** (`https://dankoshop-api-production.up.railway.app`)
+9. ✅ Backend Medusa v2 desplegado y ONLINE en Railway
+10. ✅ Seed upsert de metadata de precios minoristas (efectivo, transferencia, cuotas)
+11. ✅ Sync Excel → Medusa v2 (scripts/sync_excel.py) — precios ARS + metadata
+12. ✅ Storefront conectado a Medusa en vivo (productos, categorías, búsqueda)
+13. ✅ Env vars de Vercel configuradas (Medusa URL, publishable key, admin password)
+14. ✅ Editor de contenido /admin-contenido con JSON + GitHub API
+15. ✅ Contenido institucional editable (nosotros, envios, faq, pagos, terminos, privacidad, contacto)
+16. ✅ Tienda funcionando en producción: dankoshop.vercel.app
 
 ## Solución del Deploy en Railway (COMPLETADO)
 El despliegue de Medusa en Railway presentaba dos problemas principales:
@@ -147,32 +176,35 @@ El despliegue de Medusa en Railway presentaba dos problemas principales:
 
 ---
 
-## Pasos para finalizar el proyecto (Roadmap)
+## Pasos restantes (Roadmap)
 
-### Paso 1: Cargar catálogo inicial de datos en la DB de Railway (Seed)
-- Ejecutar el script `seed.py` configurado apuntando a la base de datos PostgreSQL de producción en Railway (`DATABASE_URL`).
-- Verificar que los 114 productos y categorías queden cargados en el backend de Railway.
+### ✅ PASOS COMPLETADOS
+- Seed upsert de metadata de precios minoristas
+- Sync Excel → Medusa v2 (REST API)
+- Conectar storefront a Medusa en vivo
+- Configurar env vars de Vercel
+- Deploy de Railway con seed automático
+- Editor de contenido /admin-contenido
 
-### Paso 2: Conectar el Frontend en Vercel con el Backend en Railway
-- Configurar en Vercel la variable de entorno:
-  `NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app`
-- Modificar las páginas del storefront (`src/app/productos`, `src/app/categoria`, etc.) para consultar la API pública de Medusa en lugar de importar `products.ts` hardcodeado.
+### Paso 1: GITHUB_TOKEN para el editor
+- Generar token de GitHub con scope "repo" (classic) o Contents: Read and Write (fine-grained)
+- Agregar como env var `GITHUB_TOKEN` en Vercel
+- El editor /admin-contenido guardará cambios directamente al repo
 
-### Paso 3: Revisión y corrección manual de imágenes
-- Acceder al Panel de Administración de Medusa: [https://dankoshop-api-production.up.railway.app/app](https://dankoshop-api-production.up.railway.app/app)
-- Credenciales: `admin@dankoshop.com` / `supersecret`.
-- Revisar y reasignar las imágenes de los productos que requieran ajuste manual.
+### Paso 2: Revisión manual de imágenes
+- Acceder al Panel de Administración de Medusa: https://dankoshop-api-production.up.railway.app/app
+- Credenciales: admin@dankoshop.com / supersecret
+- Revisar y reasignar las imágenes de los productos que requieran ajuste manual
 
-### Paso 4: Integración de la pasarela de pagos (MercadoPago)
-- Instalar el módulo de pagos de MercadoPago (`@medusajs/payment-mercadopago` o proveedor correspondiente).
+### Paso 3: Integración de la pasarela de pagos (MercadoPago)
+- Instalar el módulo de pagos de MercadoPago
 - Configurar las variables en Railway:
-  - `MERCADOPAGO_ACCESS_TOKEN`
-  - `MERCADOPAGO_PUBLIC_KEY`
-  - `MERCADOPAGO_WEBHOOK_SECRET`
+  - MERCADOPAGO_ACCESS_TOKEN
+  - MERCADOPAGO_PUBLIC_KEY
+  - MERCADOPAGO_WEBHOOK_SECRET
 
-### Paso 5: Publicación final y Dominio propio
-- Configurar las variables de entorno definitivas de producción (Cloudinary, JWT, Cookies secrets).
-- Configurar el dominio custom del cliente en Vercel y Railway.
+### Paso 4: Dominio propio
+- Configurar el dominio custom del cliente en Vercel y Railway
 
 ---
 
@@ -226,10 +258,15 @@ PORT = "9000"
 ```
 
 ## Notas importantes
-- El frontend en Vercel muestra productos hardcodeados en `products.ts` de forma provisional.
+- El storefront en Vercel está conectado a Medusa en vivo (no usa products.ts hardcodeado).
 - Las imágenes están alojadas en Cloudinary.
 - Medusa v2 usa autenticación en `/auth/user/emailpass`.
 - package.json del backend utiliza `packageManager`: `pnpm@9.15.9`.
 - Railway project: `dankoshop-backend`, service: `dankoshop-api`.
 - Backend URL activa: `https://dankoshop-api-production.up.railway.app`
 - Admin Dashboard URL activa: `https://dankoshop-api-production.up.railway.app/app`
+- Storefront URL activa: `https://dankoshop.vercel.app`
+- Editor de contenido: `https://dankoshop.vercel.app/admin-contenido` (contraseña: danko-admin-2026)
+- Sync Excel → Medusa: `MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app python3 scripts/sync_excel.py`
+- Precios: web pública muestra solo minorista (efectivo, transferencia, cuotas). Mayorista es interno/admin.
+- Datos oficiales: dirección Calle 26 Número 207, teléfono/WhatsApp 221 621 9596.
