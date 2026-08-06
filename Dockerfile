@@ -16,6 +16,8 @@ RUN pnpm install --frozen-lockfile
 COPY medusa-backend/ ./
 WORKDIR /app/medusa-backend/apps/backend
 RUN NODE_OPTIONS="--max-old-space-size=3072" pnpm exec medusa build 2>&1
+RUN cp -r /app/medusa-backend/apps/backend/.medusa/server/public /app/medusa-backend/apps/backend/public
+RUN cp -r /app/medusa-backend/apps/backend/.medusa/server/public /app/medusa-backend/public
 RUN cp -r /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa
 
 # 3. Runtime from apps/backend
