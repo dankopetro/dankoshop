@@ -1,9 +1,20 @@
+import { getContent } from "@/content"
+
+interface TerminosContent {
+  title: string
+  paragraphs: string[]
+}
+
 export default function TerminosPage() {
+  const c = getContent<TerminosContent>("terminos")
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Términos y Condiciones</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-6">{c.title}</h1>
       <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm space-y-4 text-gray-700">
-        <p>Bienvenido a DankoShop. Al utilizar nuestro sitio web y realizar compras, aceptás los siguientes términos y condiciones de uso.</p>
+        {c.paragraphs.map((p, i) => (
+          <p key={i}>{p}</p>
+        ))}
       </div>
     </div>
   )
