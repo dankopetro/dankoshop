@@ -67,7 +67,6 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                     Transferencia: <span className="font-semibold">{formatPrice(product.prices.precio_transferencia)}</span>
                   </p>
                 )}
-                )}
                 {product.prices.cuotas && product.prices.cuota_valor && (
                   <p className="text-sm text-blue-600 font-medium">
                     {product.prices.cuotas}x {formatPrice(product.prices.cuota_valor)} sin interés
