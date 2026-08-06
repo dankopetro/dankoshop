@@ -27,37 +27,66 @@ if MEDUSA_API_TOKEN:
     HEADERS["Authorization"] = f"Bearer {MEDUSA_API_TOKEN}"
 
 
+EXCEL_PATH = Path("/home/claudio/Descargas/dankoshop/excel/Productos_Maestro.xlsx")
+
 def read_products() -> List[Dict]:
-    """Read products from CSV (preferred) or JSON fallback"""
-    if CSV_PATH.exists():
-        products = []
-        with open(CSV_PATH, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                # Parse images
-                images = row.get("images", "").split("|") if row.get("images") else []
-                products.append({
-                    "sku": row["sku"],
-                    "name": row["name"],
-                    "category": row["category"],
-                    "description": row["description"],
-                    "specs": row["specs"],
-                    "precio_lista": int(row["precio_lista"]) if row["precio_lista"] else None,
-                    "precio_efectivo": int(row["precio_efectivo"]) if row["precio_efectivo"] else None,
-                    "precio_transferencia": int(row["precio_transferencia"]) if row["precio_transferencia"] else None,
-                    "precio_mayorista": int(row["precio_mayorista"]) if row["precio_mayorista"] else None,
-                    "precio_mayorista_transferencia": int(row["precio_mayorista_transferencia"]) if row["precio_mayorista_transferencia"] else None,
-                    "cuotas": int(row["cuotas"]) if row["cuotas"] else None,
-                    "cuota_valor": int(row["cuota_valor"]) if row["cuota_valor"] else None,
-                    "images": images,
-                })
-        return products
-    elif JSON_PATH.exists():
-        with open(JSON_PATH, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    else:
-        print("No products.csv or products.json found")
+    """Read products directly from excel/Productos_Maestro.xlsx"""
+    if not EXCEL_PATH.exists():
+        print(f"Excel maestro not found at {EXCEL_PATH}")
         return []
+    
+    import openpyxl
+    wb = openpyxl.load_workbook(EXCEL_PATH, data_only=True)
+    ws = wb.active
+    
+    products = []
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if not row[0] or not row[1]:
+            continue
+        sku = str(row[0]).strip()
+        name = str(row[1]).strip()
+        category = str(row[2]).strip() if row[2] else "General"
+        def parse_float(val):
+            if val is None:
+                return None
+            try:
+                return float(str(val).replace("$", "").replace(",", "").strip())
+            except:
+                return None
+        def parse_int(val):
+            if val is None:
+                return None
+            try:
+                return int(float(str(val).replace("$", "").replace(",", "").strip()))
+            except:
+                return None
+
+        precio_lista = parse_float(row[3])
+        precio_efectivo = parse_float(row[4])
+        precio_transferencia = parse_float(row[5])
+        precio_mayorista = parse_float(row[6])
+        cuotas = parse_int(row[7])
+        cuota_valor = parse_float(row[8])
+        description = str(row[9]).strip() if row[9] else ""
+        imgs_str = str(row[10]).strip() if row[10] else ""
+        images = [i.strip() for i in imgs_str.split("|") if i.strip()]
+        
+        products.append({
+            "sku": sku,
+            "name": name,
+            "category": category,
+            "description": description,
+            "specs": "",
+            "precio_lista": precio_lista,
+            "precio_efectivo": precio_efectivo,
+            "precio_transferencia": precio_transferencia,
+            "precio_mayorista": precio_mayorista,
+            "cuotas": cuotas,
+            "cuota_valor": cuota_valor,
+            "images": images,
+        })
+    print(f"Loaded {len(products)} products from {EXCEL_PATH}")
+    return products
 
 
 def get_auth_token() -> Optional[str]:

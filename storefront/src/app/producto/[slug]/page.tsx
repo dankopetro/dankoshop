@@ -67,10 +67,6 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                     Transferencia: <span className="font-semibold">{formatPrice(product.prices.precio_transferencia)}</span>
                   </p>
                 )}
-                {product.prices.precio_mayorista && (
-                  <p className="text-sm text-gray-600">
-                    Mayorista (3+): <span className="font-semibold">{formatPrice(product.prices.precio_mayorista)}</span>
-                  </p>
                 )}
                 {product.prices.cuotas && product.prices.cuota_valor && (
                   <p className="text-sm text-blue-600 font-medium">

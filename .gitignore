@@ -56,7 +56,6 @@ venv/
 env/
 
 # ===== Datos sensibles (precios, stock) =====
-excel/
 data/organized_images/
 *.xlsx
 *.xls

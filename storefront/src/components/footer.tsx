@@ -52,11 +52,11 @@ export default function Footer() {
             <address className="not-italic space-y-3 text-sm">
               <div className="flex items-start gap-2">
                 <MapPin className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                <p>Calle 36 entre 21 y 22, Nro 1328<br />La Plata, Buenos Aires</p>
+                <p>Calle 26 Número 207<br />La Plata, Buenos Aires</p>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                <a href="tel:+541167958796" className="hover:text-white">11 6795-8796</a>
+                <a href="tel:+5492216219596" className="hover:text-white">221 621 9596</a>
               </div>
             </address>
           </div>
