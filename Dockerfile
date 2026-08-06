@@ -12,4 +12,4 @@ RUN pnpm build
 
 WORKDIR /app/medusa-backend/apps/backend
 EXPOSE 9000
-CMD ["sh", "-c", "npx medusa db:migrate && exec ./node_modules/.bin/medusa start"]
+CMD ["sh", "-c", "echo 'Running migration...' && npx medusa db:migrate 2>&1 && echo 'Migration done, starting server...' && exec ./node_modules/.bin/medusa start"]
