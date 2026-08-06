@@ -13,8 +13,6 @@ COPY medusa-backend/apps/backend/package.json ./apps/backend/
 RUN pnpm install --frozen-lockfile
 
 COPY medusa-backend/ ./
-RUN NODE_OPTIONS="--max-old-space-size=3072" pnpm build
-
 WORKDIR /app/medusa-backend/apps/backend
 RUN NODE_OPTIONS="--max-old-space-size=3072" pnpm exec medusa build 2>&1
 
