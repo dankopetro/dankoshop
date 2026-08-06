@@ -12,14 +12,14 @@ COPY medusa-backend/package.json medusa-backend/pnpm-lock.yaml medusa-backend/pn
 COPY medusa-backend/apps/backend/package.json ./apps/backend/
 RUN pnpm install --frozen-lockfile
 
-# 2. Copy source and build FROM apps/backend
+# 2. Copy source and build FROM apps/backend (where medusa CLI lives and build output goes)
 COPY medusa-backend/ ./
 WORKDIR /app/medusa-backend/apps/backend
 RUN NODE_OPTIONS="--max-old-space-size=3072" pnpm exec medusa build 2>&1
-RUN cp -r /app/medusa-backend/apps/backend/.medusa/server/public /app/medusa-backend/apps/backend/public
-RUN cp -r /app/medusa-backend/apps/backend/.medusa/server/public /app/medusa-backend/public
-RUN cp -r /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa
 
-# 3. Runtime from apps/backend
+# 3. Copy seed script
+COPY medusa-backend/apps/backend/seed-products.js /app/seed-products.js
+
+# 3. Runtime from apps/backend (where medusa start expects to run)
 EXPOSE 9000
-CMD ["sh", "-c", "echo '=== Waiting for DB ===' && sleep 5 && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && echo '=== Starting server on 0.0.0.0:9000 ===' && exec pnpm exec medusa start"]
+CMD ["sh", "-c", "echo '=== Waiting for DB ===' && sleep 5 && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && echo '=== Seeding products ===' && node /app/seed-products.js 2>&1 && echo '=== Starting server on 0.0.0.0:9000 ===' && exec ./node_modules/.bin/medusa start"]
