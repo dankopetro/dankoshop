@@ -113,11 +113,12 @@ NODE_ENV=production
 - Branch: main
 - Railway project: dankoshop-backend (https://railway.com/project/43f44001-29b4-4bf8-ac5b-faceff49a9dc)
 
-## Railway Setup (ya creado)
+## Railway Setup (COMPLETADO Y ONLINE)
 - Proyecto: dankoshop-backend
 - Servicios: dankoshop-api (GitHub repo dankopetro/dankoshop), Postgres, Redis
-- Login CLI: ya logueado como Dankopetro
-- **SOLUCION APLICADA: En Dockerfile se agregó `RUN cp -r /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa` y en CMD se ejecuta `pnpm exec medusa start`.**
+- URL Backend: https://dankoshop-api-production.up.railway.app
+- Admin Dashboard URL: https://dankoshop-api-production.up.railway.app/app
+- **ESTADO: ✅ ONLINE y funcionando correctamente.**
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)
