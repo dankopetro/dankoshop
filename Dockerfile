@@ -11,5 +11,7 @@ COPY medusa-backend/ ./
 RUN pnpm build
 
 WORKDIR /app/medusa-backend/apps/backend
+COPY ../../entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 EXPOSE 9000
-CMD ["sh", "-c", "set -x && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && echo '=== Migration done, starting server ===' && exec ./node_modules/.bin/medusa start"]
+ENTRYPOINT ["/entrypoint.sh"]
