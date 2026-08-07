@@ -23,9 +23,17 @@
 
 ## Publishable API Key (para la API store)
 
-```
-pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
-```
+- **Producción (Railway/Vercel):**
+  ```
+  pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
+  ```
+- **Local (base de datos Docker):**
+  ```
+  pk_8eee05fa38bf73afe6aa4e6cb494c0a57b01e30aed7533dec018f7fef1e6dcd9
+  ```
+
+> ⚠️ La clave de producción NO sirve contra la instancia local y viceversa.
+> Al buildear el storefront local hay que usar la clave **local** (ver más abajo).
 
 ## Datos del Negocio
 
@@ -43,7 +51,16 @@ pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
 | `NEXT_PUBLIC_MEDUSA_BACKEND_URL` | `https://dankoshop-api-production.up.railway.app` |
 | `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` | `pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17` |
 | `CONTENT_ADMIN_PASSWORD` | `danko-admin-2026` |
-| `GITHUB_TOKEN` | _(pendiente de configurar)_ |
+| `GITHUB_TOKEN` | `github_pat_...` (configurado, permisos Contents: Read and Write) |
+| `MERCADOPAGO_ACCESS_TOKEN` | _(pendiente — token de acceso de MercadoPago, producción o TEST)_ |
+| `MERCADOPAGO_PUBLIC_KEY` | _(pendiente — clave pública de MercadoPago)_ |
+| `NEXT_PUBLIC_BASE_URL` | `https://dankoshop.vercel.app` (para los back_urls de pago) |
+| `NEXT_PUBLIC_ENVIO_FEE` | costo de envío por debajo de $50.000 (opcional) |
+| `NEXT_PUBLIC_BANCO_TITULAR` | titular de la cuenta (ej. `DANKOSHOP S.R.L.`) |
+| `NEXT_PUBLIC_BANCO_CBU` | CBU de DankoShop |
+| `NEXT_PUBLIC_BANCO_ALIAS` | alias CVU (ej. `danko.shop.cbu`) |
+| `NEXT_PUBLIC_BANCO_CUIT` | CUIT de DankoShop |
+| `NEXT_PUBLIC_BANCO_NOMBRE` | nombre del banco |
 
 ### Railway (Backend)
 
@@ -81,25 +98,27 @@ MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app \
 ### Sync local (para pruebas)
 
 ```bash
-MEDUSA_BACKEND_URL=http://localhost:9000 python3 scripts/sync_excel.py
+MEDUSA_BACKEND_URL=http://localhost:9100 python3 scripts/sync_excel.py
 ```
 
 ### Frontend local
 
 ```bash
 cd storefront
-NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9000 \
-  NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17 \
+NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9100 \
+  NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_8eee05fa38bf73afe6aa4e6cb494c0a57b01e30aed7533dec018f7fef1e6dcd9 \
   npm run dev
 ```
 
-### Backend local
+> La clave publicable local es la de la base Docker, NO la de producción.
+
+### Backend local (control de instancias)
 
 ```bash
-cd medusa-backend
-DATABASE_URL=postgresql://dankoshop:dankoshop@localhost:5432/dankoshop \
-  REDIS_URL=redis://localhost:6379 \
-  pnpm exec medusa develop
+./scripts/medusa-local.sh status   # estado de contenedores + Medusa
+./scripts/medusa-local.sh start    # levanta UNA instancia (si no hay otra)
+./scripts/medusa-local.sh stop     # detiene la instancia (aunque esté colgada)
+./scripts/medusa-local.sh restart  # stop + start
 ```
 
 ### Railway deploy
@@ -109,6 +128,29 @@ railway login
 railway link
 railway up
 ```
+
+## Gestión Local (evita cuelgues y sobrecalentamiento)
+
+El entorno local depende de 2 contenedores Docker + 1 instancia de Medusa en `:9100`.
+Para que no se cuelguen instancias ni se queme la notebook:
+
+1. **Los contenedores se auto-reinician** (`restart: unless-stopped`):
+   ```bash
+   docker update --restart unless-stopped dankoshop-postgres dankoshop-redis
+   ```
+   Con esto, si Docker se reinicia (o la notebook se apaga/duerme), los contenedores
+   vuelven a levantarse solos al arrancar el sistema.
+
+2. **Siempre usar el script** `scripts/medusa-local.sh` para arrancar Medusa.
+   El script:
+   - Arranca los contenedores si están caídos y espera a que PostgreSQL responda.
+   - **Rechaza levantar una 2ª instancia** si el puerto `:9100` ya está ocupado.
+   - `stop` mata la instancia aunque sea un proceso huérfano/colgado (sin terminal).
+   - Guarda el PID en `/tmp/medusa-local.pid` y el log en `/tmp/medusa-local.log`.
+
+> ⚠️ **NO** levantar Medusa a mano en varias terminales. Eso es lo que causó el
+> incidente del 06/08: 4 instancias corriendo, una colgada al 91.8% de CPU
+> (sobrecalentamiento + 6.8 GB de RAM) porque PostgreSQL estaba detenido.
 
 ## Precios
 
@@ -192,6 +234,37 @@ Los cambios se publican automáticamente al repo GitHub y Vercel redespliega.
 
 **Nota:** Para que funcione el guardado, necesitás configurar la env var `GITHUB_TOKEN` en Vercel con un token de GitHub con permisos de escritura en el repo.
 
+## Checkout y Pagos (online)
+
+Flujo implementado en el storefront (Next.js), sin depender del módulo de pagos de Medusa:
+
+- **`/checkout`** — formulario de datos + envío + selector de método de pago.
+  - **Mercado Pago** (tarjeta crédito/débito, dinero en cuenta, efectivo/Rapipago/Pago Fácil):
+    crea una preferencia en `POST /api/mercadopago/preference` (usa `MERCADOPAGO_ACCESS_TOKEN`)
+    y redirige al checkout seguro de Mercado Pago.
+  - **Transferencia bancaria** (Alias CVU): muestra los datos de la cuenta (CBU/alias) y genera
+    el comprobante pendiente; se confirma manualmente al acreditarse.
+- **`/comprobante`** — recibo imprimible / PDF del pedido con todos los datos, y las
+  instrucciones de transferencia si corresponde.
+- **`POST /api/ordenes`** — registra pedidos en `data/pedidos.json` vía GitHub (usa `GITHUB_TOKEN`).
+- **`POST /api/mercadopago/notification`** — webhook de Mercado Pago que marca el pedido como "pagado"
+  cuando `payment.approved`.
+
+> **Para activar el pago online real** hace falta cargar en Vercel:
+> `MERCADOPAGO_ACCESS_TOKEN` (y `MERCADOPAGO_PUBLIC_KEY`) + los datos del banco
+> (`NEXT_PUBLIC_BANCO_CBU`, `NEXT_PUBLIC_BANCO_ALIAS`, etc.). Sin el token, el botón de
+> Mercado Pago devuelve un error claro; la transferencia bancaria funciona siempre.
+
+### Configuración rápida de los datos bancarios (env vars Vercel)
+
+```
+NEXT_PUBLIC_BANCO_TITULAR=DANKOSHOP S.R.L.
+NEXT_PUBLIC_BANCO_CBU=000000310000...
+NEXT_PUBLIC_BANCO_ALIAS=mi.alias.cvu
+NEXT_PUBLIC_BANCO_CUIT=30-12345678-9
+NEXT_PUBLIC_BANCO_NOMBRE=Mi Banco
+```
+
 ## Solución de Problemas
 
 ### El sitio no muestra productos
@@ -210,3 +283,16 @@ Los cambios se publican automáticamente al repo GitHub y Vercel redespliega.
 ### Build de Vercel falla
 1. Verificar que no hay errores de TypeScript: `cd storefront && npx tsc --noEmit`
 2. Verificar el build local: `cd storefront && npm run build`
+
+### La notebook calienta / Medusa "cuelga" (local)
+1. Revisar si hay instancias duplicadas: `./scripts/medusa-local.sh status`
+2. Verificar que los contenedores estén arriba: `docker ps`
+3. Si el storefront local da 500 con clave inválida, rebuildear con la clave local:
+   ```bash
+   cd storefront
+   NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9100 \
+     NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_8eee05fa38bf73afe6aa4e6cb494c0a57b01e30aed7533dec018f7fef1e6dcd9 \
+     npm run build && ./node_modules/.bin/next start -p 3005
+   ```
+4. Si hay procesos Medusa colgados (más de una instancia, CPU alta):
+   `./scripts/medusa-local.sh stop` y luego `./scripts/medusa-local.sh start`

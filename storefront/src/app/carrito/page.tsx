@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Trash2, ShoppingBag, ArrowRight } from "lucide-react"
 
 export default function CarritoPage() {
+  const router = useRouter()
   const [cart, setCart] = useState<any[]>([])
 
   useEffect(() => {
@@ -77,6 +79,9 @@ export default function CarritoPage() {
             </div>
             <button onClick={checkoutWhatsApp} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
               Finalizar compra por WhatsApp 📲
+            </button>
+            <button onClick={() => router.push("/checkout")} className="w-full bg-sky-600 hover:bg-sky-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+              Continuar al checkout (pagos online) →
             </button>
             <p className="text-xs text-center text-gray-500">Retirá en Calle 26 Número 207, La Plata, o pedí envío a domicilio.</p>
           </div>
