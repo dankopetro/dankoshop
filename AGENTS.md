@@ -42,15 +42,24 @@ dankoshop/
 ## Docker Containers
 - `dankoshop-postgres` → localhost:5432, user: dankoshop, pass: dankoshop, db: dankoshop
 - `dankoshop-redis` → localhost:6379
+- Ambos con política `restart: unless-stopped` (se auto-reinician al iniciar Docker/sistema).
+  - Ver: `docker inspect dankoshop-postgres --format '{{.HostConfig.RestartPolicy.Name}}'`
+  - Aplicar de nuevo si se recrean: `docker update --restart unless-stopped dankoshop-postgres dankoshop-redis`
 
 ## Medusa Backend (local)
-- Puerto: 9000
-- Admin URL: http://localhost:9000/app
+- Puerto: 9100 (en `.env` local; el storefront local apunta a 9100)
+- Admin URL: http://localhost:9100/app
 - Admin credentials: admin@dankoshop.com / supersecret
+- Publishable key local: `pk_8eee05fa38bf73afe6aa4e6cb494c0a57b01e30aed7533dec018f7fef1e6dcd9`
 - Auth API: POST /auth/user/emailpass (Medusa v2, NO /admin/auth)
 - DB migrate: `pnpm exec medusa db:migrate`
 - Seed: `python3 scripts/seed.py`
-- Arrancar: `nvm use 22 && cd medusa-backend && pnpm exec medusa develop`
+- **Arrancar SIEMPRE con el script de control** (evita instancias duplicadas/colgadas):
+  - `./scripts/medusa-local.sh start|stop|restart|status`
+  - Script: garantiza contenedores arriba, rechaza duplicados en :9100, y `stop` mata
+    procesos huérfanos. PID en `/tmp/medusa-local.pid`, log en `/tmp/medusa-local.log`.
+- NO levantar `medusa start`/`medusa develop` a mano en varias terminales (causó
+  incidente 06/08: 4 instancias, una al 91.8% CPU por DB Docker caída).
 
 ## Node.js Versions
 - **System:** v18.19.1 (NO usar para nada)
@@ -67,11 +76,14 @@ El .npmrc en la raíz configura `registry=https://registry.npmmirror.com` para e
 nvm use 20 && cd storefront && npm run build
 nvm use 20 && cd storefront && npm run dev
 
-# Backend (Node 22 + pnpm)
-nvm use 22 && cd medusa-backend && pnpm exec medusa develop
+# Backend (Node 22 + pnpm): levantar SIEMPRE con el script de control
+./scripts/medusa-local.sh start    # arranca contenedores + 1 instancia en :9100
+./scripts/medusa-local.sh stop     # mata la instancia (aunque esté huérfana)
+./scripts/medusa-local.sh status   # contenedores + instancia + memoria
+./scripts/medusa-local.sh restart
 
 # Sync Excel → Medusa v2 (REST API)
-MEDUSA_BACKEND_URL=http://localhost:9000 python3 scripts/sync_excel.py
+MEDUSA_BACKEND_URL=http://localhost:9100 python3 scripts/sync_excel.py
 
 # Sync contra producción Railway
 MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app python3 scripts/sync_excel.py
@@ -89,12 +101,12 @@ python3 scripts/dedup_images.py
 ```
 
 ## Variables de entorno
-### Frontend (Vercel) - PENDIENTE DE CONFIGURAR
-Se necesitan 4 variables (Settings → Environment Variables, marcar Production+Preview):
+### Frontend (Vercel) - CONFIGURADO
+Variables (Settings → Environment Variables, marcar Production+Preview):
 ```
 NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
 NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
-GITHUB_TOKEN=<token GitHub con scope repo>          # para editor /admin-contenido
+GITHUB_TOKEN=<token GitHub con scope repo>          # CONFIGURADO
 CONTENT_ADMIN_PASSWORD=<contraseña del editor>       # ej: danko-admin-2026
 ```
 Hay un script de ayuda: scripts/vercel-env.sh
@@ -133,7 +145,7 @@ NODE_ENV=production
   - NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
   - NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
   - CONTENT_ADMIN_PASSWORD=danko-admin-2026
-  - GITHUB_TOKEN=**PENDIENTE** (necesario para editor /admin-contenido)
+  - GITHUB_TOKEN=**CONFIGURADO** (fine-grained, repo dankoshop, Contents: Read and Write — editor /admin-contenido funcional)
 
 ## Railway Setup (COMPLETADO Y ONLINE)
 - Proyecto: dankoshop-backend
@@ -161,6 +173,11 @@ NODE_ENV=production
 14. ✅ Editor de contenido /admin-contenido con JSON + GitHub API
 15. ✅ Contenido institucional editable (nosotros, envios, faq, pagos, terminos, privacidad, contacto)
 16. ✅ Tienda funcionando en producción: dankoshop.vercel.app
+17. ✅ Robustez local: contenedores con restart policy + script `scripts/medusa-local.sh`
+    (anti-instancias-duplicadas/colgadas) + puerto local unificado en 9100
+18. ✅ Checkout online implementado: `/checkout` (MercadoPago + Transferencia CVU), `/comprobante`
+    (recibo imprimible), API de preferencia, webhook y registro de pedidos. Falta solo el
+    `MERCADOPAGO_ACCESS_TOKEN` + datos banco en Vercel para activar el pago real.
 
 ## Solución del Deploy en Railway (COMPLETADO)
 El despliegue de Medusa en Railway presentaba dos problemas principales:
@@ -186,22 +203,29 @@ El despliegue de Medusa en Railway presentaba dos problemas principales:
 - Deploy de Railway con seed automático
 - Editor de contenido /admin-contenido
 
-### Paso 1: GITHUB_TOKEN para el editor
-- Generar token de GitHub con scope "repo" (classic) o Contents: Read and Write (fine-grained)
-- Agregar como env var `GITHUB_TOKEN` en Vercel
-- El editor /admin-contenido guardará cambios directamente al repo
+### ✅ Paso 1: GITHUB_TOKEN para el editor (COMPLETADO)
+- Token fine-grained con Contents: Read and Write sobre el repo dankoshop
+- Configurado como env var `GITHUB_TOKEN` en Vercel
+- El editor /admin-contenido guarda cambios directamente al repo (verificado OK)
 
 ### Paso 2: Revisión manual de imágenes
 - Acceder al Panel de Administración de Medusa: https://dankoshop-api-production.up.railway.app/app
 - Credenciales: admin@dankoshop.com / supersecret
 - Revisar y reasignar las imágenes de los productos que requieran ajuste manual
 
-### Paso 3: Integración de la pasarela de pagos (MercadoPago)
-- Instalar el módulo de pagos de MercadoPago
-- Configurar las variables en Railway:
-  - MERCADOPAGO_ACCESS_TOKEN
-  - MERCADOPAGO_PUBLIC_KEY
-  - MERCADOPAGO_WEBHOOK_SECRET
+### ✅ Paso 3: Pasarela de pagos (MercadoPago) - PARCIALMENTE IMPLEMENTADO
+- Implementado el flujo de checkout y comprobantes en el storefront (ver más abajo "Checkout y Pagos").
+- `MERCADOPAGO_ACCESS_TOKEN` pendiente de agregar en Vercel para activar el pago real.
+- Rutas: `/checkout`, `/comprobante`, `/api/mercadopago/preference`, `/api/mercadopago/notification`, `/api/ordenes`.
+
+## Checkout y Pagos (implementado)
+- `POST /api/mercadopago/preference` → crea preferencia (usa `MERCADOPAGO_ACCESS_TOKEN`) y redirige a MP (cubre tarjeta, efectivo, Rapipago/Pago Fácil).
+- `POST /api/ordenes` → guarda pedidos en `data/pedidos.json` vía GitHub.
+- `POST /api/mercadopago/notification` → webhook marca pedido "pagado" al recibir `payment.approved`.
+- `/checkout` → selector de pago (MercadoPago o Transferencia CVU).
+- `/comprobante` → recibo imprimible/PDF.
+- Datos banco vía env vars: `NEXT_PUBLIC_BANCO_{TITULAR,CBU,ALIAS,CUIT,NOMBRE}`.
+- Env vars Vercel pendientes: `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_PUBLIC_KEY`, `NEXT_PUBLIC_BASE_URL`, datos del banco.
 
 ### Paso 4: Dominio propio
 - Configurar el dominio custom del cliente en Vercel y Railway
