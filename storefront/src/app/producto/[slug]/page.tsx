@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, Truck, Shield, CreditCard } from "lucide-react"
 import ProductImage from "@/components/product-image"
+import AddToCart from "@/components/add-to-cart"
 
 function formatPrice(n: number | null) {
   if (n === null) return null
@@ -77,7 +78,11 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                 </div>
               )}
 
-              <div className="mt-8 pt-6 border-t border-gray-100 space-y-3">
+              <div className="mt-8 pt-6 border-t border-gray-100">
+                <AddToCart product={product} />
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-gray-100 space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <Truck className="w-5 h-5 text-blue-500" />
                   Envío gratis en compras +$50.000

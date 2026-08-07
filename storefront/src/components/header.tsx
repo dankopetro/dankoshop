@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, X, User, Search } from "lucide-react"
+import { Menu, X, Search } from "lucide-react"
 import { useState } from "react"
+import CartIcon from "./cart-icon"
 
 const categories = [
   { name: "Celulares", slug: "celulares" },
@@ -43,10 +44,7 @@ export default function Header() {
         </form>
 
         <div className="flex items-center gap-4">
-          <Link href="/carrito" className="relative p-2 text-gray-600 hover:text-gray-900">
-            <ShoppingCart className="w-6 h-6" />
-            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">0</span>
-          </Link>
+          <CartIcon />
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-gray-600">
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
