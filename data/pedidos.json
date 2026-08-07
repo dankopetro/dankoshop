@@ -54,5 +54,33 @@
     "total": 680,
     "metodo_pago": "mercadopago",
     "estado": "pendiente"
+  },
+  {
+    "id": "DK-MSJJLRQ0",
+    "fecha": "2026-08-07T22:55:01.272Z",
+    "cliente": {
+      "nombre": "hrdytdf",
+      "email": "higigig@jhj.com",
+      "telefono": "8524789955",
+      "dni": "125478555",
+      "direccion": "",
+      "ciudad": "",
+      "provincia": "Buenos Aires",
+      "metodo_envio": "retiro"
+    },
+    "items": [
+      {
+        "sku": "9446",
+        "name": "Plato Durax Hondo Fénix Blanco (N°9446",
+        "price": 680,
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9446_1.jpg"
+      }
+    ],
+    "subtotal": 680,
+    "envio": 0,
+    "total": 680,
+    "metodo_pago": "mercadopago",
+    "estado": "pendiente"
   }
 ]
