@@ -4,7 +4,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN
 const GITHUB_REPO = process.env.GITHUB_REPO || "dankopetro/dankoshop"
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main"
 const CONTENT_DIR = "storefront/src/content"
-const ADMIN_PASSWORD = process.env.CONTENT_ADMIN_PASSWORD || "dankoshop2026"
+const ADMIN_PASSWORD = process.env.CONTENT_ADMIN_PASSWORD || ""
 
 export async function POST(req: NextRequest) {
   if (!GITHUB_TOKEN) {

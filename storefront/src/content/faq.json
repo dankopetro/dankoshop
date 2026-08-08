@@ -3,15 +3,51 @@
   "items": [
     {
       "question": "¿Cuáles son los medios de pago disponibles?",
-      "answer": "Aceptamos efectivo en el local, transferencia bancaria con descuento y tarjetas de crédito en cuotas."
+      "answer": "Aceptamos transferencia bancaria con descuento, tarjetas de crédito en cuotas (hasta 12 cuotas sin interés) y dinero en cuenta MercadoPago."
     },
     {
       "question": "¿Cómo hago para comprar?",
-      "answer": "Agregás los productos al carrito y hacés click en finalizar compra para enviar el pedido directamente por WhatsApp a nuestro asesor."
+      "answer": "Elegí los productos, agregalos al carrito y finalizá la compra. Podés pagar online con tarjeta o transferencia, o enviarnos el pedido por WhatsApp."
     },
     {
-      "question": "¿Dónde están ubicados?",
-      "answer": "Nuestro local está en Calle 26 Número 207, La Plata, Buenos Aires."
+      "question": "¿Cuánto tarda el envío?",
+      "answer": "Los envíos a CABA y Gran Buenos Aires se realizan en 2 a 5 días hábiles. Al resto del país entre 5 y 10 días hábiles. El plazo exacto se confirma al momento de la compra."
+    },
+    {
+      "question": "¿Tienen garantía los productos?",
+      "answer": "Sí, todos nuestros productos tienen garantía del fabricante. La duración varía según el producto (generalmente 12 meses). Consultanos para más detalles."
+    },
+    {
+      "question": "¿Puedo devolver un producto?",
+      "answer": "Sí, tenés 30 días para devolver un producto sin usar y en su embalaje original. El costo de envío de devolución corre por cuenta del comprador."
+    },
+    {
+      "question": "¿Hacen envíos a todo el país?",
+      "answer": "Sí, enviamos a cualquier dirección de Argentina. El costo de envío se calcula automáticamente al finalizar la compra según tu ubicación."
+    },
+    {
+      "question": "¿Cómo pago con transferencia bancaria?",
+      "answer": "Al finalizar la compra te mostramos los datos de nuestra cuenta (CBU, alias y titular). Hacés la transferencia y nos envías el comprobante por WhatsApp o email. Procesamos el pedido al confirmarse el pago."
+    },
+    {
+      "question": "¿Puedo hacer pedidos al por mayor?",
+      "answer": "Sí, trabajamos con precios mayoristas para compras de 3 unidades o más del mismo producto. Contactanos por WhatsApp o completá el formulario de mayoristas para conocer los precios especiales."
+    },
+    {
+      "question": "¿Cómo me comunico con ustedes?",
+      "answer": "Podés escribirnos por WhatsApp al 221 621 9596, enviarnos un email a ventas@dankoshop.com.ar, o completar el formulario en la página de Contacto."
+    },
+    {
+      "question": "¿Los precios incluyen IVA?",
+      "answer": "Sí, todos los precios publicados incluyen IVA. No hay costos ocultos adicionales."
+    },
+    {
+      "question": "¿Puedo comprar en cuotas con tarjeta de crédito?",
+      "answer": "Sí, aceptamos todas las tarjetas de crédito con hasta 12 cuotas sin interés. También podés pagar en cuotas con interés para más cantidad de cuotas."
+    },
+    {
+      "question": "¿Qué es el descuento por pago en efectivo o transferencia?",
+      "answer": "Al pagar por transferencia bancaria o en efectivo, obtenés un descuento especial sobre el precio de lista. El porcentaje de descuento varía según el producto y se muestra en la página de cada producto."
     }
   ]
 }

@@ -9,7 +9,6 @@ import { getBankData } from "@/lib/banco"
 
 const NEGOCIO = {
   nombre: "DankoShop",
-  direccion: "Calle 26 Número 207, La Plata, Buenos Aires",
   telefono: "221 621 9596",
   email: "ventas@dankoshop.com.ar",
 }
@@ -102,7 +101,7 @@ function ComprobanteInner() {
           <p>Email: {order.cliente.email} · Tel: {order.cliente.telefono}</p>
           <p>
             {order.cliente.metodo_envio === "retiro"
-              ? "Retiro en local (Calle 26 N° 207, La Plata)"
+              ? "Retiro en local (a coordinar)"
               : `Envío a: ${order.cliente.direccion}, ${order.cliente.ciudad}, ${order.cliente.provincia}`}
           </p>
         </div>

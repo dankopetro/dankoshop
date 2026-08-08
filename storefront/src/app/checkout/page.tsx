@@ -177,7 +177,7 @@ export default function CheckoutPage() {
               <label className="flex items-center gap-3 border rounded-lg p-3 cursor-pointer">
                 <input type="radio" name="envio" checked={cliente.metodo_envio === "retiro"} onChange={() => set("metodo_envio", "retiro")} />
                 <Store className="w-5 h-5 text-gray-500" />
-                <span className="text-sm">Retiro en Calle 26 N° 207, La Plata</span>
+                <span className="text-sm">Retiro en local (a coordinar)</span>
               </label>
               <label className="flex items-center gap-3 border rounded-lg p-3 cursor-pointer">
                 <input type="radio" name="envio" checked={cliente.metodo_envio === "envio"} onChange={() => set("metodo_envio", "envio")} />

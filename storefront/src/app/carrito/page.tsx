@@ -32,7 +32,7 @@ export default function CarritoPage() {
 
   const checkoutWhatsApp = () => {
     const itemsList = cart.map(i => `- ${i.name} (SKU: ${i.sku}) x${i.quantity || 1} - $%s`.replace("%s", (i.price || 0).toLocaleString("es-AR"))).join("%0A")
-    const text = `Hola DankoShop! Quiero realizar el siguiente pedido:%0A%0A${itemsList}%0A%0A*Total: $${total.toLocaleString("es-AR")}.*%0A%0AMi dirección de envío / retiro en local (Calle 26 N° 207):`
+    const text = `Hola DankoShop! Quiero realizar el siguiente pedido:%0A%0A${itemsList}%0A%0A*Total: $${total.toLocaleString("es-AR")}.*%0A%0AMi dirección de envío o coordinamos retiro:`
     window.open(`https://wa.me/5492216219596?text=${text}`, "_blank")
   }
 
@@ -83,7 +83,7 @@ export default function CarritoPage() {
             <button onClick={() => router.push("/checkout")} className="w-full bg-sky-600 hover:bg-sky-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
               Continuar al checkout (pagos online) →
             </button>
-            <p className="text-xs text-center text-gray-500">Retirá en Calle 26 Número 207, La Plata, o pedí envío a domicilio.</p>
+            <p className="text-xs text-center text-gray-500">Retirá en nuestro local o pedí envío a domicilio.</p>
           </div>
         </div>
       )}

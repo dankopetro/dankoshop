@@ -6,18 +6,8 @@ import { useState } from "react"
 import CartIcon from "./cart-icon"
 
 const categories = [
-  { name: "Celulares", slug: "celulares" },
-  { name: "TVs", slug: "tvs" },
-  { name: "Lavarropas", slug: "lavarropas-secarropas" },
-  { name: "Heladeras", slug: "heladeras-freezers" },
-  { name: "Cocinas/Hornos", slug: "cocinas-hornos-microondas" },
-  { name: "Pequeños Electrodomésticos", slug: "pequenos-electrodomesticos" },
-  { name: "Bicicletas", slug: "bicicletas" },
-  { name: "Outdoor", slug: "outdoor-playa" },
-  { name: "Herramientas", slug: "herramientas" },
-  { name: "Hogar/Baño", slug: "hogar-bano" },
-  { name: "Gaming", slug: "gaming" },
-  { name: "Tablets", slug: "tablets" },
+  { name: "Combos", slug: "combos" },
+  { name: "Audio", slug: "audio" },
 ]
 
 export default function Header() {

@@ -50,13 +50,13 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Contacto</h3>
             <address className="not-italic space-y-3 text-sm">
-              <div className="flex items-start gap-2">
-                <MapPin className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                <p>Calle 26 Número 207<br />La Plata, Buenos Aires</p>
-              </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-5 h-5 text-gray-400 flex-shrink-0" />
                 <a href="tel:+5492216219596" className="hover:text-white">221 621 9596</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                <a href="mailto:ventas@dankoshop.com.ar" className="hover:text-white">ventas@dankoshop.com.ar</a>
               </div>
             </address>
           </div>
