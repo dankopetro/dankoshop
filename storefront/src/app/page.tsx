@@ -48,22 +48,14 @@ export default async function Home() {
             </div>
 
             <div className="relative hidden lg:block h-[480px]">
-              {/* TV - arriba centro */}
-              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/LG_television_set.png" alt="Televisor" className="absolute left-[30%] top-[2%] w-[180px] object-contain drop-shadow-xl" />
-              {/* Aspiradora - izquierda centro */}
-              <img src="https://pngimg.com/uploads/vacuum_cleaner/vacuum_cleaner_PNG44.png" alt="Aspiradora" className="absolute left-[22%] top-[32%] w-[75px] object-contain drop-shadow-xl" />
-              {/* Heladera - arriba derecha */}
-              <img src="https://cdn.pixabay.com/photo/2017/06/19/18/03/refrigerator-2420419_1280.png" alt="Heladera" className="absolute right-[5%] top-[2%] w-[90px] object-contain drop-shadow-xl" />
-              {/* Smartphone - centro */}
-              <img src="https://pngimg.com/uploads/smartphone/smartphone_PNG8523.png" alt="Celular" className="absolute left-[42%] top-[38%] w-[55px] object-contain drop-shadow-xl" />
-              {/* Lavarropas - derecha centro */}
-              <img src="https://cdn.pixabay.com/photo/2017/01/20/11/40/washing-machine-1994661_1280.png" alt="Lavarropas" className="absolute right-[2%] top-[36%] w-[140px] object-contain drop-shadow-xl" />
-              {/* Microondas - izquierda bajo */}
-              <img src="https://cdn.pixabay.com/photo/2022/05/23/12/58/microwave-7216130_1280.png" alt="Microondas" className="absolute left-[22%] top-[58%] w-[110px] object-contain drop-shadow-xl" />
-              {/* Bicicleta - centro abajo */}
-              <img src="https://pngimg.com/uploads/bicycle/bicycle_PNG5381.png" alt="Bicicleta" className="absolute left-[36%] top-[75%] w-[160px] object-contain drop-shadow-xl" />
-              {/* Auriculares - derecha abajo */}
-              <img src="https://cdn.pixabay.com/photo/2013/07/12/12/18/headset-145520_640.png" alt="Auriculares" className="absolute right-[5%] top-[72%] w-[60px] object-contain drop-shadow-xl" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/LG_television_set.png" alt="Televisor" className="absolute right-44 top-6 w-48 object-contain drop-shadow-xl rotate-6" />
+              <img src="https://cdn.pixabay.com/photo/2017/06/19/18/03/refrigerator-2420419_1280.png" alt="Heladera" className="absolute right-2 top-0 w-40 object-contain drop-shadow-xl -rotate-6" />
+              <img src="https://pngimg.com/uploads/vacuum_cleaner/vacuum_cleaner_PNG44.png" alt="Aspiradora" className="absolute right-72 top-24 w-32 object-contain drop-shadow-xl rotate-3" />
+              <img src="https://pngimg.com/uploads/smartphone/smartphone_PNG8523.png" alt="Celular" className="absolute right-16 top-44 w-24 object-contain drop-shadow-xl rotate-12" />
+              <img src="https://cdn.pixabay.com/photo/2017/01/20/11/40/washing-machine-1994661_1280.png" alt="Lavarropas" className="absolute right-0 bottom-24 w-40 object-contain drop-shadow-xl -rotate-3" />
+              <img src="https://cdn.pixabay.com/photo/2022/05/23/12/58/microwave-7216130_1280.png" alt="Microondas" className="absolute right-72 bottom-16 w-36 object-contain drop-shadow-xl -rotate-12" />
+              <img src="https://pngimg.com/uploads/bicycle/bicycle_PNG5381.png" alt="Bicicleta" className="absolute right-40 bottom-0 w-52 object-contain drop-shadow-xl rotate-3" />
+              <img src="https://cdn.pixabay.com/photo/2013/07/12/12/18/headset-145520_640.png" alt="Auriculares" className="absolute right-4 top-64 w-24 object-contain drop-shadow-xl -rotate-8" />
             </div>
           </div>
         </div>
