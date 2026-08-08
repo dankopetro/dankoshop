@@ -1,0 +1,77 @@
+{
+  "bienvenida": "¡Hola! Soy CARLA 😊, la asistente virtual de DankoShop. Puedo ayudarte con precios, cuotas, envíos, garantías, pagos y más. ¿En qué te ayudo?",
+  "saludo": [
+    "¡Hola! ¿En qué te puedo ayudar hoy?",
+    "¡Hola! Consultame sobre precios, cuotas, envíos o productos."
+  ],
+  "despedida": [
+    "¡Gracias por escribirnos! Si necesitás algo más, acá estoy 😊",
+    "De nada. ¡Ante cualquier duda, escribime!"
+  ],
+  "no_entendido": "No estoy segura de haber entendido tu consulta. Podés preguntarme por envíos, medios de pago, cuotas, garantías, precios de productos o pedidos al por mayor. También podés escribirnos por WhatsApp al 221 621 9596.",
+  "cuotas_interes": {
+    "descripcion": "Financiación con tarjeta de crédito. Hasta 6 cuotas sin interés. A partir de 9 cuotas se aplica interés según la promoción vigente de MercadoPago.",
+    "tasas": {
+      "3": 0,
+      "6": 0,
+      "9": 0.26,
+      "12": 0.48,
+      "18": 0.75
+    },
+    "sin_interes_max": 6
+  },
+  "conocimiento": [
+    {
+      "keywords": ["horario", "horarios", "atencion", "abierto", "abren", "cierra", "hora"],
+      "answer": "Nuestro horario de atención es de lunes a sábado de 9 a 19 hs. Fuera de ese horario, podés dejarme tu consulta acá y te respondemos a la brevedad, o escribirnos por WhatsApp al 221 621 9596."
+    },
+    {
+      "keywords": ["ubicacion", "direccion", "donde estan", "retiro", "retirar", "local", "showroom"],
+      "answer": "Trabajamos en forma online. Cuando completes tu compra, coordinamos el retiro o la entrega por WhatsApp (221 621 9596) y te informamos la dirección de retiro en ese momento. También hacemos envíos a todo el país."
+    },
+    {
+      "keywords": ["envio", "envios", "demora", "tarda", "cuando llega", "correo", "cadete"],
+      "answer": "Los envíos a CABA y Gran Buenos Aires se realizan en 2 a 5 días hábiles, y al resto del país entre 5 y 10 días hábiles. Tenés envío gratis en compras mayores a $50.000. El plazo exacto se confirma al momento de la compra."
+    },
+    {
+      "keywords": ["cuota", "cuotas", "financiacion", "financiar", "tarjeta", "credito", "interes"],
+      "answer": "Aceptamos tarjetas de crédito con hasta 6 cuotas sin interés. A partir de 9 cuotas se aplica un interés según la promoción vigente. Si me decís qué producto te interesa y en cuántas cuotas, te calculo el valor exacto 😊"
+    },
+    {
+      "keywords": ["pago", "pagar", "medios", "transferencia", "efectivo", "mercadopago", "dinero en cuenta"],
+      "answer": "Aceptamos: efectivo (con descuento), transferencia bancaria (con descuento), tarjetas de crédito en cuotas y dinero en cuenta de MercadoPago. Si pagás por transferencia o efectivo, obtenés un descuento especial que se muestra en cada producto."
+    },
+    {
+      "keywords": ["garantia", "garantias", "falla", "reparacion", "no funciona"],
+      "answer": "Todos nuestros productos tienen garantía del fabricante, generalmente de 12 meses. Si un producto presenta fallas, escribinos por WhatsApp al 221 621 9596 con el comprobante de compra y lo gestionamos."
+    },
+    {
+      "keywords": ["devolucion", "devolver", "cambio", "reembolso", "reintegro", "arrepentimiento"],
+      "answer": "Tenés 30 días para devolver un producto sin usar y en su embalaje original. El costo de envío de devolución corre por cuenta del comprador. Escribinos por WhatsApp y coordinamos el proceso."
+    },
+    {
+      "keywords": ["mayorista", "por mayor", "revendedor", "revend", "al por mayor", "proveedor", "precios especiales"],
+      "answer": "Trabajamos con precios mayoristas para compras de 3 unidades o más del mismo producto. Completá el formulario de mayoristas en la web (https://dankoshop.com.ar/registro-mayorista) o escribinos por WhatsApp al 221 621 9596 para recibir la lista de precios especiales."
+    },
+    {
+      "keywords": ["iva", "factura", "facturacion", "comprobante", "recibo", "factura a"],
+      "answer": "Todos los precios publicados incluyen IVA. Al finalizar tu compra podés descargar un comprobante imprimible. Si necesitás factura con datos fiscales, indicanos el CUIT al momento de la compra."
+    },
+    {
+      "keywords": ["contacto", "comunicar", "escribir", "whatsapp", "telefono", "email", "mail"],
+      "answer": "Podés escribirnos por WhatsApp al 221 621 9596, enviarnos un email a ventas@dankoshop.com.ar o completar el formulario en la página de Contacto (https://dankoshop.com.ar/contacto)."
+    },
+    {
+      "keywords": ["compra", "como compro", "proceso", "como hago", "pedido", "comprar"],
+      "answer": "Elegí los productos y agregalos al carrito. Después entrá al checkout, elegí tu forma de pago (tarjeta, transferencia o efectivo) y confirmá. También podés enviarnos tu pedido por WhatsApp al 221 621 9596."
+    },
+    {
+      "keywords": ["producto", "precio", "cuanto cuesta", "cuanto vale", "catalogo", "disponible", "stock"],
+      "answer": "Podés ver el catálogo completo en https://dankoshop.com.ar/productos. Si me decís qué producto te interesa, te paso el precio, los descuentos y las opciones de cuotas."
+    },
+    {
+      "keywords": ["descuento", "oferta", "promocion", "bonificacion", "off", "remate"],
+      "answer": "Ofrecemos descuentos por pago en efectivo o transferencia (se muestran en cada producto), envío gratis en compras +$50.000, y promociones en cuotas sin interés. También tenemos precios mayoristas para revendedores."
+    }
+  ]
+}
