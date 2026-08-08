@@ -1,10 +1,9 @@
-import { MapPin, Phone, Clock } from "lucide-react"
+import { Phone, Clock } from "lucide-react"
 import { getContent } from "@/content"
 
 interface ContactoContent {
   title: string
   subtitle: string
-  address: string
   phone: string
   whatsapp: string
   whatsappMessage: string
@@ -25,13 +24,6 @@ export default function ContactoPage() {
           <h2 className="text-xl font-semibold text-gray-800">¿Cómo podemos ayudarte?</h2>
           <p className="text-gray-600">{c.subtitle}</p>
           <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
-              <div>
-                <p className="font-medium text-gray-900">Dirección</p>
-                <p className="text-gray-600">{c.address}</p>
-              </div>
-            </div>
             <div className="flex items-center gap-3">
               <Phone className="w-6 h-6 text-blue-600 flex-shrink-0" />
               <div>
