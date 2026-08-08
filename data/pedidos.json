@@ -393,6 +393,8 @@
     "envio": 0,
     "total": 949619,
     "metodo_pago": "mercadopago",
-    "estado": "pendiente"
+    "estado": "pagado",
+    "pago_ref": "172659387430",
+    "metodo_pago_label": "visa"
   }
 ]
