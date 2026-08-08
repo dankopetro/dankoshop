@@ -120,6 +120,17 @@ export default function CarlaChat() {
                 </div>
               </div>
             )}
+
+            {msgs.length > 0 && !loading && (
+              <div className="flex justify-center pt-1">
+                <button
+                  onClick={() => setMsgs([])}
+                  className="text-xs text-gray-500 hover:text-[#c98a3d] underline underline-offset-2 transition-colors"
+                >
+                  ↩ Volver al menú principal
+                </button>
+              </div>
+            )}
             <div ref={bottomRef} />
           </div>
 
