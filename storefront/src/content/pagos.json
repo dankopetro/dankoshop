@@ -4,15 +4,19 @@
   "items": [
     {
       "label": "Efectivo",
-      "text": "Abonando en nuestro local de La Plata."
+      "text": "Con descuentos especiales. Coordinamos la entrega o retiro por WhatsApp."
     },
     {
       "label": "Transferencia Bancaria",
-      "text": "Con descuentos especiales."
+      "text": "Con descuentos especiales. Te enviamos los datos de nuestra cuenta (CBU y alias) al finalizar tu compra."
     },
     {
       "label": "Tarjetas de Crédito",
-      "text": "Financiación en cuotas sin interés según promoción vigente."
+      "text": "Financiación en cuotas sin interés según promoción vigente. Procesado de forma segura con MercadoPago."
+    },
+    {
+      "label": "Dinero en Cuenta MercadoPago",
+      "text": "Pagá de forma rápida y segura con saldo disponible de tu cuenta MercadoPago."
     }
   ]
 }
