@@ -48,14 +48,22 @@ export default async function Home() {
             </div>
 
             <div className="relative hidden lg:block h-[480px]">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/LG_television_set.png" alt="Televisor" className="absolute right-44 top-6 w-48 object-contain drop-shadow-xl rotate-6" />
-              <img src="https://cdn.pixabay.com/photo/2017/06/19/18/03/refrigerator-2420419_1280.png" alt="Heladera" className="absolute right-2 top-0 w-40 object-contain drop-shadow-xl -rotate-6" />
-              <img src="https://pngimg.com/uploads/vacuum_cleaner/vacuum_cleaner_PNG44.png" alt="Aspiradora" className="absolute right-72 top-24 w-32 object-contain drop-shadow-xl rotate-3" />
-              <img src="https://pngimg.com/uploads/smartphone/smartphone_PNG8523.png" alt="Celular" className="absolute right-16 top-44 w-24 object-contain drop-shadow-xl rotate-12" />
-              <img src="https://cdn.pixabay.com/photo/2017/01/20/11/40/washing-machine-1994661_1280.png" alt="Lavarropas" className="absolute right-0 bottom-24 w-40 object-contain drop-shadow-xl -rotate-3" />
-              <img src="https://cdn.pixabay.com/photo/2022/05/23/12/58/microwave-7216130_1280.png" alt="Microondas" className="absolute right-72 bottom-16 w-36 object-contain drop-shadow-xl -rotate-12" />
-              <img src="https://pngimg.com/uploads/bicycle/bicycle_PNG5381.png" alt="Bicicleta" className="absolute right-40 bottom-0 w-52 object-contain drop-shadow-xl rotate-3" />
-              <img src="https://cdn.pixabay.com/photo/2013/07/12/12/18/headset-145520_640.png" alt="Auriculares" className="absolute right-4 top-64 w-24 object-contain drop-shadow-xl -rotate-8" />
+              {/* Heladera - esquina superior derecha */}
+              <img src="https://cdn.pixabay.com/photo/2017/06/19/18/03/refrigerator-2420419_1280.png" alt="Heladera" style={{ position: "absolute", right: "0px", top: "0px", width: "150px" }} className="object-contain drop-shadow-xl -rotate-3" />
+              {/* TV - derecha, abajo de heladera */}
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/LG_television_set.png" alt="Televisor" style={{ position: "absolute", right: "170px", top: "40px", width: "195px" }} className="object-contain drop-shadow-xl rotate-3" />
+              {/* Aspiradora - izquierda del TV */}
+              <img src="https://pngimg.com/uploads/vacuum_cleaner/vacuum_cleaner_PNG44.png" alt="Aspiradora" style={{ position: "absolute", right: "310px", top: "120px", width: "100px" }} className="object-contain drop-shadow-xl" />
+              {/* Lavarropas - derecha, debajo de heladera */}
+              <img src="https://cdn.pixabay.com/photo/2017/01/20/11/40/washing-machine-1994661_1280.png" alt="Lavarropas" style={{ position: "absolute", right: "0px", top: "150px", width: "210px" }} className="object-contain drop-shadow-xl" />
+              {/* Celular - centro del grupo */}
+              <img src="https://pngimg.com/uploads/smartphone/smartphone_PNG8523.png" alt="Celular" style={{ position: "absolute", right: "200px", top: "185px", width: "78px" }} className="object-contain drop-shadow-xl rotate-12" />
+              {/* Microondas - abajo izquierda del grupo */}
+              <img src="https://cdn.pixabay.com/photo/2022/05/23/12/58/microwave-7216130_1280.png" alt="Microondas" style={{ position: "absolute", right: "295px", top: "270px", width: "140px" }} className="object-contain drop-shadow-xl -rotate-12" />
+              {/* Auriculares - abajo derecha */}
+              <img src="https://cdn.pixabay.com/photo/2013/07/12/12/18/headset-145520_640.png" alt="Auriculares" style={{ position: "absolute", right: "30px", top: "310px", width: "68px" }} className="object-contain drop-shadow-xl -rotate-6" />
+              {/* Bicicleta - abajo centro */}
+              <img src="https://pngimg.com/uploads/bicycle/bicycle_PNG5381.png" alt="Bicicleta" style={{ position: "absolute", right: "110px", bottom: "0px", width: "220px" }} className="object-contain drop-shadow-xl rotate-3" />
             </div>
           </div>
         </div>
