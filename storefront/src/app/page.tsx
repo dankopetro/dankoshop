@@ -24,12 +24,14 @@ export default async function Home() {
     <div className="flex flex-col flex-1 bg-gray-50">
       <section className="relative overflow-hidden" style={{ backgroundColor: "#e5ad68" }}>
         <div className="absolute inset-0 overflow-hidden">
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_1.jpg" alt="" className="absolute -right-8 top-4 w-36 h-36 object-cover rounded-xl shadow-lg -rotate-6 opacity-80" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_1.jpg" alt="" className="absolute -right-20 top-28 w-28 h-28 object-cover rounded-xl shadow-lg rotate-3 opacity-70" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8575_1.jpg" alt="" className="absolute right-16 top-0 w-24 h-24 object-cover rounded-xl shadow-lg -rotate-12 opacity-75" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5751_1.jpg" alt="" className="absolute -right-10 top-52 w-32 h-28 object-cover rounded-xl shadow-lg rotate-6 opacity-65" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_1.jpg" alt="" className="absolute right-32 top-36 w-20 h-20 object-cover rounded-xl shadow-lg -rotate-3 opacity-70" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260731111239-1_1.jpg" alt="" className="absolute -right-4 top-64 w-16 h-16 object-cover rounded-lg shadow-lg rotate-12 opacity-60" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_1.jpg" alt="" className="absolute right-10 top-2 w-40 h-40 object-cover rounded-xl shadow-lg -rotate-6 opacity-85" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_1.jpg" alt="" className="absolute right-56 top-10 w-32 h-32 object-cover rounded-xl shadow-lg rotate-3 opacity-80" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8575_1.jpg" alt="" className="absolute right-36 bottom-16 w-36 h-36 object-cover rounded-xl shadow-lg -rotate-12 opacity-85" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5751_1.jpg" alt="" className="absolute right-80 bottom-8 w-28 h-28 object-cover rounded-xl shadow-lg rotate-6 opacity-75" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_1.jpg" alt="" className="absolute right-1/3 top-6 w-24 h-24 object-cover rounded-xl shadow-lg -rotate-3 opacity-70" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260731111239-1_1.jpg" alt="" className="absolute right-2/3 bottom-20 w-20 h-20 object-cover rounded-lg shadow-lg rotate-12 opacity-65" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9479_1.jpg" alt="" className="absolute right-1/4 top-0 w-28 h-28 object-cover rounded-xl shadow-lg rotate-8 opacity-70" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9449_1.jpg" alt="" className="absolute right-1/2 bottom-4 w-24 h-24 object-cover rounded-xl shadow-lg -rotate-10 opacity-75" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="max-w-3xl">
