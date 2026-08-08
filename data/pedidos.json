@@ -366,5 +366,33 @@
     "estado": "pagado",
     "pago_ref": "172655857254",
     "metodo_pago_label": "master"
+  },
+  {
+    "id": "DK-MSJNSWAR",
+    "fecha": "2026-08-08T00:52:32.259Z",
+    "cliente": {
+      "nombre": "dani",
+      "email": "pcproduccioneslp@gmail.com",
+      "telefono": "2345678998766",
+      "dni": "12345678",
+      "direccion": "",
+      "ciudad": "",
+      "provincia": "Buenos Aires",
+      "metodo_envio": "retiro"
+    },
+    "items": [
+      {
+        "sku": "8575",
+        "name": "𝗦𝗠𝗔𝗥𝗧 𝗧𝗩 𝗛𝗬𝗨𝗡𝗗𝗔𝗜 𝟲𝟱” 𝗤𝗟𝗘𝗗 𝗚𝗢𝗢𝗚𝗟𝗘 𝗧𝗩 - Cod.8575",
+        "price": 949619,
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8575_1.jpg"
+      }
+    ],
+    "subtotal": 949619,
+    "envio": 0,
+    "total": 949619,
+    "metodo_pago": "mercadopago",
+    "estado": "pendiente"
   }
 ]
