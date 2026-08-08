@@ -2,11 +2,11 @@ import { getCategories } from "@/lib/medusa"
 import Link from "next/link"
 
 const categoryIcons: Record<string, string> = {
-  "Accesorios": "🎒", "Bicicletas": "🚲", "Celulares": "📱", "Cocinas/Hornos/Microondas": "🍳",
-  "Combos": "📦", "Deportes": "⚽", "Gaming": "🎮", "Heladeras/Freezers": "❄️",
-  "Herramientas": "🔧", "Hogar/Baño": "🛁", "Lavarropas/Secarropas": "🌀",
-  "Outdoor/Playa": "🏖️", "Pequeños Electrodomésticos": "🍳", "TVs": "📺",
-  "Tablets": "📱", "Varios": "📦",
+  "Accesorios": "🎒", "Audio": "🔊", "Bicicletas": "🚲", "Celulares": "📱",
+  "Cocinas/Hornos/Microondas": "🍳", "Combos": "📦", "Deportes": "⚽", "Gaming": "🎮",
+  "Heladeras/Freezers": "❄️", "Herramientas": "🔧", "Hogar/Baño": "🛁",
+  "Lavarropas/Secarropas": "🌀", "Outdoor/Playa": "🏖️",
+  "Pequeños Electrodomésticos": "🍳", "TVs": "📺", "Tablets": "📱",
 }
 
 export default async function CategoriasPage() {

@@ -9,10 +9,11 @@ function formatPrice(n: number | null) {
 }
 
 const categoryIcons: Record<string, string> = {
-  "Combos": "📦", "Audio": "🔊", "Celulares": "📱", "Cocinas/Hornos/Microondas": "🍳",
+  "Accesorios": "🎒", "Audio": "🔊", "Bicicletas": "🚲", "Celulares": "📱",
+  "Cocinas/Hornos/Microondas": "🍳", "Combos": "📦", "Deportes": "⚽", "Gaming": "🎮",
   "Heladeras/Freezers": "❄️", "Herramientas": "🔧", "Hogar/Baño": "🛁",
-  "Lavarropas/Secarropas": "🌀", "Pequeños Electrodomésticos": "🍳", "TVs": "📺",
-  "Tablets": "📱", "Gaming": "🎮", "Bicicletas": "🚲", "Outdoor/Playa": "🏖️",
+  "Lavarropas/Secarropas": "🌀", "Outdoor/Playa": "🏖️",
+  "Pequeños Electrodomésticos": "🍳", "TVs": "📺", "Tablets": "📱",
 }
 
 export default async function CategoriaPage({ params }: { params: Promise<{ slug: string }> }) {
