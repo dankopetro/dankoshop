@@ -363,6 +363,8 @@
     "envio": 0,
     "total": 680,
     "metodo_pago": "mercadopago",
-    "estado": "pendiente"
+    "estado": "pagado",
+    "pago_ref": "172655857254",
+    "metodo_pago_label": "master"
   }
 ]
