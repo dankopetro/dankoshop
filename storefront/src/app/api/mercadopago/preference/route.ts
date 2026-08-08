@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   const base =
     process.env.NEXT_PUBLIC_BASE_URL ||
     (process.env.NODE_ENV === "production"
-      ? "https://dankoshop.vercel.app"
+      ? "https://dankoshop.com.ar"
       : "http://localhost:3005")
 
   const items = (body.items as MPItem[]).map((it) => ({
