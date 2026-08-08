@@ -55,13 +55,13 @@ export default async function Home() {
               {/* Aspiradora - izquierda del TV */}
               <img src="https://pngimg.com/uploads/vacuum_cleaner/vacuum_cleaner_PNG44.png" alt="Aspiradora" style={{ position: "absolute", right: "310px", top: "120px", width: "100px" }} className="object-contain drop-shadow-xl" />
               {/* Lavarropas - derecha, debajo de heladera */}
-              <img src="https://cdn.pixabay.com/photo/2017/01/20/11/40/washing-machine-1994661_1280.png" alt="Lavarropas" style={{ position: "absolute", right: "0px", top: "150px", width: "210px" }} className="object-contain drop-shadow-xl" />
+              <img src="https://cdn.pixabay.com/photo/2017/01/20/11/40/washing-machine-1994661_1280.png" alt="Lavarropas" style={{ position: "absolute", right: "0px", top: "150px", width: "150px" }} className="object-contain drop-shadow-xl" />
               {/* Celular - centro del grupo */}
               <img src="https://pngimg.com/uploads/smartphone/smartphone_PNG8523.png" alt="Celular" style={{ position: "absolute", right: "200px", top: "185px", width: "78px" }} className="object-contain drop-shadow-xl rotate-12" />
               {/* Microondas - abajo izquierda del grupo */}
               <img src="https://cdn.pixabay.com/photo/2022/05/23/12/58/microwave-7216130_1280.png" alt="Microondas" style={{ position: "absolute", right: "295px", top: "270px", width: "140px" }} className="object-contain drop-shadow-xl -rotate-12" />
               {/* Auriculares - abajo derecha */}
-              <img src="https://cdn.pixabay.com/photo/2013/07/12/12/18/headset-145520_640.png" alt="Auriculares" style={{ position: "absolute", right: "30px", top: "310px", width: "68px" }} className="object-contain drop-shadow-xl -rotate-6" />
+              <img src="https://cdn.pixabay.com/photo/2013/07/12/12/18/headset-145520_640.png" alt="Auriculares" style={{ position: "absolute", right: "30px", top: "310px", width: "110px" }} className="object-contain drop-shadow-xl -rotate-6" />
               {/* Bicicleta - abajo centro */}
               <img src="https://pngimg.com/uploads/bicycle/bicycle_PNG5381.png" alt="Bicicleta" style={{ position: "absolute", right: "110px", bottom: "0px", width: "220px" }} className="object-contain drop-shadow-xl rotate-3" />
             </div>
