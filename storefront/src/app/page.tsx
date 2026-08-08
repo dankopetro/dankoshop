@@ -23,36 +23,39 @@ export default async function Home() {
   return (
     <div className="flex flex-col flex-1 bg-gray-50">
       <section className="relative overflow-hidden" style={{ backgroundColor: "#e5ad68" }}>
-        <div className="absolute inset-0 overflow-hidden">
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_1.jpg" alt="" className="absolute right-10 top-2 w-40 h-40 object-cover rounded-xl shadow-lg -rotate-6 opacity-85" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_1.jpg" alt="" className="absolute right-56 top-10 w-32 h-32 object-cover rounded-xl shadow-lg rotate-3 opacity-80" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8575_1.jpg" alt="" className="absolute right-36 bottom-16 w-36 h-36 object-cover rounded-xl shadow-lg -rotate-12 opacity-85" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5751_1.jpg" alt="" className="absolute right-80 bottom-8 w-28 h-28 object-cover rounded-xl shadow-lg rotate-6 opacity-75" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_1.jpg" alt="" className="absolute right-1/3 top-6 w-24 h-24 object-cover rounded-xl shadow-lg -rotate-3 opacity-70" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260731111239-1_1.jpg" alt="" className="absolute right-2/3 bottom-20 w-20 h-20 object-cover rounded-lg shadow-lg rotate-12 opacity-65" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9479_1.jpg" alt="" className="absolute right-1/4 top-0 w-28 h-28 object-cover rounded-xl shadow-lg rotate-8 opacity-70" />
-          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9449_1.jpg" alt="" className="absolute right-1/2 bottom-4 w-24 h-24 object-cover rounded-xl shadow-lg -rotate-10 opacity-75" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-          <div className="max-w-3xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-medium text-gray-900 mb-6">
-              🚀 Envío gratis en compras +$50.000 • 15% OFF efectivo • 3 cuotas sin interés
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900">
-              Todo para tu hogar <br />en un solo lugar
-            </h1>
-            <p className="text-lg sm:text-xl text-gray-800 mb-8 max-w-2xl">
-              Tecnología, electrodomésticos, outdoor, herramientas y más.
-              Precios de mayorista para minoristas. Envíos a todo el país.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/productos" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium bg-white text-gray-900 hover:bg-gray-50 rounded-lg transition-colors shadow-sm">
-                Ver productos
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-              <Link href="/categorias" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium border-2 border-gray-900 text-gray-900 hover:bg-gray-900/10 rounded-lg transition-colors">
-                Categorías
-              </Link>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="max-w-xl">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-white/25 backdrop-blur-sm text-sm font-medium text-gray-900 mb-6">
+                🚀 Envío gratis en compras +$50.000 • 15% OFF efectivo • 3 cuotas sin interés
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900">
+                Todo para tu hogar <br />en un solo lugar
+              </h1>
+              <p className="text-lg sm:text-xl text-gray-800 mb-8">
+                Tecnología, electrodomésticos, outdoor, herramientas y más.
+                Precios de mayorista para minoristas. Envíos a todo el país.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/productos" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium bg-white text-gray-900 hover:bg-gray-50 rounded-lg transition-colors shadow-sm">
+                  Ver productos
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+                <Link href="/categorias" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium border-2 border-gray-900 text-gray-900 hover:bg-gray-900/10 rounded-lg transition-colors">
+                  Categorías
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative hidden lg:block h-[480px]">
+              <img src="https://cdn.pixabay.com/photo/2017/06/19/18/03/refrigerator-2420419_1280.png" alt="Heladera" className="absolute right-2 top-0 w-40 object-contain drop-shadow-xl -rotate-6" />
+              <img src="https://pngimg.com/uploads/bicycle/bicycle_PNG5381.png" alt="Bicicleta" className="absolute right-40 bottom-0 w-52 object-contain drop-shadow-xl rotate-3" />
+              <img src="https://cdn.pixabay.com/photo/2017/01/20/11/40/washing-machine-1994661_1280.png" alt="Lavarropas" className="absolute right-0 bottom-24 w-40 object-contain drop-shadow-xl -rotate-3" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e9/LG_television_set.png" alt="Televisor" className="absolute right-44 top-6 w-48 object-contain drop-shadow-xl rotate-6" />
+              <img src="https://cdn.pixabay.com/photo/2022/05/23/12/58/microwave-7216130_1280.png" alt="Microondas" className="absolute right-72 bottom-16 w-36 object-contain drop-shadow-xl -rotate-12" />
+              <img src="https://pngimg.com/uploads/smartphone/smartphone_PNG8523.png" alt="Celular" className="absolute right-16 top-44 w-24 object-contain drop-shadow-xl rotate-12" />
+              <img src="https://pngimg.com/uploads/vacuum_cleaner/vacuum_cleaner_PNG44.png" alt="Aspiradora" className="absolute right-72 top-24 w-32 object-contain drop-shadow-xl rotate-3" />
+              <img src="https://cdn.pixabay.com/photo/2013/07/12/12/18/headset-145520_640.png" alt="Auriculares" className="absolute right-4 top-64 w-24 object-contain drop-shadow-xl -rotate-8" />
             </div>
           </div>
         </div>
@@ -63,8 +66,8 @@ export default async function Home() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit) => (
               <div key={benefit.title} className="text-center p-6">
-                <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <benefit.icon className="w-7 h-7 text-blue-600" />
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: "#f3ddc2" }}>
+                  <benefit.icon className="w-7 h-7" style={{ color: "#c98a3d" }} />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-1">{benefit.title}</h3>
                 <p className="text-sm text-gray-600">{benefit.desc}</p>
