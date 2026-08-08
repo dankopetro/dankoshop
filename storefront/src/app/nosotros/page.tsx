@@ -4,8 +4,6 @@ interface NosotrosContent {
   title: string
   intro: string
   paragraphs: string[]
-  sectionTitle: string
-  sectionBody: string
 }
 
 export default function NosotrosPage() {
@@ -19,8 +17,6 @@ export default function NosotrosPage() {
         {c.paragraphs.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
-        <h2 className="text-xl font-semibold text-gray-900 pt-4">{c.sectionTitle}</h2>
-        <p dangerouslySetInnerHTML={{ __html: c.sectionBody }} />
       </div>
     </div>
   )

@@ -71,7 +71,6 @@ function ComprobanteInner() {
         <div className="flex items-start justify-between border-b pb-4">
           <div>
             <h1 className="text-2xl font-extrabold text-gray-900">{NEGOCIO.nombre}</h1>
-            <p className="text-sm text-gray-500">{NEGOCIO.direccion}</p>
             <p className="text-sm text-gray-500">{NEGOCIO.telefono} · {NEGOCIO.email}</p>
           </div>
           <div className="text-right">
@@ -165,7 +164,7 @@ function ComprobanteInner() {
         </div>
 
         <p className="mt-6 text-center text-xs text-gray-400">
-          {NEGOCIO.nombre} · {NEGOCIO.direccion} · Comprobante generado el {new Date(order.fecha).toLocaleString("es-AR")}
+          {NEGOCIO.nombre} · Comprobante generado el {new Date(order.fecha).toLocaleString("es-AR")}
         </p>
       </div>
 
