@@ -118,7 +118,7 @@ export default function CheckoutPage() {
         return
       }
       clearCart()
-      const target = data.sandbox_init_point || data.init_point
+      const target = data.init_point || data.sandbox_init_point
       if (target) window.location.href = target
       else {
         setError("No se pudo obtener el link de pago.")
