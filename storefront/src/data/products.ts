@@ -523,7 +523,7 @@ export const products: Product[] = [
   {
     sku: "5671",
     name: "Frigobar Telefunken 50L TFK-R50GEB",
-    description: "🎨 Colores disponibles:\n⚪ Blanco (N°5671)\n⚫ Negro (N°5758)\n🔴 Rojo (N°5757)\n🔘 Gris (N°5756)\n🏷️ Minorista $198.809\n📲 11 6795-8796",
+    description: "🎨 Colores disponibles:\n⚪ Blanco (N°5671)\n⚫ Negro (N°5758)\n🔴 Rojo (N°5757)\n🔘 Gris (N°5756)\n🏷️ Minorista $198.809",
     category: "Heladeras/Freezers",
     prices: { precio_lista: 220899, precio_efectivo: 187764, precio_transferencia: 198809, precio_mayorista: 194391, cuotas: null, cuota_valor: null },
     images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_6.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5671_7.jpg"],
@@ -559,7 +559,7 @@ export const products: Product[] = [
   {
     sku: "2220",
     name: "Cocina Industrial Usman Irina Pta. Vidrio 550 (2220) (N°6870",
-    description: "📲 11 6795-8796\n📊 Post 85/60",
+    description: "📊 Post 85/60",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 583484, precio_efectivo: 495961, precio_transferencia: 525136, precio_mayorista: 484292, cuotas: null, cuota_valor: null },
     images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_3.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_4.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_5.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/2220_6.jpg"],
@@ -568,7 +568,7 @@ export const products: Product[] = [
   {
     sku: "6091",
     name: "Cocina Electrica Kanji 50x50 (6091/6093",
-    description: "📲 11 6795-8796",
+    description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 400120, precio_efectivo: 340102, precio_transferencia: 360108, precio_mayorista: 332100, cuotas: null, cuota_valor: null },
     images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6091_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6091_2.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6091_3.jpg"],
@@ -577,7 +577,7 @@ export const products: Product[] = [
   {
     sku: "5109",
     name: "Cocina Eléctrica Vitta Negra 50X50 VIT-EKB001V (N°5109",
-    description: "📲 11 6795-8796",
+    description: "",
     category: "Cocinas/Hornos/Microondas",
     prices: { precio_lista: 398857, precio_efectivo: 339028, precio_transferencia: 358971, precio_mayorista: 331051, cuotas: null, cuota_valor: null },
     images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5109_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5109_2.jpg"],
@@ -928,7 +928,7 @@ export const products: Product[] = [
   {
     sku: "6168",
     name: "Bomba Centrífuga de 1 Hp KONAN-KBC1 (N°6168",
-    description: "📲 11 6795-8796",
+    description: "",
     category: "Herramientas",
     prices: { precio_lista: 98845, precio_efectivo: 84018, precio_transferencia: 88960, precio_mayorista: 82041, cuotas: null, cuota_valor: null },
     images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6168_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6168_2.jpg"],
@@ -1027,7 +1027,7 @@ export const products: Product[] = [
   {
     sku: "4853",
     name: "Tostadora Vitta Verde Doble (N°4853",
-    description: "🏷️ Minorista $17.909\n📲 11 6795-8796",
+    description: "🏷️ Minorista $17.909",
     category: "Pequeños Electrodomésticos",
     prices: { precio_lista: 19899, precio_efectivo: 16914, precio_transferencia: 17909, precio_mayorista: 17511, cuotas: 3, cuota_valor: 6633 },
     images: ["https://res.cloudinary.com/xjuisove/image/upload/dankoshop/4853_1.jpg", "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/4853_2.jpg"],

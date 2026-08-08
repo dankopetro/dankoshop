@@ -9,11 +9,10 @@ function formatPrice(n: number | null) {
 }
 
 const categoryIcons: Record<string, string> = {
-  "Accesorios": "🎒", "Bicicletas": "🚲", "Celulares": "📱", "Cocinas/Hornos/Microondas": "🍳",
-  "Combos": "📦", "Deportes": "⚽", "Gaming": "🎮", "Heladeras/Freezers": "❄️",
-  "Herramientas": "🔧", "Hogar/Baño": "🛁", "Lavarropas/Secarropas": "🌀",
-  "Outdoor/Playa": "🏖️", "Pequeños Electrodomésticos": "🍳", "TVs": "📺",
-  "Tablets": "📱", "Varios": "📦",
+  "Combos": "📦", "Audio": "🔊", "Celulares": "📱", "Cocinas/Hornos/Microondas": "🍳",
+  "Heladeras/Freezers": "❄️", "Herramientas": "🔧", "Hogar/Baño": "🛁",
+  "Lavarropas/Secarropas": "🌀", "Pequeños Electrodomésticos": "🍳", "TVs": "📺",
+  "Tablets": "📱", "Gaming": "🎮", "Bicicletas": "🚲", "Outdoor/Playa": "🏖️",
 }
 
 export default async function CategoriaPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -27,9 +26,9 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/productos" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6">
+        <Link href="/categorias" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6">
           <ArrowLeft className="w-4 h-4" />
-          Volver al catálogo
+          Volver a categorías
         </Link>
 
         <div className="mb-8">
