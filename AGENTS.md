@@ -34,7 +34,7 @@ dankoshop/
 - **Frontend:** Next.js 16, React 19, Tailwind CSS 4, lucide-react
 - **Backend:** MedusaJS v2.18, Node.js 22, PostgreSQL 16, Redis 7
 - **Imágenes:** Cloudinary (cloud_name: xjuisove, api_key: 645939449555487)
-- **Hosting frontend:** Vercel (dankoshop-storefront, redirige desde dankoshop.vercel.app) - **faltan env vars**
+- **Hosting frontend:** Vercel (dankoshop-storefront) - dominio propio https://dankoshop.com.ar
 - **Hosting backend:** Railway (https://railway.com/project/43f44001-29b4-4bf8-ac5b-faceff49a9dc) - **ONLINE**
 - **DB:** Docker local (dankoshop-postgres, dankoshop-redis en network dankoshop-net)
 - **Package manager:** pnpm 9.15.9 (monorepo con pnpm-workspace.yaml)
@@ -106,8 +106,16 @@ Variables (Settings → Environment Variables, marcar Production+Preview):
 ```
 NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
 NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
+NEXT_PUBLIC_BASE_URL=https://dankoshop.com.ar
 GITHUB_TOKEN=<token GitHub con scope repo>          # CONFIGURADO
 CONTENT_ADMIN_PASSWORD=<contraseña del editor>       # ej: danko-admin-2026
+MERCADOPAGO_ACCESS_TOKEN=<token MP>                  # CONFIGURADO
+MERCADOPAGO_PUBLIC_KEY=<public key MP>              # CONFIGURADO
+NEXT_PUBLIC_BANCO_TITULAR=CLAUDIO DANIEL MIRANDA
+NEXT_PUBLIC_BANCO_NOMBRE=Banco Provincia
+NEXT_PUBLIC_BANCO_CUIT=20-18559096-9
+NEXT_PUBLIC_BANCO_CBU=0140999803200070892957
+NEXT_PUBLIC_BANCO_ALIAS=DANKO.PETRO.GUNTER
 ```
 Hay un script de ayuda: scripts/vercel-env.sh
 
@@ -123,9 +131,9 @@ COOKIE_SECRET=super-secret-cookie-change-in-production
 ```
 DATABASE_URL=postgresql://...  (Railway genera esto)
 REDIS_URL=redis://...          (Railway genera esto)
-STORE_CORS=https://dankoshop-storefront.vercel.app,http://localhost:3000
+STORE_CORS=https://dankoshop.com.ar,https://www.dankoshop.com.ar,https://dankoshop.vercel.app,http://localhost:3000
 ADMIN_CORS=http://localhost:9000,http://localhost:7001
-AUTH_CORS=https://dankoshop-storefront.vercel.app,http://localhost:3000,http://localhost:9000
+AUTH_CORS=https://dankoshop.com.ar,https://www.dankoshop.com.ar,https://dankoshop.vercel.app,http://localhost:3000,http://localhost:9000
 JWT_SECRET=<random>
 COOKIE_SECRET=<random>
 NODE_ENV=production
@@ -140,11 +148,14 @@ NODE_ENV=production
 
 ## Vercel (STOREFRONT ONLINE)
 - Proyecto: dankoshop-storefront
-- URL producción: https://dankoshop.vercel.app
+- URL producción: https://dankoshop.com.ar (dominio propio, redirige a www)
+- Legacy URL: https://dankoshop.vercel.app (redirige al dominio nuevo)
 - Env vars configuradas:
   - NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
   - NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
+  - NEXT_PUBLIC_BASE_URL=https://dankoshop.com.ar
   - CONTENT_ADMIN_PASSWORD=danko-admin-2026
+  - MERCADOPAGO_ACCESS_TOKEN / MERCADOPAGO_PUBLIC_KEY / NEXT_PUBLIC_BANCO_* = CONFIGURADOS
   - GITHUB_TOKEN=**CONFIGURADO** (fine-grained, repo dankoshop, Contents: Read and Write — editor /admin-contenido funcional)
 
 ## Railway Setup (COMPLETADO Y ONLINE)
@@ -213,10 +224,17 @@ El despliegue de Medusa en Railway presentaba dos problemas principales:
 - Credenciales: admin@dankoshop.com / supersecret
 - Revisar y reasignar las imágenes de los productos que requieran ajuste manual
 
-### ✅ Paso 3: Pasarela de pagos (MercadoPago) - PARCIALMENTE IMPLEMENTADO
+### ✅ Paso 3: Pasarela de pagos (MercadoPago) - COMPLETADO
 - Implementado el flujo de checkout y comprobantes en el storefront (ver más abajo "Checkout y Pagos").
-- `MERCADOPAGO_ACCESS_TOKEN` pendiente de agregar en Vercel para activar el pago real.
+- Env vars de MercadoPago y banco configuradas en Vercel. Pago real validado.
 - Rutas: `/checkout`, `/comprobante`, `/api/mercadopago/preference`, `/api/mercadopago/notification`, `/api/ordenes`.
+
+### ✅ Paso 4: Dominio propio (COMPLETADO)
+- Dominio `dankoshop.com.ar` configurado en Vercel (nameservers delegados a Vercel).
+- URL producción: https://dankoshop.com.ar (redirige a www).
+- `NEXT_PUBLIC_BASE_URL=https://dankoshop.com.ar` actualizado en Vercel.
+- Emails con dominio propio: `ventas@dankoshop.com.ar` vía ImprovMX reenviando a Gmail.
+- Email también configurado en los otros dominios (pcproducciones.net.ar, cosmovision.net.ar) vía ImprovMX.
 
 ## Checkout y Pagos (implementado)
 - `POST /api/mercadopago/preference` → crea preferencia (usa `MERCADOPAGO_ACCESS_TOKEN`) y redirige a MP (cubre tarjeta, efectivo, Rapipago/Pago Fácil).
@@ -225,10 +243,12 @@ El despliegue de Medusa en Railway presentaba dos problemas principales:
 - `/checkout` → selector de pago (MercadoPago o Transferencia CVU).
 - `/comprobante` → recibo imprimible/PDF.
 - Datos banco vía env vars: `NEXT_PUBLIC_BANCO_{TITULAR,CBU,ALIAS,CUIT,NOMBRE}`.
-- Env vars Vercel pendientes: `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_PUBLIC_KEY`, `NEXT_PUBLIC_BASE_URL`, datos del banco.
+- ✅ Env vars Vercel configuradas: `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_PUBLIC_KEY`, `NEXT_PUBLIC_BASE_URL`, datos del banco.
 
-### Paso 4: Dominio propio
-- Configurar el dominio custom del cliente en Vercel y Railway
+### ✅ Paso 4: Dominio propio (COMPLETADO)
+- Dominio `dankoshop.com.ar` configurado en Vercel (nameservers delegados a Vercel).
+- URL producción: https://dankoshop.com.ar (redirige a www). `NEXT_PUBLIC_BASE_URL` actualizado.
+- Email con dominio propio: `ventas@dankoshop.com.ar` vía ImprovMX → Gmail.
 
 ---
 
@@ -281,7 +301,7 @@ HOST = "0.0.0.0"
 PORT = "9000"
 ```
 
-## Notas importantes
+## Notas finales
 - El storefront en Vercel está conectado a Medusa en vivo (no usa products.ts hardcodeado).
 - Las imágenes están alojadas en Cloudinary.
 - Medusa v2 usa autenticación en `/auth/user/emailpass`.
@@ -289,8 +309,9 @@ PORT = "9000"
 - Railway project: `dankoshop-backend`, service: `dankoshop-api`.
 - Backend URL activa: `https://dankoshop-api-production.up.railway.app`
 - Admin Dashboard URL activa: `https://dankoshop-api-production.up.railway.app/app`
-- Storefront URL activa: `https://dankoshop.vercel.app`
-- Editor de contenido: `https://dankoshop.vercel.app/admin-contenido` (contraseña: danko-admin-2026)
+- Storefront URL activa: `https://dankoshop.com.ar` (redirige a www)
+- Editor de contenido: `https://dankoshop.com.ar/admin-contenido` (contraseña: danko-admin-2026)
 - Sync Excel → Medusa: `MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app python3 scripts/sync_excel.py`
 - Precios: web pública muestra solo minorista (efectivo, transferencia, cuotas). Mayorista es interno/admin.
-- Datos oficiales: dirección Calle 26 Número 207, teléfono/WhatsApp 221 621 9596.
+- Email: `ventas@dankoshop.com.ar` (ImprovMX → Gmail).
+- Teléfono/WhatsApp: 221 621 9596.

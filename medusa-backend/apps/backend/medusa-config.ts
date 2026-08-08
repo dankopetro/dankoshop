@@ -6,9 +6,9 @@ module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
     http: {
-      storeCors: process.env.STORE_CORS || "http://localhost:3000,https://dankoshop.vercel.app",
+      storeCors: process.env.STORE_CORS || "http://localhost:3000,https://dankoshop.com.ar,https://www.dankoshop.com.ar,https://dankoshop.vercel.app",
       adminCors: process.env.ADMIN_CORS || "http://localhost:9000,http://localhost:7001",
-      authCors: process.env.AUTH_CORS || "http://localhost:3000,http://localhost:9000,https://dankoshop.vercel.app",
+      authCors: process.env.AUTH_CORS || "http://localhost:3000,http://localhost:9000,https://dankoshop.com.ar,https://www.dankoshop.com.ar,https://dankoshop.vercel.app",
       jwtSecret: process.env.JWT_SECRET || "super-secret-jwt",
       cookieSecret: process.env.COOKIE_SECRET || "super-secret-cookie",
     }
