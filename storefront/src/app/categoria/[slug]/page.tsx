@@ -1,7 +1,7 @@
 import { getCategories, getProducts } from "@/lib/medusa"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 
 function formatPrice(n: number | null) {
   if (n === null) return null
@@ -27,10 +27,16 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Link href="/categorias" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6">
-          <ArrowLeft className="w-4 h-4" />
-          Volver a categorías
-        </Link>
+        <div className="flex items-center justify-between mb-6">
+          <Link href="/categorias" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700">
+            <ArrowLeft className="w-4 h-4" />
+            Volver a categorías
+          </Link>
+          <Link href="/productos" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700">
+            Ir al Catálogo
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
         <div className="mb-8">
           <span className="text-4xl">{categoryIcons[category.name] || "📦"}</span>

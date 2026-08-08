@@ -17,8 +17,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
       <div className="flex items-center justify-between px-4 py-4 md:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-lg">D</span>
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#e5ad68" }}>
+              <span className="text-white font-bold text-lg">D</span>
           </div>
           <span className="text-xl font-bold text-gray-900">DankoShop</span>
         </Link>

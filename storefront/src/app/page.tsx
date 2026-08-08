@@ -22,25 +22,33 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col flex-1 bg-gray-50">
-      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white overflow-hidden">
+      <section className="relative overflow-hidden" style={{ backgroundColor: "#e5ad68" }}>
+        <div className="absolute inset-0 overflow-hidden">
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6140_1.jpg" alt="" className="absolute -right-8 top-4 w-36 h-36 object-cover rounded-xl shadow-lg -rotate-6 opacity-80" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5448_1.jpg" alt="" className="absolute -right-20 top-28 w-28 h-28 object-cover rounded-xl shadow-lg rotate-3 opacity-70" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/8575_1.jpg" alt="" className="absolute right-16 top-0 w-24 h-24 object-cover rounded-xl shadow-lg -rotate-12 opacity-75" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/5751_1.jpg" alt="" className="absolute -right-10 top-52 w-32 h-28 object-cover rounded-xl shadow-lg rotate-6 opacity-65" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9614_1.jpg" alt="" className="absolute right-32 top-36 w-20 h-20 object-cover rounded-xl shadow-lg -rotate-3 opacity-70" />
+          <img src="https://res.cloudinary.com/xjuisove/image/upload/dankoshop/AUTO-20260731111239-1_1.jpg" alt="" className="absolute -right-4 top-64 w-16 h-16 object-cover rounded-lg shadow-lg rotate-12 opacity-60" />
+        </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="max-w-3xl">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-medium text-gray-900 mb-6">
               🚀 Envío gratis en compras +$50.000 • 15% OFF efectivo • 3 cuotas sin interés
             </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900">
               Todo para tu hogar <br />en un solo lugar
             </h1>
-            <p className="text-lg sm:text-xl text-blue-100 mb-8 max-w-2xl">
-              Tecnología, electrodomésticos, outdoor, herramientas y más. 
+            <p className="text-lg sm:text-xl text-gray-800 mb-8 max-w-2xl">
+              Tecnología, electrodomésticos, outdoor, herramientas y más.
               Precios de mayorista para minoristas. Envíos a todo el país.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/productos" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium bg-white text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+              <Link href="/productos" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium bg-white text-gray-900 hover:bg-gray-50 rounded-lg transition-colors shadow-sm">
                 Ver productos
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
-              <Link href="/categorias" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium border border-white text-white hover:bg-white/10 rounded-lg transition-colors">
+              <Link href="/categorias" className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium border-2 border-gray-900 text-gray-900 hover:bg-gray-900/10 rounded-lg transition-colors">
                 Categorías
               </Link>
             </div>
