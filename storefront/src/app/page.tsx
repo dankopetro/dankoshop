@@ -27,7 +27,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="max-w-xl">
               <span className="inline-block px-4 py-1.5 rounded-full bg-white/25 backdrop-blur-sm text-sm font-medium text-gray-900 mb-6">
-                🚀 Envío gratis en compras +$50.000 • 15% OFF efectivo • 3 cuotas sin interés
+                🚀 Envío gratis en compras +$50.000 • 15% OFF efectivo • Hasta 6 cuotas sin interés
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900">
                 Todo para tu hogar <br />en un solo lugar
