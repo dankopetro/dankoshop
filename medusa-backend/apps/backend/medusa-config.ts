@@ -20,7 +20,7 @@ module.exports = defineConfig({
       options: {
         providers: [
           {
-            resolve: "@jaykanjia/medusa-file-cloudinary/providers/file-cloudinary",
+            resolve: "./src/providers/cloudinary",
             id: "cloudinary",
             options: {
               apiKey: process.env.CLOUDINARY_API_KEY,
