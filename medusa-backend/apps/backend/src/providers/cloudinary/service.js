@@ -42,7 +42,6 @@ class CloudinaryFileProviderService extends utils_1.AbstractFileProviderService 
                 resource_type: resourceType,
                 public_id: publicId,
                 folder: this.options_?.folderName || undefined,
-                format: ext || undefined,
             }, (error, result) => {
                 console.log({ result });
                 if (error)
