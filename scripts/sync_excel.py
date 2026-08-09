@@ -60,6 +60,7 @@ def read_products() -> List[Dict]:
     for row in ws.iter_rows(min_row=2, values_only=True):
         if not row[0] or not row[1]:
             continue
+        envio_grande_raw = row[11] if len(row) > 11 else None
         products.append({
             "sku": str(row[0]).strip(),
             "name": str(row[1]).strip(),
@@ -72,6 +73,7 @@ def read_products() -> List[Dict]:
             "cuotas": parse_int(row[7]),
             "cuota_valor": parse_float(row[8]),
             "description": str(row[9]).strip() if row[9] else "",
+            "envio_grande": str(envio_grande_raw).strip().lower() in ("true", "1", "sí", "si", "yes") if envio_grande_raw else False,
         })
     print(f"Loaded {len(products)} products from {EXCEL_PATH}")
     return products
@@ -197,7 +199,7 @@ def build_metadata(product: Dict) -> Dict:
     factor_12 = ((1 + tasa_ml) ** 12 - 1) / (tasa_ml * (1 + tasa_ml) ** 12)
     cuota_12 = int(round(precio_lista / factor_12))
 
-    return {
+    meta = {
         "precio_lista": precio_lista,
         "precio_efectivo": precio_efectivo,
         "precio_transferencia": precio_transferencia,
@@ -206,6 +208,11 @@ def build_metadata(product: Dict) -> Dict:
         "cuota_valor_6": cuota_6,
         "cuota_valor_12": cuota_12,
     }
+
+    if product.get("envio_grande"):
+        meta["envio_grande"] = True
+
+    return meta
 
 
 def slugify(value: str) -> str:
