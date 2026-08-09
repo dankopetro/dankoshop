@@ -4,6 +4,7 @@ export interface CartItem {
   price: number
   quantity: number
   image?: string
+  envio_grande?: boolean
 }
 
 export interface Customer {

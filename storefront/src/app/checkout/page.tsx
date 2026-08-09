@@ -55,6 +55,7 @@ export default function CheckoutPage() {
   const envio = calcEnvio(subtotal, cliente.metodo_envio)
   const total = subtotal + envio
   const banco = getBankData()
+  const hasBigItems = cart.some((it) => it.envio_grande)
 
   const set = (k: keyof Customer, v: string) => setCliente((c) => ({ ...c, [k]: v }))
 
@@ -179,14 +180,33 @@ export default function CheckoutPage() {
                 <Store className="w-5 h-5 text-gray-500" />
                 <span className="text-sm">Retiro en local (a coordinar)</span>
               </label>
-              <label className="flex items-center gap-3 border rounded-lg p-3 cursor-pointer">
-                <input type="radio" name="envio" checked={cliente.metodo_envio === "envio"} onChange={() => set("metodo_envio", "envio")} />
-                <Truck className="w-5 h-5 text-gray-500" />
-                <span className="text-sm">Envío a domicilio</span>
-              </label>
+              {!hasBigItems && (
+                <label className="flex items-center gap-3 border rounded-lg p-3 cursor-pointer">
+                  <input type="radio" name="envio" checked={cliente.metodo_envio === "envio"} onChange={() => set("metodo_envio", "envio")} />
+                  <Truck className="w-5 h-5 text-gray-500" />
+                  <span className="text-sm">Envío a domicilio</span>
+                </label>
+              )}
+              {hasBigItems && (
+                <div className="border rounded-lg p-3 bg-amber-50 border-amber-200">
+                  <div className="flex items-center gap-2 text-amber-700">
+                    <Truck className="w-5 h-5" />
+                    <span className="text-sm font-medium">Envío de productos grandes</span>
+                  </div>
+                  <p className="text-xs text-amber-600 mt-1">
+                    El envío de productos de gran volumen se coordina después de la compra. Te contactamos para definir costo y plazo.
+                  </p>
+                </div>
+              )}
             </div>
 
-            {cliente.metodo_envio === "envio" && (
+            {cliente.metodo_envio === "retiro" && (
+              <p className="text-xs text-gray-500 mt-2">
+                El stock se confirma después de la compra. Puede tardar entre 5 y 7 días hábiles en estar disponible para retirar.
+              </p>
+            )}
+
+            {cliente.metodo_envio === "envio" && !hasBigItems && (
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Dirección *</label>
@@ -202,10 +222,17 @@ export default function CheckoutPage() {
                 </div>
               </div>
             )}
-            {cliente.metodo_envio === "envio" && subtotal < ENVIO_GRATIS_DESDE && (
+            {cliente.metodo_envio === "envio" && !hasBigItems && subtotal < ENVIO_GRATIS_DESDE && (
               <p className="text-xs text-gray-500 mt-2">
                 Envío gratis a partir de {formatARS(ENVIO_GRATIS_DESDE)}.
               </p>
+            )}
+            {hasBigItems && (
+              <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-700">
+                <p className="font-medium mb-1">Envío de productos grandes</p>
+                <p>Dentro de La Plata, Berisso y Ensenada coordinamos el envío sin costo adicional en compras mayores a {formatARS(100000)}.</p>
+                <p className="mt-1">Fuera de esta zona, el costo es similar al de un flete. Te contactamos después de la compra para coordinar.</p>
+              </div>
             )}
           </section>
 
@@ -267,7 +294,7 @@ export default function CheckoutPage() {
           </div>
           <div className="border-t pt-3 space-y-1">
             <div className="flex justify-between text-sm text-gray-600"><span>Subtotal</span><span>{formatARS(subtotal)}</span></div>
-            <div className="flex justify-between text-sm text-gray-600"><span>Envío</span><span>{envio === 0 ? "Gratis" : formatARS(envio)}</span></div>
+            <div className="flex justify-between text-sm text-gray-600"><span>Envío</span><span>{hasBigItems ? (cliente.metodo_envio === "retiro" ? "Gratis" : "A coordinar") : (envio === 0 ? "Gratis" : formatARS(envio))}</span></div>
             <div className="flex justify-between text-lg font-bold text-gray-900 border-t pt-2">
               <span>Total</span><span className="text-blue-600">{formatARS(total)}</span>
             </div>
