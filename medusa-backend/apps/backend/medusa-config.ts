@@ -14,6 +14,25 @@ module.exports = defineConfig({
     }
   },
   modules: [
+    // Cloudinary file storage provider
+    {
+      resolve: "@medusajs/medusa/file",
+      options: {
+        providers: [
+          {
+            resolve: "@jaykanjia/medusa-file-cloudinary/providers/file-cloudinary",
+            id: "cloudinary",
+            options: {
+              apiKey: process.env.CLOUDINARY_API_KEY,
+              apiSecret: process.env.CLOUDINARY_API_SECRET,
+              cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+              folderName: "dankoshop",
+              secure: true,
+            },
+          },
+        ],
+      },
+    },
     // MercadoPago payment provider - uncomment after installing @medusajs/payment-mercadopago
     // {
     //   resolve: "@medusajs/payment-mercadopago",
