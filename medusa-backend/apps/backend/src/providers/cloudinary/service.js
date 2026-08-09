@@ -24,8 +24,14 @@ class CloudinaryFileProviderService extends utils_1.AbstractFileProviderService 
     async upload(file) {
         const publicId = this.generatePublicId(file.filename);
         console.log({ publicId });
-        // Convert binary-encoded string to Buffer
-        const buffer = Buffer.from(file.content, "binary");
+        // Decode file content properly (handle base64 and binary)
+        let buffer;
+        const decodedBase64 = Buffer.from(file.content, "base64");
+        if (decodedBase64.toString("base64") === file.content) {
+            buffer = decodedBase64;
+        } else {
+            buffer = Buffer.from(file.content, "binary");
+        }
         // Detect resource type from file extension
         const ext = file.filename?.split('.').pop()?.toLowerCase() || '';
         const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff'];
@@ -45,7 +51,7 @@ class CloudinaryFileProviderService extends utils_1.AbstractFileProviderService 
                     return reject(new Error("No result returned from Cloudinary upload."));
                 resolve({
                     url: result.secure_url,
-                    key: result.public_id.replace(this.options_?.folderName || "", ""),
+                    key: result.public_id.replace(new RegExp("^" + (this.options_?.folderName || "") + "/?"), ""),
                 });
             });
             stream_1.Readable.from(buffer).pipe(uploadStream);
