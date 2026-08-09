@@ -64,9 +64,19 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                     Transferencia: <span className="font-semibold">{formatPrice(product.prices.precio_transferencia)}</span>
                   </p>
                 )}
-                {product.prices.cuotas && product.prices.cuota_valor && (
+                {product.prices.cuota_valor_3 && (
                   <p className="text-sm text-blue-600 font-medium">
-                    {product.prices.cuotas}x {formatPrice(product.prices.cuota_valor)} sin interés
+                    3x {formatPrice(product.prices.cuota_valor_3)} sin interés
+                  </p>
+                )}
+                {product.prices.cuota_valor_6 && (
+                  <p className="text-sm text-blue-600 font-medium">
+                    6x {formatPrice(product.prices.cuota_valor_6)} sin interés
+                  </p>
+                )}
+                {product.prices.cuota_valor_12 && (
+                  <p className="text-sm text-blue-600 font-medium">
+                    12x {formatPrice(product.prices.cuota_valor_12)} con interés
                   </p>
                 )}
               </div>

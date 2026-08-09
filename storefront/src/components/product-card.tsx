@@ -13,8 +13,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { prices } = product
   const precioLista = prices.precio_lista || 0
   const precioEfectivo = prices.precio_efectivo || 0
-  const cuotas = prices.cuotas || 0
-  const cuotaValor = prices.cuota_valor || 0
+  const cuotaValor3 = prices.cuota_valor_3 || 0
+  const cuotaValor6 = prices.cuota_valor_6 || 0
+  const cuotaValor12 = prices.cuota_valor_12 || 0
 
   return (
     <Link href={`/producto/${product.slug}`} className="group">
@@ -70,10 +71,22 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <span>Efectivo: ${precioEfectivo.toLocaleString("es-AR")}</span>
               </div>
             )}
-            {cuotas > 0 && cuotaValor > 0 && (
+            {cuotaValor3 > 0 && (
               <div className="flex items-center gap-2 text-gray-600 text-sm">
                 <Tag className="w-4 h-4" />
-                <span>{cuotas} cuotas de ${cuotaValor.toLocaleString("es-AR")}</span>
+                <span>3 cuotas de ${cuotaValor3.toLocaleString("es-AR")}</span>
+              </div>
+            )}
+            {cuotaValor6 > 0 && (
+              <div className="flex items-center gap-2 text-gray-600 text-sm">
+                <Tag className="w-4 h-4" />
+                <span>6 cuotas de ${cuotaValor6.toLocaleString("es-AR")}</span>
+              </div>
+            )}
+            {cuotaValor12 > 0 && (
+              <div className="flex items-center gap-2 text-gray-600 text-sm">
+                <Tag className="w-4 h-4" />
+                <span>12 cuotas de ${cuotaValor12.toLocaleString("es-AR")}</span>
               </div>
             )}
           </div>
