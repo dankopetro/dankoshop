@@ -23,6 +23,7 @@ export interface Product {
   }
   images: string[]
   slug: string
+  envio_grande?: boolean
 }
 
 export interface Category {
@@ -73,6 +74,7 @@ export function mapProduct(p: MedusaProduct): Product {
     },
     images: (p.images?.map((i) => i.url) || []).filter(Boolean),
     slug: p.handle,
+    envio_grande: m.envio_grande === true,
   }
 }
 

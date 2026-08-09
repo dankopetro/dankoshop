@@ -181,16 +181,31 @@ def find_product_by_sku(sku: str) -> Optional[Dict]:
 
 
 def build_metadata(product: Dict) -> Dict:
-    prices = {
-        "precio_lista": product.get("precio_lista"),
-        "precio_efectivo": product.get("precio_efectivo"),
-        "precio_transferencia": product.get("precio_transferencia"),
-        "precio_mayorista": product.get("precio_mayorista"),
-        "precio_mayorista_transferencia": product.get("precio_mayorista_transferencia"),
-        "cuotas": product.get("cuotas"),
-        "cuota_valor": product.get("cuota_valor"),
+    precio_mayorista = product.get("precio_mayorista")
+
+    if not precio_mayorista:
+        return {}
+
+    m = float(precio_mayorista)
+    precio_lista = int(round(m * 1.25))
+    precio_efectivo = int(round(m * 1.10))
+    precio_transferencia = int(round(m * 1.15))
+
+    cuota_3 = int(round(precio_lista / 3))
+    cuota_6 = int(round(precio_lista / 6))
+    tasa_ml = 0.12
+    factor_12 = ((1 + tasa_ml) ** 12 - 1) / (tasa_ml * (1 + tasa_ml) ** 12)
+    cuota_12 = int(round(precio_lista / factor_12))
+
+    return {
+        "precio_lista": precio_lista,
+        "precio_efectivo": precio_efectivo,
+        "precio_transferencia": precio_transferencia,
+        "precio_mayorista": int(round(m)),
+        "cuota_valor_3": cuota_3,
+        "cuota_valor_6": cuota_6,
+        "cuota_valor_12": cuota_12,
     }
-    return {k: v for k, v in prices.items() if v is not None}
 
 
 def slugify(value: str) -> str:
@@ -212,13 +227,8 @@ def update_variant_price(product_id: str, variant_id: str, price: float, region_
 def create_or_update_product(product: Dict, region_id: str, category_id: Optional[str], image_urls: Dict[str, List[str]]) -> bool:
     """Create or update product in Medusa v2."""
     sku = product["sku"]
-    prices = {
-        "precio_lista": product.get("precio_lista"),
-        "precio_efectivo": product.get("precio_efectivo"),
-        "precio_transferencia": product.get("precio_transferencia"),
-        "precio_mayorista": product.get("precio_mayorista"),
-    }
-    list_price = int(round(prices.get("precio_lista") or prices.get("precio_efectivo") or 0))
+    precio_mayorista = product.get("precio_mayorista")
+    list_price = int(round(float(precio_mayorista) * 1.25)) if precio_mayorista else 0
     images = [{"url": u} for u in (image_urls.get(sku) or [])[:10]]
 
     metadata = build_metadata(product)

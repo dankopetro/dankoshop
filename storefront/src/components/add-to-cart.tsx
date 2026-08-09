@@ -23,7 +23,7 @@ export default function AddToCart({ product }: AddToCartProps) {
     const items = getCart()
     const existing = items.find((i) => i.sku === product.sku)
     if (existing) existing.quantity = (existing.quantity || 1) + qty
-    else items.push({ sku: product.sku, name: product.name, price, quantity: qty, image: product.images[0] })
+    else items.push({ sku: product.sku, name: product.name, price, quantity: qty, image: product.images[0], envio_grande: product.envio_grande })
     saveCart(items)
     window.dispatchEvent(new Event("dankoshop_cart_update"))
     setAdded(true)
