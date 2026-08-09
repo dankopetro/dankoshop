@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build",
-  "installCommand": "npm install --registry=https://registry.npmmirror.com",
+  "installCommand": "npm install --registry=https://registry.npmmirror.com --legacy-peer-deps",
   "framework": "nextjs",
   "outputDirectory": ".next"
 }
