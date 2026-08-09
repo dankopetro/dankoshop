@@ -17,8 +17,9 @@ export interface Product {
     precio_efectivo: number | null
     precio_transferencia: number | null
     precio_mayorista: number | null
-    cuotas: number | null
-    cuota_valor: number | null
+    cuota_valor_3: number | null
+    cuota_valor_6: number | null
+    cuota_valor_12: number | null
   }
   images: string[]
   slug: string
@@ -66,8 +67,9 @@ export function mapProduct(p: MedusaProduct): Product {
       precio_efectivo: num(m.precio_efectivo),
       precio_transferencia: num(m.precio_transferencia),
       precio_mayorista: num(m.precio_mayorista),
-      cuotas: num(m.cuotas),
-      cuota_valor: num(m.cuota_valor),
+      cuota_valor_3: num(m.cuota_valor_3),
+      cuota_valor_6: num(m.cuota_valor_6),
+      cuota_valor_12: num(m.cuota_valor_12),
     },
     images: (p.images?.map((i) => i.url) || []).filter(Boolean),
     slug: p.handle,

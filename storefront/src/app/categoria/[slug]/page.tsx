@@ -77,9 +77,19 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
                     {formatPrice(p.prices.precio_efectivo)}
                   </p>
                 )}
-                {p.prices.cuotas && p.prices.cuota_valor && (
+                {p.prices.cuota_valor_3 && (
                   <p className="text-xs text-gray-500 mt-1">
-                    {p.prices.cuotas}x {formatPrice(p.prices.cuota_valor)} sin interés
+                    3x {formatPrice(p.prices.cuota_valor_3)} sin interés
+                  </p>
+                )}
+                {p.prices.cuota_valor_6 && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    6x {formatPrice(p.prices.cuota_valor_6)} sin interés
+                  </p>
+                )}
+                {p.prices.cuota_valor_12 && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    12x {formatPrice(p.prices.cuota_valor_12)} con interés
                   </p>
                 )}
               </div>
