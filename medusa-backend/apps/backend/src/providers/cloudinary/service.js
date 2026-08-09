@@ -26,11 +26,17 @@ class CloudinaryFileProviderService extends utils_1.AbstractFileProviderService 
         console.log({ publicId });
         // Convert binary-encoded string to Buffer
         const buffer = Buffer.from(file.content, "binary");
+        // Detect resource type from file extension
+        const ext = file.filename?.split('.').pop()?.toLowerCase() || '';
+        const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff'];
+        const resourceType = imageExts.includes(ext) ? 'image' : 'raw';
+
         return new Promise((resolve, reject) => {
             const uploadStream = cloudinary_1.v2.uploader.upload_stream({
-                resource_type: "auto",
+                resource_type: resourceType,
                 public_id: publicId,
                 folder: this.options_?.folderName || undefined,
+                format: ext || undefined,
             }, (error, result) => {
                 console.log({ result });
                 if (error)
