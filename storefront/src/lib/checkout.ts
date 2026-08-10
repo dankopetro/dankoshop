@@ -1,3 +1,5 @@
+import { EnvioZona, EnvioVelocidad } from "./envios"
+
 export interface CartItem {
   sku: string
   name: string
@@ -16,6 +18,8 @@ export interface Customer {
   ciudad: string
   provincia: string
   metodo_envio: "retiro" | "envio"
+  zona_envio?: EnvioZona
+  velocidad_envio?: EnvioVelocidad
 }
 
 export interface Order {

@@ -18,13 +18,12 @@ import {
   formatARS,
   getCart,
   cartSubtotal,
-  calcEnvio,
   saveOrder,
   clearCart,
   buildOrder,
-  ENVIO_GRATIS_DESDE,
 } from "@/lib/checkout"
 import { getBankData } from "@/lib/banco"
+import { ZONAS_ENVIO, ENVIO_GRATIS_DESDE, calcEnvioCosto, EnvioZona, EnvioVelocidad } from "@/lib/envios"
 
 const input =
   "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -41,6 +40,8 @@ export default function CheckoutPage() {
     ciudad: "",
     provincia: "Buenos Aires",
     metodo_envio: "retiro",
+    zona_envio: "laplata",
+    velocidad_envio: "estandar",
   })
   const [metodo, setMetodo] = useState<"mercadopago" | "transferencia">("mercadopago")
   const [loading, setLoading] = useState(false)
@@ -52,10 +53,10 @@ export default function CheckoutPage() {
   }, [])
 
   const subtotal = cartSubtotal(cart)
-  const envio = calcEnvio(subtotal, cliente.metodo_envio)
+  const hasBigItems = cart.some((it) => it.envio_grande)
+  const envio = hasBigItems && cliente.metodo_envio === "envio" ? 0 : calcEnvioCosto(subtotal, cliente.zona_envio || null, cliente.velocidad_envio || "estandar")
   const total = subtotal + envio
   const banco = getBankData()
-  const hasBigItems = cart.some((it) => it.envio_grande)
 
   const set = (k: keyof Customer, v: string) => setCliente((c) => ({ ...c, [k]: v }))
 
@@ -207,25 +208,59 @@ export default function CheckoutPage() {
             )}
 
             {cliente.metodo_envio === "envio" && !hasBigItems && (
-              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="sm:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Dirección *</label>
-                  <input className={input} value={cliente.direccion} onChange={(e) => set("direccion", e.target.value)} />
+              <div className="mt-4 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="sm:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Dirección *</label>
+                    <input className={input} value={cliente.direccion} onChange={(e) => set("direccion", e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+                    <input className={input} value={cliente.ciudad} onChange={(e) => set("ciudad", e.target.value)} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Provincia</label>
+                    <input className={input} value={cliente.provincia} onChange={(e) => set("provincia", e.target.value)} />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
-                  <input className={input} value={cliente.ciudad} onChange={(e) => set("ciudad", e.target.value)} />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Zona de envío *</label>
+                    <select
+                      className={input}
+                      value={cliente.zona_envio || "laplata"}
+                      onChange={(e) => set("zona_envio", e.target.value as EnvioZona)}
+                    >
+                      {ZONAS_ENVIO.map((z) => (
+                        <option key={z.zona} value={z.zona}>{z.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Velocidad *</label>
+                    <select
+                      className={input}
+                      value={cliente.velocidad_envio || "estandar"}
+                      onChange={(e) => set("velocidad_envio", e.target.value as EnvioVelocidad)}
+                    >
+                      <option value="estandar">Estándar (5-7 días)</option>
+                      <option value="express">Express (2-3 días)</option>
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Provincia</label>
-                  <input className={input} value={cliente.provincia} onChange={(e) => set("provincia", e.target.value)} />
-                </div>
+
+                {subtotal >= ENVIO_GRATIS_DESDE ? (
+                  <p className="text-sm text-green-600 font-medium">
+                    Envío gratis por superar {formatARS(ENVIO_GRATIS_DESDE)}.
+                  </p>
+                ) : (
+                  <p className="text-sm text-gray-600">
+                    Costo de envío: <span className="font-medium">{formatARS(envio)}</span>
+                    {cliente.velocidad_envio === "express" ? " (express)" : " (estándar)"}
+                  </p>
+                )}
               </div>
-            )}
-            {cliente.metodo_envio === "envio" && !hasBigItems && subtotal < ENVIO_GRATIS_DESDE && (
-              <p className="text-xs text-gray-500 mt-2">
-                Envío gratis a partir de {formatARS(ENVIO_GRATIS_DESDE)}.
-              </p>
             )}
             {hasBigItems && (
               <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-700">
@@ -295,6 +330,9 @@ export default function CheckoutPage() {
           <div className="border-t pt-3 space-y-1">
             <div className="flex justify-between text-sm text-gray-600"><span>Subtotal</span><span>{formatARS(subtotal)}</span></div>
             <div className="flex justify-between text-sm text-gray-600"><span>Envío</span><span>{hasBigItems ? (cliente.metodo_envio === "retiro" ? "Gratis" : "A coordinar") : (envio === 0 ? "Gratis" : formatARS(envio))}</span></div>
+            {!hasBigItems && cliente.metodo_envio === "envio" && envio > 0 && (
+              <p className="text-xs text-gray-400 text-right">{cliente.velocidad_envio === "express" ? "Express" : "Estándar"} - {ZONAS_ENVIO.find(z => z.zona === cliente.zona_envio)?.label}</p>
+            )}
             <div className="flex justify-between text-lg font-bold text-gray-900 border-t pt-2">
               <span>Total</span><span className="text-blue-600">{formatARS(total)}</span>
             </div>
