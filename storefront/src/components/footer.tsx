@@ -89,7 +89,7 @@ export default function Footer() {
           </p>
           <p className="text-sm text-gray-500">
             Desarrollado con Next.js + MedusaJS ·{" "}
-            <Link href="/admin-contenido" className="hover:text-gray-300">Admin</Link>
+            <a href="mailto:admin@dankoshop.com.ar" className="hover:text-gray-300">Admin</a>
           </p>
         </div>
       </div>
