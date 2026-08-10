@@ -4,13 +4,13 @@ import { useState, useRef, useEffect } from "react"
 import { MessageCircle, X, Send, Sparkles } from "lucide-react"
 
 interface ChatMsg {
-  from: "user" | "carla"
+  from: "user" | "mary"
   text: string
 }
 
 const QUICK = ["Medios de pago", "Envíos", "Garantías", "Precios mayoristas"]
 
-export default function CarlaChat() {
+export default function MaryChat() {
   const [open, setOpen] = useState(false)
   const [msgs, setMsgs] = useState<ChatMsg[]>([])
   const [input, setInput] = useState("")
@@ -28,15 +28,15 @@ export default function CarlaChat() {
     setInput("")
     setLoading(true)
     try {
-      const res = await fetch("/api/carla", {
+      const res = await fetch("/api/mary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: trimmed }),
       })
       const data = await res.json()
-      setMsgs((m) => [...m, { from: "carla", text: data.reply || "Ups, no pude procesar tu consulta." }])
+      setMsgs((m) => [...m, { from: "mary", text: data.reply || "Ups, no pude procesar tu consulta." }])
     } catch {
-      setMsgs((m) => [...m, { from: "carla", text: "Hubo un problema de conexión. Intentalo de nuevo 😊" }])
+      setMsgs((m) => [...m, { from: "mary", text: "Hubo un problema de conexión. Intentalo de nuevo 😊" }])
     } finally {
       setLoading(false)
     }
@@ -49,7 +49,7 @@ export default function CarlaChat() {
         onClick={() => setOpen((o) => !o)}
         className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
         style={{ backgroundColor: "#e5ad68" }}
-        aria-label="Abrir chat con CARLA"
+        aria-label="Abrir chat con MARY"
       >
         {open ? (
           <X className="w-6 h-6 text-white" />
@@ -72,7 +72,7 @@ export default function CarlaChat() {
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <div>
-              <p className="text-white font-semibold text-sm">CARLA</p>
+              <p className="text-white font-semibold text-sm">MARY</p>
               <p className="text-white/80 text-xs">Asistente virtual · Online</p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function CarlaChat() {
             {msgs.length === 0 && (
               <div className="space-y-3">
                 <div className="bg-white rounded-2xl rounded-tl-sm p-3 text-sm text-gray-700 shadow-sm">
-                  ¡Hola! Soy CARLA 😊, la asistente virtual de DankoShop. Consultame sobre precios, cuotas, envíos, garantías o pagos.
+                  ¡Hola! Soy MARY 😊, la asistente virtual de DankoShop. Consultame sobre precios, cuotas, envíos, garantías o pagos.
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {QUICK.map((q) => (

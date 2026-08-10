@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getProducts } from "@/lib/medusa"
 
-const KNOWLEDGE = require("@/content/carla.json") as {
+const KNOWLEDGE = require("@/content/mary.json") as {
   bienvenida: string
   saludo: string[]
   despedida: string[]
@@ -17,7 +17,7 @@ function normalize(s: string): string {
     .replace(/[\u0300-\u036f]/g, "")
 }
 
-const SALUDOS = ["hola", "buenas", "buen dia", "buenas tardes", "buenas noches", "hey", "que tal", "carla"]
+const SALUDOS = ["hola", "buenas", "buen dia", "buenas tardes", "buenas noches", "hey", "que tal", "mary"]
 const DESPEDIDAS = ["chau", "adios", "gracias", "graciass", "ok", "perfecto", "listo", "hasta luego", "nos vemos"]
 
 function formatPrice(n: number): string {
