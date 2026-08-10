@@ -3,7 +3,7 @@ import { Geist } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import CarlaChat from "@/components/carla-chat"
+import MaryChat from "@/components/mary-chat"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <CarlaChat />
+        <MaryChat />
       </body>
     </html>
   )
