@@ -68,7 +68,7 @@ export default function Footer() {
               { icon: Truck, title: "Envío gratis", desc: "En compras +$50.000" },
               { icon: Shield, title: "Compra segura", desc: "SSL certificado" },
               { icon: RotateCcw, title: "Devoluciones", desc: "30 días gratis" },
-              { icon: Headphones, title: "Soporte 24/7", desc: "CARLA IA" },
+              { icon: Headphones, title: "Soporte 24/7", desc: "Mary IA" },
             ].map((benefit) => (
               <div key={benefit.title} className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
