@@ -6,7 +6,7 @@ const benefits = [
   { icon: Truck, title: "Envío gratis", desc: "En compras superiores a $50.000" },
   { icon: Shield, title: "Compra 100% segura", desc: "SSL certificado y pagos protegidos" },
   { icon: RotateCcw, title: "Devoluciones fáciles", desc: "30 días para cambiar o devolver" },
-  { icon: Headphones, title: "Soporte 24/7", desc: "CARLA nuestra IA te atiende siempre" },
+  { icon: Headphones, title: "Soporte 24/7", desc: "Mary nuestra IA te atiende siempre" },
 ]
 
 const categoryIcons: Record<string, string> = {
