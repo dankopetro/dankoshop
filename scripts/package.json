@@ -4,7 +4,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "sync": "python3 sync_excel.py",
+    "build": "echo ok",
+    "sync": "python3 sync_excel_to_medusa.py",
     "parse:chat": "python3 parse_chat.py"
   },
   "dependencies": {}
