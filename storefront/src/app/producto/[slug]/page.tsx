@@ -55,9 +55,12 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                   </p>
                 )}
                 {product.prices.precio_efectivo && (
-                  <p className="text-3xl font-bold text-green-600">
-                    {formatPrice(product.prices.precio_efectivo)}
-                  </p>
+                  <div>
+                    <p className="text-xs text-green-500 font-medium uppercase tracking-wide">Precio en efectivo</p>
+                    <p className="text-3xl font-bold text-green-600">
+                      {formatPrice(product.prices.precio_efectivo)}
+                    </p>
+                  </div>
                 )}
                 {product.prices.precio_transferencia && (
                   <p className="text-sm text-gray-600">

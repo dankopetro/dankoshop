@@ -73,9 +73,12 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
                   </p>
                 )}
                 {p.prices.precio_efectivo && (
-                  <p className="text-lg font-bold text-green-600 mt-1">
-                    {formatPrice(p.prices.precio_efectivo)}
-                  </p>
+                  <div className="mt-1">
+                    <p className="text-[10px] text-green-500 font-medium uppercase tracking-wide">Efectivo</p>
+                    <p className="text-lg font-bold text-green-600">
+                      {formatPrice(p.prices.precio_efectivo)}
+                    </p>
+                  </div>
                 )}
                 {p.prices.cuota_valor_3 && (
                   <p className="text-xs text-gray-500 mt-1">
