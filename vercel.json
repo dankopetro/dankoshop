@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build --workspace=storefront",
   "installCommand": "npm install --registry=https://registry.npmmirror.com --legacy-peer-deps",
   "framework": "nextjs",
   "outputDirectory": ".next"
