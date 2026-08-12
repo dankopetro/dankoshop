@@ -54,7 +54,7 @@ export default function CheckoutPage() {
 
   const subtotal = cartSubtotal(cart)
   const hasBigItems = cart.some((it) => it.envio_grande)
-  const envio = hasBigItems && cliente.metodo_envio === "envio" ? 0 : calcEnvioCosto(subtotal, cliente.zona_envio || null, cliente.velocidad_envio || "estandar")
+  const envio = cliente.metodo_envio === "retiro" ? 0 : hasBigItems && cliente.metodo_envio === "envio" ? 0 : calcEnvioCosto(subtotal, cliente.zona_envio || null, cliente.velocidad_envio || "estandar")
   const total = subtotal + envio
   const banco = getBankData()
 
