@@ -83,32 +83,17 @@ export default function ProductsClient({ products, categories }: { products: Pro
               <div className="p-4">
                 <span className="text-xs text-blue-600 font-medium">{p.category}</span>
                 <h3 className="font-semibold text-gray-900 mt-1 line-clamp-2 text-sm">{p.name}</h3>
-                {p.prices.precio_lista && (
-                  <p className="text-xs text-gray-400 line-through mt-1">
-                    Lista: {formatPrice(p.prices.precio_lista)}
-                  </p>
-                )}
                 {p.prices.precio_efectivo && (
-                  <div className="mt-1">
-                    <p className="text-[10px] text-green-500 font-medium uppercase tracking-wide">Efectivo</p>
+                  <div className="mt-2">
+                    <p className="text-[10px] text-green-600 font-semibold uppercase tracking-wide">Efectivo / Transferencia</p>
                     <p className="text-lg font-bold text-green-600">
                       {formatPrice(p.prices.precio_efectivo)}
                     </p>
                   </div>
                 )}
-                {p.prices.cuota_valor_3 && (
+                {p.prices.precio_lista && (
                   <p className="text-xs text-gray-500 mt-1">
-                    3x {formatPrice(p.prices.cuota_valor_3)} sin interés
-                  </p>
-                )}
-                {p.prices.cuota_valor_6 && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    6x {formatPrice(p.prices.cuota_valor_6)} sin interés
-                  </p>
-                )}
-                {p.prices.cuota_valor_12 && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    12x {formatPrice(p.prices.cuota_valor_12)} con interés
+                    Lista: <span className="font-medium text-gray-700">{formatPrice(p.prices.precio_lista)}</span> (hasta 12 cuotas)
                   </p>
                 )}
               </div>
