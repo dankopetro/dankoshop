@@ -5,6 +5,17 @@ interface MPItem {
   name: string
   price: number
   quantity: number
+  description?: string
+}
+
+interface MPPayer {
+  nombre?: string
+  email?: string
+  telefono?: string
+  dni?: string
+  direccion?: string
+  ciudad?: string
+  provincia?: string
 }
 
 export async function POST(req: NextRequest) {
@@ -30,6 +41,7 @@ export async function POST(req: NextRequest) {
   const items = (body.items as MPItem[]).map((it) => ({
     id: String(it.sku),
     title: String(it.name).slice(0, 240),
+    description: String(it.description || it.name).slice(0, 250),
     quantity: Number(it.quantity) || 1,
     unit_price: Math.round(Number(it.price) || 0),
     currency_id: "ARS",
@@ -37,7 +49,45 @@ export async function POST(req: NextRequest) {
 
   const externalRef = String(body.external_reference || `DK-${Date.now()}`)
 
-  const preference = {
+  let payerObj: any = undefined
+  if (body.payer) {
+    const rawPayer = body.payer as MPPayer
+    const fullNombre = (rawPayer.nombre || "").trim()
+    const nameParts = fullNombre.split(/\s+/)
+    const firstName = nameParts[0] || "Cliente"
+    const lastName = nameParts.slice(1).join(" ") || firstName
+
+    payerObj = {
+      name: firstName,
+      surname: lastName,
+      email: (rawPayer.email || "").trim(),
+    }
+
+    const rawPhone = (rawPayer.telefono || "").replace(/\D/g, "")
+    if (rawPhone) {
+      payerObj.phone = {
+        area_code: "",
+        number: rawPhone,
+      }
+    }
+
+    const rawDni = (rawPayer.dni || "").replace(/\D/g, "")
+    if (rawDni) {
+      payerObj.identification = {
+        type: "DNI",
+        number: rawDni,
+      }
+    }
+
+    if (rawPayer.direccion) {
+      payerObj.address = {
+        street_name: rawPayer.direccion.trim(),
+        zip_code: "",
+      }
+    }
+  }
+
+  const preference: any = {
     items,
     external_reference: externalRef,
     statement_descriptor: "DANKOSHOP",
@@ -52,6 +102,10 @@ export async function POST(req: NextRequest) {
     },
     auto_return: "approved",
     notification_url: `${base}/api/mercadopago/notification`,
+  }
+
+  if (payerObj) {
+    preference.payer = payerObj
   }
 
   try {
@@ -85,3 +139,4 @@ export async function POST(req: NextRequest) {
     )
   }
 }
+
