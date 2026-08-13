@@ -74,7 +74,7 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
                 )}
                 {p.prices.precio_efectivo && (
                   <div className="mt-1">
-                    <p className="text-[10px] text-green-500 font-medium uppercase tracking-wide">Efectivo</p>
+                    <p className="text-[10px] text-green-500 font-medium uppercase tracking-wide">Efectivo / Transferencia / Débito</p>
                     <p className="text-lg font-bold text-green-600">
                       {formatPrice(p.prices.precio_efectivo)}
                     </p>
@@ -82,17 +82,17 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
                 )}
                 {p.prices.cuota_valor_3 && (
                   <p className="text-xs text-gray-500 mt-1">
-                    3x {formatPrice(p.prices.cuota_valor_3)} sin interés
+                    3 cuotas de {formatPrice(p.prices.cuota_valor_3)}
                   </p>
                 )}
                 {p.prices.cuota_valor_6 && (
                   <p className="text-xs text-gray-500 mt-1">
-                    6x {formatPrice(p.prices.cuota_valor_6)} sin interés
+                    6 cuotas de {formatPrice(p.prices.cuota_valor_6)}
                   </p>
                 )}
                 {p.prices.cuota_valor_12 && (
                   <p className="text-xs text-gray-500 mt-1">
-                    12x {formatPrice(p.prices.cuota_valor_12)} con interés
+                    12 cuotas de {formatPrice(p.prices.cuota_valor_12)}
                   </p>
                 )}
               </div>

@@ -40,7 +40,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="absolute top-2 left-2 flex flex-col gap-1">
               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-600 text-white">
                 <Banknote className="w-3 h-3 mr-1" />
-                Efectivo
+                Efectivo / Débito
               </span>
             </div>
           )}
@@ -68,7 +68,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {precioEfectivo > 0 && precioEfectivo < precioLista && (
               <div className="flex items-center gap-2 text-green-600 font-medium text-sm">
                 <Banknote className="w-4 h-4" />
-                <span>Efectivo: ${precioEfectivo.toLocaleString("es-AR")}</span>
+                <span>Efectivo / Débito: ${precioEfectivo.toLocaleString("es-AR")}</span>
               </div>
             )}
             {cuotaValor3 > 0 && (

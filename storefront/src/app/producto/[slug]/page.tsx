@@ -52,7 +52,7 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                 {product.prices.precio_efectivo && (
                   <div>
                     <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mb-1">
-                      💵 Precio Efectivo / Transferencia
+                      💵 Precio Efectivo / Transferencia / Débito
                     </span>
                     <p className="text-3xl font-extrabold text-green-600">
                       {formatPrice(product.prices.precio_efectivo)}
@@ -62,10 +62,10 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
                 {product.prices.precio_lista && (
                   <div className="pt-2 border-t border-gray-200">
                     <p className="text-sm font-semibold text-gray-700">
-                      💳 Precio de Lista: <span className="text-base text-gray-900 font-bold">{formatPrice(product.prices.precio_lista)}</span>
+                      💳 Precio de Lista (Crédito): <span className="text-base text-gray-900 font-bold">{formatPrice(product.prices.precio_lista)}</span>
                     </p>
                     <p className="text-xs text-gray-500 mt-0.5">
-                      Aceptamos todas las tarjetas en hasta 12 cuotas fijas o de tu banco vía Mercado Pago.
+                      Aceptamos tarjetas de crédito en hasta 12 cuotas fijas o según las promociones de tu banco en Mercado Pago.
                     </p>
                   </div>
                 )}
