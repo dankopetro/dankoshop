@@ -55,10 +55,14 @@ __pycache__/
 venv/
 env/
 
-# ===== Datos sensibles (precios, stock) =====
+# ===== Datos sensibles (precios, stock, clientes) =====
 data/organized_images/
+data/backups/
+data/pedidos.json
+medusa_backup*.json
 *.xlsx
 *.xls
+.~lock.*
 
 # ===== Vercel =====
 .vercel
@@ -66,3 +70,4 @@ data/organized_images/
 # ===== Docker =====
 .docker/
 docker-compose.override.yml
+.env*

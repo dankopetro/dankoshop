@@ -15,7 +15,6 @@ export interface Product {
   prices: {
     precio_lista: number | null
     precio_efectivo: number | null
-    precio_transferencia: number | null
     precio_mayorista: number | null
     cuota_valor_3: number | null
     cuota_valor_6: number | null
@@ -66,7 +65,6 @@ export function mapProduct(p: MedusaProduct): Product {
     prices: {
       precio_lista: num(m.precio_lista),
       precio_efectivo: num(m.precio_efectivo),
-      precio_transferencia: num(m.precio_transferencia),
       precio_mayorista: num(m.precio_mayorista),
       cuota_valor_3: num(m.cuota_valor_3),
       cuota_valor_6: num(m.cuota_valor_6),

@@ -14,7 +14,7 @@ E-commerce headless: **Next.js 14 (Storefront) + MedusaJS v2 (Backend)**
 dankoshop/
 ├── medusa-backend/     # API Medusa + Admin
 ├── storefront/         # Next.js Storefront
-├── scripts/            # sync_excel.py, seed.js
+├── scripts/            # sync_excel_to_medusa.py, seed.js
 ├── data/               # products.json, products.csv (generados)
 ├── excel/              # Productos_Maestro.xlsx (local only, .gitignored)
 ├── package.json        # Workspaces root

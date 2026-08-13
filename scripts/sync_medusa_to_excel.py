@@ -1,153 +1,316 @@
 #!/usr/bin/env python3
 """
-Sync products from Medusa v2 backend to excel/Productos_Maestro.xlsx.
-Usage:
-  MEDUSA_BACKEND_URL=https://... python3 sync_medusa_to_excel.py
+sync_medusa_to_excel.py - Medusa to Excel sync
+Reads all products from Medusa backend and writes them to excel/Productos_Maestro.xlsx.
 
-Reads all products from Medusa, extracts metadata and prices,
-and writes them to the Excel master file.
+New products (in Medusa but not in Excel) are ADDED.
+Existing products (matched by Medusa ID hidden in col 8) are UPDATED.
+Products in Excel but not in Medusa are DELETED (ghost rows).
+
+Excel columns (centered, colored headers):
+  0: SKU
+  1: Artículo
+  2: Categoría
+  3: Descripción
+  4: Precio Lista
+  5: Precio Mayorista
+  6: Envío Grande
+  7: (hidden) Medusa Product ID
+
+Prices are derived from Precio Mayorista stored in product metadata.
+
+Usage:
+  MEDUSA_BACKEND_URL=https://... python3 scripts/sync_medusa_to_excel.py [ruta_archivo.xlsx]
+  (el archivo por defecto es excel/Productos_Maestro.xlsx)
 """
 
-import json
 import os
 import sys
+import json
 import requests
 from pathlib import Path
 
-# Config
-MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "http://localhost:9100")
+MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
 ADMIN_EMAIL = os.getenv("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
 ADMIN_PASSWORD = os.getenv("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
-EXCEL_PATH = Path(__file__).parent.parent / "excel" / "Productos_Maestro.xlsx"
+EXCEL_PATH = Path(__file__).resolve().parent.parent / "excel" / "Productos_Maestro.xlsx"
+if len(sys.argv) > 1:
+    EXCEL_PATH = Path(sys.argv[1])
 
-MEDUSA_API_TOKEN = None
-HEADERS = {"Content-Type": "application/json"}
+_token = None
+
+# Header colors (hex without #)
+HEADER_COLORS = {
+    "SKU": "D35230",           # rojo
+    "Artículo": "E8A838",      # naranja/dorado
+    "Categoría": "4CAF50",     # verde
+    "Descripción": "2196F3",   # azul
+    "Precio Lista": "9C27B0",  # púrpura
+    "Precio Mayorista": "FF9800", # naranja
+    "Envío Grande": "00BCD4",  # cyan
+}
 
 
-def get_auth_token():
-    global MEDUSA_API_TOKEN
-    try:
-        resp = requests.post(
-            f"{MEDUSA_URL}/auth/user/emailpass",
-            json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD},
-            headers={"Content-Type": "application/json"},
-            timeout=10
-        )
-        if resp.status_code == 200:
-            MEDUSA_API_TOKEN = resp.json().get("token")
-            return MEDUSA_API_TOKEN
-    except Exception as e:
-        print(f"Login failed: {e}")
+def get_token():
+    global _token
+    if _token:
+        return _token
+    r = requests.post(
+        f"{MEDUSA_URL}/auth/user/emailpass",
+        json={"email": ADMIN_EMAIL, "password": ADMIN_PASSWORD},
+        headers={"Content-Type": "application/json"},
+        timeout=10,
+    )
+    if r.status_code == 200:
+        _token = r.json().get("token")
+        return _token
+    print(f"AUTH FAILED ({r.status_code}): {r.text[:200]}")
     return None
 
 
-def medusa_request(method, endpoint, data=None, params=None):
-    token = get_auth_token()
+def api(method, endpoint, data=None, params=None):
+    token = get_token()
     if not token:
-        raise Exception("No auth token")
-    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
-    return requests.request(method, f"{MEDUSA_URL}{endpoint}", headers=headers, json=data, params=params, timeout=30)
+        raise RuntimeError("No auth token")
+    return requests.request(
+        method,
+        f"{MEDUSA_URL}{endpoint}",
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+        json=data,
+        params=params,
+        timeout=30,
+    )
 
 
 def fetch_all_products():
     products = []
     offset = 0
-    limit = 100
     while True:
-        resp = medusa_request("GET", "/admin/products", params={"limit": limit, "offset": offset, "fields": "*categories,*variants,*images"})
-        if resp.status_code != 200:
-            print(f"Error fetching products: {resp.status_code}")
+        r = api("GET", "/admin/products", params={"limit": 100, "offset": offset})
+        if r.status_code != 200:
+            print(f"Error fetching products: {r.status_code}")
             break
-        batch = resp.json().get("products", [])
+        batch = r.json().get("products", [])
         products.extend(batch)
-        if len(batch) < limit:
+        if len(batch) < 100:
             break
-        offset += limit
+        offset += 100
     return products
 
 
-def get_category_name(product):
-    cats = product.get("categories", [])
-    if cats:
-        cat = cats[0]
-        if isinstance(cat, dict):
-            return cat.get("name") or cat.get("category", {}).get("name", "General")
-        return str(cat)
-    return "General"
-
-
-def sync_to_excel():
-    import openpyxl
-
-    products = fetch_all_products()
-    print(f"Fetched {len(products)} products from Medusa")
-
-    if EXCEL_PATH.exists():
-        wb = openpyxl.load_workbook(EXCEL_PATH)
-        ws = wb.active
-
-        existing_skus = {}
-        for row in ws.iter_rows(min_row=2, values_only=False):
-            if row[0].value:
-                existing_skus[str(row[0].value).strip()] = row
-    else:
-        wb = openpyxl.Workbook()
-        ws = wb.active
-        ws.title = "Productos"
-        headers = ["SKU", "Nombre", "Categoría", "Precio Lista", "Precio Efectivo",
-                    "Precio Transferencia", "Precio Mayorista", "Cuotas", "Valor Cuota",
-                    "Descripción", "Imágenes"]
-        ws.append(headers)
-        existing_skus = {}
-
-    updated = 0
-    created = 0
-    for p in products:
-        for v in p.get("variants", []):
-            sku = v.get("sku")
-            if not sku:
-                continue
-
-            meta = p.get("metadata") or {}
-            lista = meta.get("precio_lista")
-            efectivo = meta.get("precio_efectivo")
-            transferencia = meta.get("precio_transferencia")
-            mayorista = meta.get("precio_mayorista")
-            c3 = meta.get("cuota_valor_3")
-
-            images_list = p.get("images", [])
-            img_urls = " | ".join(img.get("url", "") for img in images_list if img.get("url"))
-            if not img_urls and p.get("thumbnail"):
-                img_urls = p["thumbnail"]
-
-            category = get_category_name(p)
-            description = p.get("description") or ""
-
-            if sku in existing_skus:
-                row = existing_skus[sku]
-                row[1].value = p.get("title", "")
-                row[2].value = category
-                row[3].value = lista
-                row[4].value = efectivo
-                row[5].value = transferencia
-                row[6].value = mayorista
-                row[7].value = 3
-                row[8].value = c3
-                row[9].value = description
-                row[10].value = img_urls
-                updated += 1
-            else:
-                new_row = [sku, p.get("title", ""), category, lista, efectivo,
-                           transferencia, mayorista, 3, c3, description, img_urls]
-                ws.append(new_row)
-                existing_skus[sku] = ws.max_row
-                created += 1
-
+def fetch_category_map():
+    """Build {product_id: category_name} by querying each category."""
+    cat_map = {}
+    cats = []
+    offset = 0
+    while True:
+        r = api("GET", "/admin/product-categories", params={"limit": 100, "offset": offset})
+        if r.status_code != 200:
             break
+        batch = r.json().get("product_categories", [])
+        cats.extend(batch)
+        if len(batch) < 100:
+            break
+        offset += 100
+
+    for cat in cats:
+        r = api("GET", "/admin/products", params={"limit": 100, "category_id": cat["id"]})
+        if r.status_code == 200:
+            for p in r.json().get("products", []):
+                cat_map[p["id"]] = cat["name"]
+    return cat_map
+
+
+def read_existing_excel():
+    """Returns {medusa_id: {row, sku, ...}} from existing Excel"""
+    import openpyxl
+    existing = {}
+    if not EXCEL_PATH.exists():
+        return existing
+
+    wb = openpyxl.load_workbook(EXCEL_PATH, data_only=True)
+    ws = wb.active
+    for idx, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
+        medusa_id = row[7] if len(row) > 7 else None
+        sku = row[0] if row[0] else None
+        if medusa_id:
+            existing[str(medusa_id).strip()] = {
+                "row": idx,
+                "sku": sku,
+            }
+        elif sku:
+            existing[f"sku:{sku}"] = {
+                "row": idx,
+                "sku": sku,
+            }
+    return existing
+
+
+def write_excel(products_data, existing):
+    """
+    products_data: list of dicts with keys:
+      medusa_id, sku, title, category, description, precio_lista, precio_mayorista, envio_grande
+    existing: dict from read_existing_excel()
+    """
+    import openpyxl
+    from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Productos"
+
+    headers = ["SKU", "Artículo", "Categoría", "Descripción", "PRECIO LISTA (control)", "Precio Mayorista", "Envío Grande"]
+    hidden_headers = ["ID Medusa"]  # col 8 (hidden)
+
+    # Write headers with colors
+    header_font = Font(bold=True, color="FFFFFF", size=11)
+    header_fill_cache = {}
+    center = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    thin_border = Border(
+        left=Side(style="thin"),
+        right=Side(style="thin"),
+        top=Side(style="thin"),
+        bottom=Side(style="thin"),
+    )
+
+    for col_idx, h in enumerate(headers, 1):
+        cell = ws.cell(row=1, column=col_idx, value=h)
+        cell.font = header_font
+        cell.alignment = center
+        color = HEADER_COLORS.get(h, "333333")
+        cell.fill = PatternFill(start_color=color, end_color=color, fill_type="solid")
+        cell.border = thin_border
+
+    # Hidden column for Medusa ID
+    cell = ws.cell(row=1, column=8, value="ID Medusa")
+    cell.font = Font(color="999999", size=8)
+    ws.column_dimensions["H"].hidden = True
+
+    # Write data
+    data_center = Alignment(horizontal="center", vertical="center")
+    data_left = Alignment(horizontal="left", vertical="center", wrap_text=True)
+
+    for row_idx, p in enumerate(products_data, 2):
+        ws.cell(row=row_idx, column=1, value=p["sku"]).alignment = data_center
+        ws.cell(row=row_idx, column=2, value=p["title"]).alignment = data_left
+        ws.cell(row=row_idx, column=3, value=p["category"]).alignment = data_center
+        ws.cell(row=row_idx, column=4, value=p["description"]).alignment = data_left
+
+        precio_mayorista = p.get("precio_mayorista")
+        cell6 = ws.cell(row=row_idx, column=6, value=precio_mayorista)
+        cell6.alignment = data_center
+        cell6.number_format = '#,##0'
+
+        envio = "TRUE" if p.get("envio_grande") else ""
+        ws.cell(row=row_idx, column=7, value=envio).alignment = data_center
+
+        ws.cell(row=row_idx, column=8, value=p["medusa_id"])
+
+        # Apply borders
+        for col in range(1, 9):
+            ws.cell(row=row_idx, column=col).border = thin_border
+
+    # Col E: control — fórmula en TODA la columna hasta fila 10000,
+    # así las filas nuevas (agregadas a mano) ya tienen fórmula.
+    # No se sube a Medusa.
+    MAX_FILA = 10000
+    for r in range(2, MAX_FILA + 1):
+        c5 = ws.cell(row=r, column=5, value=f'=IF(F{r}="","",F{r}*1.25)')
+        c5.alignment = data_center
+        c5.number_format = '#,##0'
+
+    # Column widths
+    ws.column_dimensions["A"].width = 22
+    ws.column_dimensions["B"].width = 55
+    ws.column_dimensions["C"].width = 28
+    ws.column_dimensions["D"].width = 50
+    ws.column_dimensions["E"].width = 16
+    ws.column_dimensions["F"].width = 18
+    ws.column_dimensions["G"].width = 14
+
+    # Freeze header
+    ws.freeze_panes = "A2"
+
+    # Auto-filter
+    ws.auto_filter.ref = f"A1:G{len(products_data) + 1}"
 
     wb.save(EXCEL_PATH)
-    print(f"Done: {updated} updated, {created} created in {EXCEL_PATH}")
+
+
+def main():
+    print("=" * 60)
+    print("  Medusa → Excel Sync")
+    print(f"  Excel: {EXCEL_PATH}")
+    print("=" * 60)
+
+    try:
+        r = requests.get(f"{MEDUSA_URL}/health", timeout=10)
+        if r.status_code != 200:
+            print(f"Medusa not healthy: {r.status_code}")
+            return
+    except Exception as e:
+        print(f"Cannot connect to Medusa: {e}")
+        return
+
+    if not get_token():
+        print("Auth failed")
+        return
+
+    raw_products = fetch_all_products()
+    print(f"Medusa products: {len(raw_products)}")
+
+    cat_map = fetch_category_map()
+    print(f"Category mappings: {len(cat_map)}")
+
+    existing = read_existing_excel()
+    print(f"Existing Excel rows: {len(existing)}")
+
+    products_data = []
+    for p in raw_products:
+        meta = p.get("metadata", {}) or {}
+        sku = None
+        for v in p.get("variants", []):
+            sku = v.get("sku")
+            if sku:
+                break
+        if not sku:
+            continue
+
+        category = cat_map.get(p["id"], "")
+
+        precio_mayorista = meta.get("precio_mayorista")
+        precio_lista = meta.get("precio_lista")
+        if precio_mayorista and not precio_lista:
+            precio_lista = int(round(float(precio_mayorista) * 1.25))
+        elif not precio_lista and p.get("variants"):
+            # Fallback: use variant price / 1.25
+            for v in p["variants"]:
+                for pr in v.get("prices", []):
+                    if pr.get("amount"):
+                        precio_lista = pr["amount"]
+                        precio_mayorista = int(round(pr["amount"] / 1.25))
+                        break
+
+        products_data.append({
+            "medusa_id": p["id"],
+            "sku": sku,
+            "title": p.get("title", ""),
+            "category": category,
+            "description": p.get("description", "") or "",
+            "precio_lista": precio_lista,
+            "precio_mayorista": precio_mayorista,
+            "envio_grande": bool(meta.get("envio_grande")),
+        })
+
+    write_excel(products_data, existing)
+    print(f"Excel written: {EXCEL_PATH}")
+    print(f"  Products: {len(products_data)}")
+    print(f"  Columns: SKU, Artículo, Categoría, Descripción, Precio Lista, Precio Mayorista, Envío Grande")
+    print(f"  Headers: centered + colored")
+    print(f"\n{'='*60}")
+    print(f"  Done!")
+    print(f"{'='*60}")
 
 
 if __name__ == "__main__":
-    sync_to_excel()
+    main()
