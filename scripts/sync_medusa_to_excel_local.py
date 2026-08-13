@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-sync_medusa_to_excel.py - Medusa to Excel sync
-Reads all products from Medusa backend and writes them to excel/Productos_Maestro.xlsx.
+sync_medusa_to_excel_local.py - Medusa (LOCAL) to Excel sync
+Reads all products from LOCAL Medusa backend and writes them to excel/Productos_Local.xlsx.
 
 New products (in Medusa but not in Excel) are ADDED.
 Existing products (matched by Medusa ID hidden in col 8) are UPDATED.
@@ -20,8 +20,8 @@ Excel columns (centered, colored headers):
 Prices are derived from Precio Mayorista stored in product metadata.
 
 Usage:
-  MEDUSA_BACKEND_URL=https://... python3 scripts/sync_medusa_to_excel.py [ruta_archivo.xlsx]
-  (el archivo por defecto es excel/Productos_Maestro.xlsx)
+  python3 scripts/sync_medusa_to_excel_local.py [ruta_archivo.xlsx]
+  (el archivo por defecto es excel/Productos_Local.xlsx)
 """
 
 import os
@@ -30,10 +30,10 @@ import json
 import requests
 from pathlib import Path
 
-MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
+MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "http://localhost:9100")
 ADMIN_EMAIL = os.getenv("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
 ADMIN_PASSWORD = os.getenv("MEDUSA_ADMIN_PASSWORD", "supersecret")
-EXCEL_PATH = Path(__file__).resolve().parent.parent / "excel" / "Productos_Maestro.xlsx"
+EXCEL_PATH = Path(__file__).resolve().parent.parent / "excel" / "Productos_Local.xlsx"
 if len(sys.argv) > 1:
     EXCEL_PATH = Path(sys.argv[1])
 
@@ -239,7 +239,7 @@ def write_excel(products_data, existing):
 
 def main():
     print("=" * 60)
-    print("  Medusa → Excel Sync")
+    print("  Medusa (LOCAL) → Excel Sync")
     print(f"  Excel: {EXCEL_PATH}")
     print("=" * 60)
 

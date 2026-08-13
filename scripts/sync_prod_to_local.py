@@ -1,0 +1,175 @@
+#!/usr/bin/env python3
+"""
+sync_prod_to_local.py - Sincronizar Producción → Local
+Baja todos los productos de Railway (producción) a Medusa local (localhost:9100).
+
+Uso:
+  python3 scripts/sync_prod_to_local.py
+"""
+
+import os
+import sys
+import json
+import time
+import requests
+import tempfile
+
+PROD_URL = "https://dankoshop-api-production.up.railway.app"
+LOCAL_URL = "http://localhost:9100"
+EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
+PASSWORD = os.environ.get("MEDUSA_ADMIN_PASSWORD", "supersecret")
+
+
+def login(url):
+    r = requests.post(f"{url}/auth/user/emailpass", json={"email": EMAIL, "password": PASSWORD}, timeout=10)
+    r.raise_for_status()
+    return r.json()["token"]
+
+
+def get_all(url, token, endpoint):
+    headers = {"Authorization": f"Bearer {token}"}
+    all_items = []
+    offset = 0
+    while True:
+        r = requests.get(f"{url}{endpoint}", headers=headers, params={"limit": 100, "offset": offset}, timeout=15)
+        r.raise_for_status()
+        data = r.json()
+        items = data.get("products", data.get("collections", data.get("product_categories", [])))
+        if not items:
+            break
+        all_items.extend(items)
+        if len(items) < 100:
+            break
+        offset += 100
+        time.sleep(0.3)
+    return all_items
+
+
+def restore_product(url, token, product):
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    variants = product.get("variants", [])
+    sku = variants[0].get("sku") if variants else None
+
+    if not sku:
+        return False
+
+    # Build variant options as dict {option_title: value}
+    variant_options = {"Default": "Default"}
+    for v in variants:
+        opts = v.get("options", [])
+        if opts:
+            variant_options = {}
+            for opt in opts:
+                if isinstance(opt, dict):
+                    title = opt.get("option", {}).get("title", "Default") if isinstance(opt.get("option"), dict) else "Default"
+                    value = opt.get("value", "Default")
+                    variant_options[title] = value
+            break
+    if not variant_options:
+        variant_options = {"Default": "Default"}
+
+    payload = {
+        "title": product.get("title"),
+        "description": product.get("description"),
+        "status": product.get("status", "published"),
+        "images": [{"url": img["url"]} for img in product.get("images", []) if img.get("url")],
+        "options": [{"title": k, "values": [v]} for k, v in variant_options.items()],
+        "variants": [{
+            "title": v.get("title", "Default"),
+            "sku": v.get("sku"),
+            "prices": [{"amount": pr["amount"], "currency_code": pr.get("currency_code", "ars")} for pr in v.get("prices", []) if pr.get("amount")],
+            "options": variant_options,
+        } for v in variants] if variants else [{"title": "Default", "sku": sku, "options": {"Default": "Default"}, "prices": []}],
+    }
+
+    if product.get("metadata"):
+        payload["metadata"] = {k: v for k, v in product["metadata"].items() if not k.startswith("_")}
+
+    # Buscar si existe por SKU
+    r = requests.get(f"{url}/admin/products", headers=headers, params={"q": sku, "limit": 10}, timeout=15)
+    existing = None
+    if r.status_code == 200:
+        for p in r.json().get("products", []):
+            for v in p.get("variants", []):
+                if v.get("sku") == sku:
+                    existing = p
+                    break
+
+    if existing:
+        r = requests.post(f"{url}/admin/products/{existing['id']}", headers=headers, json=payload, timeout=15)
+        return r.status_code == 200
+    else:
+        r = requests.post(f"{url}/admin/products", headers=headers, json=payload, timeout=15)
+        return r.status_code == 200
+
+
+def main():
+    print("=" * 60)
+    print("  Producción (Railway) → Local")
+    print("=" * 60)
+
+    # Test connections
+    print(f"\nConectando a producción: {PROD_URL}")
+    try:
+        r = requests.get(f"{PROD_URL}/health", timeout=10)
+        if r.status_code != 200:
+            print(f"  ERROR: Producción no disponible ({r.status_code})")
+            return
+    except Exception as e:
+        print(f"  ERROR: {e}")
+        return
+
+    print(f"Conectando a local: {LOCAL_URL}")
+    try:
+        r = requests.get(f"{LOCAL_URL}/health", timeout=5)
+        if r.status_code != 200:
+            print(f"  ERROR: Local no disponible ({r.status_code})")
+            print("  Arrancá Medusa local: ./scripts/medusa-local.sh start")
+            return
+    except Exception as e:
+        print(f"  ERROR: {e}")
+        print("  Arrancá Medusa local: ./scripts/medusa-local.sh start")
+        return
+
+    # Login
+    print("\nAutenticando...")
+    prod_token = login(PROD_URL)
+    local_token = login(LOCAL_URL)
+    print("  OK")
+
+    # Fetch from production
+    print("\nDescargando productos de producción...")
+    products = get_all(PROD_URL, prod_token, "/admin/products")
+    print(f"  {len(products)} productos descargados")
+
+    # Restore to local
+    print(f"\nRestaurando en local...")
+    created = 0
+    updated = 0
+    errors = 0
+
+    for i, p in enumerate(products, 1):
+        title = p.get("title", "?")[:40]
+        sku = p.get("variants", [{}])[0].get("sku", "?")
+        print(f"  [{i}/{len(products)}] {sku}: {title}", end="")
+
+        try:
+            if restore_product(LOCAL_URL, local_token, p):
+                print(" ✓")
+                created += 1
+            else:
+                print(" ✗")
+                errors += 1
+        except Exception as e:
+            print(f" ✗ {e}")
+            errors += 1
+
+        time.sleep(0.2)
+
+    print(f"\n{'='*60}")
+    print(f"  Sincronizados: {created} | Errores: {errors}")
+    print(f"{'='*60}")
+
+
+if __name__ == "__main__":
+    main()

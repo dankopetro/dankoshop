@@ -15,7 +15,6 @@ export default function AddToCart({ product }: AddToCartProps) {
 
   const priceEfectivo =
     product.prices.precio_efectivo ??
-    product.prices.precio_transferencia ??
     product.prices.precio_lista ??
     0
 

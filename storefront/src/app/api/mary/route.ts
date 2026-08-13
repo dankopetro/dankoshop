@@ -99,7 +99,6 @@ export async function POST(req: NextRequest) {
       if (product) {
         const precioBase =
           product.prices.precio_efectivo ??
-          product.prices.precio_transferencia ??
           product.prices.precio_lista ??
           0
         if (precioBase > 0) {
@@ -133,7 +132,6 @@ export async function POST(req: NextRequest) {
     if (product) {
       const efectivo =
         product.prices.precio_efectivo ??
-        product.prices.precio_transferencia ??
         product.prices.precio_lista ??
         0
       const lista = product.prices.precio_lista ?? 0

@@ -83,10 +83,10 @@ nvm use 20 && cd storefront && npm run dev
 ./scripts/medusa-local.sh restart
 
 # Sync Excel → Medusa v2 (REST API)
-MEDUSA_BACKEND_URL=http://localhost:9100 python3 scripts/sync_excel.py
+MEDUSA_BACKEND_URL=http://localhost:9100 python3 scripts/sync_excel_to_medusa_local.py
 
 # Sync contra producción Railway
-MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app python3 scripts/sync_excel.py
+python3 scripts/sync_excel_to_medusa.py
 
 # Seed upsert de productos (migración Medusa, corre en cada deploy)
 # Docker
@@ -178,7 +178,7 @@ NODE_ENV=production
 8. ✅ Docker PostgreSQL + Redis corriendo
 9. ✅ Backend Medusa v2 desplegado y ONLINE en Railway
 10. ✅ Seed upsert de metadata de precios minoristas (efectivo, transferencia, cuotas)
-11. ✅ Sync Excel → Medusa v2 (scripts/sync_excel.py) — precios ARS + metadata
+11. ✅ Sync Excel → Medusa v2 (scripts/sync_excel_to_medusa.py) — precios ARS + metadata
 12. ✅ Storefront conectado a Medusa en vivo (productos, categorías, búsqueda)
 13. ✅ Env vars de Vercel configuradas (Medusa URL, publishable key, admin password)
 14. ✅ Editor de contenido /admin-contenido con JSON + GitHub API
@@ -311,7 +311,7 @@ PORT = "9000"
 - Admin Dashboard URL activa: `https://dankoshop-api-production.up.railway.app/app`
 - Storefront URL activa: `https://dankoshop.com.ar` (redirige a www)
 - Editor de contenido: `https://dankoshop.com.ar/admin-contenido` (contraseña: danko-admin-2026)
-- Sync Excel → Medusa: `MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app python3 scripts/sync_excel.py`
+- Sync Excel → Medusa: `python3 scripts/sync_excel_to_medusa.py` (producción) o `sync_excel_to_medusa_local.py` (local)
 - Precios: web pública muestra solo minorista (efectivo, transferencia, cuotas). Mayorista es interno/admin.
 - Email: `ventas@dankoshop.com.ar` (ImprovMX → Gmail).
 - Teléfono/WhatsApp: 221 621 9596.

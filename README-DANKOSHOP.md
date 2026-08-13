@@ -92,13 +92,13 @@ curl -X POST "https://dankoshop-api-production.up.railway.app/auth/user/emailpas
 MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app \
   MEDUSA_ADMIN_EMAIL=admin@dankoshop.com \
   MEDUSA_ADMIN_PASSWORD=supersecret \
-  python3 scripts/sync_excel.py
+  python3 scripts/sync_excel_to_medusa.py
 ```
 
 ### Sync local (para pruebas)
 
 ```bash
-MEDUSA_BACKEND_URL=http://localhost:9100 python3 scripts/sync_excel.py
+MEDUSA_BACKEND_URL=http://localhost:9100 python3 scripts/sync_excel_to_medusa_local.py
 ```
 
 ### Frontend local
@@ -196,7 +196,10 @@ dankoshop/
 │       ├── seed-products.cjs → Seed upsert de productos
 │       └── src/              → Código fuente del backend
 ├── scripts/
-│   ├── sync_excel.py        → Sync Excel → Medusa v2 (REST API)
+│   ├── sync_excel_to_medusa.py → Excel → Medusa producción
+│   ├── sync_excel_to_medusa_local.py → Excel → Medusa local
+│   ├── sync_medusa_to_excel.py → Medusa producción → Excel
+│   ├── sync_medusa_to_excel_local.py → Medusa local → Excel
 │   ├── seed.py              → Seed local
 │   └── vercel-env.sh        → Configurar env vars de Vercel
 ├── excel/
@@ -274,7 +277,7 @@ NEXT_PUBLIC_BANCO_NOMBRE=Mi Banco
 
 ### Los precios no se muestran
 1. Verificar que el seed corrió en Railway (ver logs)
-2. Correr el sync: `MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app python3 scripts/sync_excel.py`
+2. Correr el sync: `python3 scripts/sync_excel_to_medusa.py`
 
 ### El editor no guarda cambios
 1. Verificar que `GITHUB_TOKEN` esté configurado en Vercel
