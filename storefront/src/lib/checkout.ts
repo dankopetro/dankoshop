@@ -4,6 +4,7 @@ export interface CartItem {
   sku: string
   name: string
   price: number
+  price_lista?: number
   quantity: number
   image?: string
   envio_grande?: boolean

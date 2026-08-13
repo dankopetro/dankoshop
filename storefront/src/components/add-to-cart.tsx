@@ -13,17 +13,32 @@ export default function AddToCart({ product }: AddToCartProps) {
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
 
-  const price =
+  const priceEfectivo =
     product.prices.precio_efectivo ??
     product.prices.precio_transferencia ??
     product.prices.precio_lista ??
     0
 
+  const priceLista = product.prices.precio_lista ?? priceEfectivo
+
   const handleAdd = () => {
     const items = getCart()
     const existing = items.find((i) => i.sku === product.sku)
-    if (existing) existing.quantity = (existing.quantity || 1) + qty
-    else items.push({ sku: product.sku, name: product.name, price, quantity: qty, image: product.images[0], envio_grande: product.envio_grande })
+    if (existing) {
+      existing.quantity = (existing.quantity || 1) + qty
+      existing.price = priceEfectivo
+      existing.price_lista = priceLista
+    } else {
+      items.push({
+        sku: product.sku,
+        name: product.name,
+        price: priceEfectivo,
+        price_lista: priceLista,
+        quantity: qty,
+        image: product.images[0],
+        envio_grande: product.envio_grande,
+      })
+    }
     saveCart(items)
     window.dispatchEvent(new Event("dankoshop_cart_update"))
     setAdded(true)
