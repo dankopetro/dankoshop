@@ -52,7 +52,14 @@ export default function CheckoutPage() {
     setCart(getCart())
   }, [])
 
-  const subtotal = cartSubtotal(cart)
+  const getItemPrice = useCallback((it: CartItem, m: "mercadopago" | "transferencia") => {
+    if (m === "mercadopago" && typeof it.price_lista === "number" && it.price_lista > 0) {
+      return it.price_lista
+    }
+    return it.price
+  }, [])
+
+  const subtotal = cart.reduce((acc, it) => acc + getItemPrice(it, metodo) * (it.quantity || 1), 0)
   const hasBigItems = cart.some((it) => it.envio_grande)
   const envio = cliente.metodo_envio === "retiro" ? 0 : hasBigItems && cliente.metodo_envio === "envio" ? 0 : calcEnvioCosto(subtotal, cliente.zona_envio || null, cliente.velocidad_envio || "estandar")
   const total = subtotal + envio
@@ -112,7 +119,7 @@ export default function CheckoutPage() {
           items: cart.map((it) => ({
             sku: it.sku,
             name: it.name,
-            price: it.price,
+            price: getItemPrice(it, "mercadopago"),
             quantity: it.quantity,
             description: it.name,
           })),
@@ -338,7 +345,7 @@ export default function CheckoutPage() {
             {cart.map((it) => (
               <div key={it.sku} className="flex justify-between text-sm gap-2">
                 <span className="text-gray-700 truncate">{it.name} <span className="text-gray-400">x{it.quantity}</span></span>
-                <span className="text-gray-900 font-medium whitespace-nowrap">{formatARS((it.price || 0) * (it.quantity || 1))}</span>
+                <span className="text-gray-900 font-medium whitespace-nowrap">{formatARS(getItemPrice(it, metodo) * (it.quantity || 1))}</span>
               </div>
             ))}
           </div>
