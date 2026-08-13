@@ -85,7 +85,7 @@ export default function ProductsClient({ products, categories }: { products: Pro
                 <h3 className="font-semibold text-gray-900 mt-1 line-clamp-2 text-sm">{p.name}</h3>
                 {p.prices.precio_efectivo && (
                   <div className="mt-2">
-                    <p className="text-[10px] text-green-600 font-semibold uppercase tracking-wide">Efectivo / Transferencia</p>
+                    <p className="text-[10px] text-green-600 font-semibold uppercase tracking-wide">Efectivo / Transferencia / Débito</p>
                     <p className="text-lg font-bold text-green-600">
                       {formatPrice(p.prices.precio_efectivo)}
                     </p>
