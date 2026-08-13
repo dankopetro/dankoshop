@@ -48,39 +48,26 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
               <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h1>
               <p className="text-sm text-gray-400 mt-1">SKU: {product.sku}</p>
 
-              <div className="mt-6 space-y-2">
-                {product.prices.precio_lista && (
-                  <p className="text-sm text-gray-400 line-through">
-                    Precio lista: {formatPrice(product.prices.precio_lista)}
-                  </p>
-                )}
+              <div className="mt-6 space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
                 {product.prices.precio_efectivo && (
                   <div>
-                    <p className="text-xs text-green-500 font-medium uppercase tracking-wide">Precio en efectivo</p>
-                    <p className="text-3xl font-bold text-green-600">
+                    <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full mb-1">
+                      💵 Precio Efectivo / Transferencia
+                    </span>
+                    <p className="text-3xl font-extrabold text-green-600">
                       {formatPrice(product.prices.precio_efectivo)}
                     </p>
                   </div>
                 )}
-                {product.prices.precio_transferencia && (
-                  <p className="text-sm text-gray-600">
-                    Transferencia: <span className="font-semibold">{formatPrice(product.prices.precio_transferencia)}</span>
-                  </p>
-                )}
-                {product.prices.cuota_valor_3 && (
-                  <p className="text-sm text-blue-600 font-medium">
-                    3x {formatPrice(product.prices.cuota_valor_3)} sin interés
-                  </p>
-                )}
-                {product.prices.cuota_valor_6 && (
-                  <p className="text-sm text-blue-600 font-medium">
-                    6x {formatPrice(product.prices.cuota_valor_6)} sin interés
-                  </p>
-                )}
-                {product.prices.cuota_valor_12 && (
-                  <p className="text-sm text-blue-600 font-medium">
-                    12x {formatPrice(product.prices.cuota_valor_12)} con interés
-                  </p>
+                {product.prices.precio_lista && (
+                  <div className="pt-2 border-t border-gray-200">
+                    <p className="text-sm font-semibold text-gray-700">
+                      💳 Precio de Lista: <span className="text-base text-gray-900 font-bold">{formatPrice(product.prices.precio_lista)}</span>
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5">
+                      Aceptamos todas las tarjetas en hasta 12 cuotas fijas o de tu banco vía Mercado Pago.
+                    </p>
+                  </div>
                 )}
               </div>
 
