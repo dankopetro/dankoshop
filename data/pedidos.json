@@ -458,5 +458,36 @@
     "total": 858,
     "metodo_pago": "mercadopago",
     "estado": "pendiente"
+  },
+  {
+    "id": "DK-MSQVKV7K",
+    "fecha": "2026-08-13T02:04:37.760Z",
+    "cliente": {
+      "nombre": "elvira lopez",
+      "email": "cladalopez@gmail.com",
+      "telefono": "2214790655",
+      "dni": "01000688",
+      "direccion": "",
+      "ciudad": "",
+      "provincia": "Buenos Aires",
+      "metodo_envio": "retiro",
+      "zona_envio": "laplata",
+      "velocidad_envio": "estandar"
+    },
+    "items": [
+      {
+        "sku": "9445",
+        "name": "Plato Durax Playo Fénix Blanco",
+        "price": 858,
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/9445_2.jpg",
+        "envio_grande": false
+      }
+    ],
+    "subtotal": 858,
+    "envio": 0,
+    "total": 858,
+    "metodo_pago": "mercadopago",
+    "estado": "pendiente"
   }
 ]
