@@ -109,8 +109,23 @@ export default function CheckoutPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: cart.map((it) => ({ sku: it.sku, name: it.name, price: it.price, quantity: it.quantity })),
+          items: cart.map((it) => ({
+            sku: it.sku,
+            name: it.name,
+            price: it.price,
+            quantity: it.quantity,
+            description: it.name,
+          })),
           external_reference: order.id,
+          payer: {
+            nombre: cliente.nombre,
+            email: cliente.email,
+            telefono: cliente.telefono,
+            dni: cliente.dni,
+            direccion: cliente.direccion,
+            ciudad: cliente.ciudad,
+            provincia: cliente.provincia,
+          },
         }),
       })
       const data = await res.json()
