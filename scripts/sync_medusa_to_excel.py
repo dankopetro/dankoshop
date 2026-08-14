@@ -27,6 +27,8 @@ Usage:
 import os
 import sys
 import json
+import shutil
+from datetime import datetime
 import requests
 from pathlib import Path
 
@@ -133,15 +135,18 @@ def read_existing_excel():
     for idx, row in enumerate(ws.iter_rows(min_row=2, values_only=True), start=2):
         medusa_id = row[7] if len(row) > 7 else None
         sku = row[0] if row[0] else None
+        precio_ingresado = row[8] if len(row) > 8 else None
         if medusa_id:
             existing[str(medusa_id).strip()] = {
                 "row": idx,
                 "sku": sku,
+                "precio_ingresado": precio_ingresado,
             }
         elif sku:
             existing[f"sku:{sku}"] = {
                 "row": idx,
                 "sku": sku,
+                "precio_ingresado": precio_ingresado,
             }
     return existing
 
@@ -186,9 +191,19 @@ def write_excel(products_data, existing):
     cell.font = Font(color="999999", size=8)
     ws.column_dimensions["H"].hidden = True
 
+    # Col I: Precio Ingresado (se preserva del Excel anterior)
+    cell = ws.cell(row=1, column=9, value="Precio Ingresado")
+    cell.font = Font(color="999999", size=8)
+
     # Write data
     data_center = Alignment(horizontal="center", vertical="center")
     data_left = Alignment(horizontal="left", vertical="center", wrap_text=True)
+
+    def existing_lookup(p):
+        e = existing.get(str(p["medusa_id"])) if p["medusa_id"] else None
+        if e is None and p["sku"]:
+            e = existing.get(f"sku:{p['sku']}")
+        return e
 
     for row_idx, p in enumerate(products_data, 2):
         ws.cell(row=row_idx, column=1, value=p["sku"]).alignment = data_center
@@ -206,8 +221,17 @@ def write_excel(products_data, existing):
 
         ws.cell(row=row_idx, column=8, value=p["medusa_id"])
 
+        # Preservar Precio Ingresado del Excel anterior (col I)
+        prev = existing_lookup(p)
+        precio_ing = None
+        if prev and prev.get("precio_ingresado") is not None:
+            precio_ing = prev["precio_ingresado"]
+        elif precio_mayorista:
+            precio_ing = int(round(float(precio_mayorista) / 1.072))
+        ws.cell(row=row_idx, column=9, value=precio_ing)
+
         # Apply borders
-        for col in range(1, 9):
+        for col in range(1, 10):
             ws.cell(row=row_idx, column=col).border = thin_border
 
     # Col E: control — fórmula en TODA la columna hasta fila 10000,
@@ -218,6 +242,10 @@ def write_excel(products_data, existing):
         c5 = ws.cell(row=r, column=5, value=f'=IF(F{r}="","",F{r}*1.25)')
         c5.alignment = data_center
         c5.number_format = '#,##0'
+        # Col F: fórmula viva a partir de Precio Ingresado (col I)
+        c6 = ws.cell(row=r, column=6, value=f'=IF(I{r}="","",ROUND(I{r}*1.072,0))')
+        c6.alignment = data_center
+        c6.number_format = '#,##0'
 
     # Column widths
     ws.column_dimensions["A"].width = 22
@@ -235,6 +263,37 @@ def write_excel(products_data, existing):
     ws.auto_filter.ref = f"A1:G{len(products_data) + 1}"
 
     wb.save(EXCEL_PATH)
+
+    # Recalc con LibreOffice headless para cachear valores de las fórmulas
+    # (necesario para que sync_excel_to_medusa.py lea F con data_only=True).
+    import subprocess, tempfile
+    outdir = Path(EXCEL_PATH).parent / "_recalc_medusa"
+    outdir.mkdir(exist_ok=True)
+    try:
+        res = subprocess.run(
+            ["soffice", "--headless", "--convert-to", "xlsx",
+             "--outdir", str(outdir), str(EXCEL_PATH)],
+            capture_output=True, text=True, timeout=180,
+        )
+        if res.returncode == 0:
+            converted = outdir / EXCEL_PATH.name
+            if converted.exists():
+                shutil.copy2(converted, EXCEL_PATH)
+    except Exception as e:
+        print(f"  WARN: recalc LibreOffice falló: {e}")
+    finally:
+        shutil.rmtree(outdir, ignore_errors=True)
+
+    # Backup con fecha/hora en excel/Masters/
+    try:
+        masters = Path(EXCEL_PATH).parent / "Masters"
+        masters.mkdir(parents=True, exist_ok=True)
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup = masters / f"{EXCEL_PATH.stem}_{ts}.xlsx"
+        shutil.copy2(EXCEL_PATH, backup)
+        print(f"  Backup guardado: {backup}")
+    except Exception as e:
+        print(f"  WARN: backup falló: {e}")
 
 
 def main():
