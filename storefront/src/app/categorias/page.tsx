@@ -21,12 +21,12 @@ export default async function CategoriasPage() {
           <p className="text-gray-600 mt-1">Explorá todos los productos por categoría</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {categories.map((cat) => (
             <Link key={cat.slug} href={`/categoria/${cat.slug}`} className="group">
               <div className="h-full text-center p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
                 <div className="text-4xl mb-3">{categoryIcons[cat.name] || "📦"}</div>
-                <h3 className="font-medium text-gray-900 group-hover:text-blue-600">{cat.name}</h3>
+                <h3 className="font-medium text-gray-900 group-hover:text-blue-600 whitespace-normal break-words">{cat.name}</h3>
                 <p className="text-sm text-gray-500 mt-1">{cat.count} productos</p>
               </div>
             </Link>
