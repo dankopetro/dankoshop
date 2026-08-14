@@ -137,5 +137,5 @@ export async function getCategories(): Promise<Category[]> {
     countByCat[c] = (countByCat[c] || 0) + 1
   }
 
-  return cats.map((c) => ({ id: c.id, name: c.name, slug: c.handle || c.id, count: countByCat[c.name] || 0 }))
+  return cats.map((c) => ({ id: c.id, name: c.name, slug: (c.handle || c.id).replace(/\//g, "-"), count: countByCat[c.name] || 0 }))
 }
