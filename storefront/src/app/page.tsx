@@ -15,6 +15,7 @@ const categoryIcons: Record<string, string> = {
   "Heladeras/Freezers": "❄️", "Herramientas": "🔧", "Hogar/Baño": "🛁",
   "Lavarropas/Secarropas": "🌀", "Outdoor/Playa": "🏖️",
   "Pequeños Electrodomésticos": "🍳", "TVs": "📺", "Tablets": "📱",
+  "Notebooks y Tablets": "💻", "Jugueteria": "🧸",
 }
 
 export default async function Home() {
