@@ -97,9 +97,9 @@ export default async function Home() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {categories.map((cat) => (
               <Link key={cat.slug} href={`/categoria/${cat.slug}`} className="group">
-                <div className="h-full text-center p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
-                  <div className="text-4xl mb-3">{categoryIcons[cat.name] || "📦"}</div>
-                  <h3 className="font-medium text-gray-900 group-hover:text-blue-600">{cat.name}</h3>
+                <div className="h-full text-center p-4 sm:p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
+                  <div className="text-3xl sm:text-4xl mb-3">{categoryIcons[cat.name] || "📦"}</div>
+                  <h3 className="font-medium text-gray-900 group-hover:text-blue-600 text-sm sm:text-base leading-tight break-words line-clamp-2">{cat.name}</h3>
                 </div>
               </Link>
             ))}
