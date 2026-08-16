@@ -196,6 +196,14 @@ NODE_ENV=production
 18. ✅ Checkout online implementado: `/checkout` (MercadoPago + Transferencia CVU), `/comprobante`
     (recibo imprimible), API de preferencia, webhook y registro de pedidos. Falta solo el
     `MERCADOPAGO_ACCESS_TOKEN` + datos banco en Vercel para activar el pago real.
+19. ✅ Parser de chat 14-15 agosto (scripts/procesar_chat_14_15.py) → Control_14_15_Agosto.xlsx
+    (46 productos: 17 NUEVO, 16 BAJA, 12 SIN SKU, 1 SIN MAYORISTA). Filtrado: dupes, SIN CAMBIO,
+    SIN SKU en maestro por nombre, Tupper Gemplast. Normalización Unicode matemático → ASCII.
+20. ✅ Sync Excel 14-15 (scripts/preparar_sync_14_15.py) → Nuevos_14_15_Sync.xlsx (28 productos).
+    Formato: col C = Precio Compra Mayorista (col H control directa), col F = Precio Venta Bruto
+    (C × 1.072). Hoja "Nuevos Sync", 8 columnas, espejo del 12-13.
+21. ✅ Footer: teléfono → WhatsApp con icono SVG oficial (#25D366) + enlace wa.me/5492216219596.
+22. ✅ Home: fix category card text overflow (overflow-hidden, line-clamp-2, break-words).
 
 ## Solución del Deploy en Railway (COMPLETADO)
 El despliegue de Medusa en Railway presentaba dos problemas principales:
