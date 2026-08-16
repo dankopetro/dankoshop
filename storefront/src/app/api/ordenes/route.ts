@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+import { Order } from "@/lib/checkout"
+import { formatOrderMessage, sendTelegram } from "@/lib/telegram"
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN
 const GITHUB_REPO = process.env.GITHUB_REPO || "dankopetro/dankoshop"
@@ -59,6 +61,12 @@ export async function POST(req: NextRequest) {
       const err = await put.text()
       return NextResponse.json({ error: `Error al guardar pedido: ${err}` }, { status: 500 })
     }
+
+    const saved = orders.find((o: any) => o.id === body.order.id)
+    if (saved) {
+      await sendTelegram(formatOrderMessage(saved as Order, "nuevo"))
+    }
+
     return NextResponse.json({ ok: true })
   } catch (e) {
     return NextResponse.json(

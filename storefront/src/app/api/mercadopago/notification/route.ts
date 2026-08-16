@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+import { Order } from "@/lib/checkout"
+import { formatOrderMessage, sendTelegram } from "@/lib/telegram"
 
 const GITHUB_REPO = process.env.GITHUB_REPO || "dankopetro/dankoshop"
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main"
@@ -48,7 +50,7 @@ export async function POST(req: NextRequest) {
             orders[idx].pago_ref = String(paymentId)
             orders[idx].metodo_pago_label = payment.payment_method_id || "mercadopago"
             const content = JSON.stringify(orders, null, 2) + "\n"
-            await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${ORDERS_PATH}`, {
+            const put = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${ORDERS_PATH}`, {
               method: "PUT",
               headers: {
                 Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
@@ -61,6 +63,9 @@ export async function POST(req: NextRequest) {
                 branch: GITHUB_BRANCH,
               }),
             })
+            if (put.ok) {
+              await sendTelegram(formatOrderMessage(orders[idx] as Order, "pagado"))
+            }
           }
         } catch {
           // no hacer fallar el webhook
