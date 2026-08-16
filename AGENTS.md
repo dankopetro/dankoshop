@@ -100,6 +100,13 @@ python3 scripts/upload_cloudinary.py
 python3 scripts/dedup_images.py
 ```
 
+## Regla de precios (syncs de chat nuevos)
+Al generar el Excel de sync para un lote nuevo de chat (ej: `preparar_sync_14_15.py`):
+- **Precio Compra Mayorista** = precio del mensaje que diga "precio por transferencia 10% descuento (o OFF) por 3 unidades" / "Pagando por transferencia te queda a tan solo Mayorista xxx$ llevando 3 unidades" / "solo dice $xxx Transferencia" / "solo hay un único precio" / "solo precios x1 x6 x12 → tomar el x1" → **× 1,0606**.
+- **Precio Venta Bruto** = Precio Compra Mayorista **× 1,072** → es lo que va a Medusa (que aplica 15% y 25%).
+- En `Control_14_15_Agosto.xlsx` la col H (Mayorista Efectivo) ya está corregida a mano por el dueño: **col C del sync = col H directa** (no re-aplicar ×1,0606).
+- Scripts: `preparar_sync_12_13.py` (formato viejo: Precio Ingresado → Precio Mayorista) y `preparar_sync_14_15.py` (formato nuevo: Precio Compra Mayorista → Precio Venta Bruto). Ambos generan `excel/Nuevos_*_Sync.xlsx` con hoja "Nuevos Sync".
+
 ## Variables de entorno
 ### Frontend (Vercel) - CONFIGURADO
 Variables (Settings → Environment Variables, marcar Production+Preview):
