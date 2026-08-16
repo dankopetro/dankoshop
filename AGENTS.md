@@ -204,6 +204,11 @@ NODE_ENV=production
     (C × 1.072). Hoja "Nuevos Sync", 8 columnas, espejo del 12-13.
 21. ✅ Footer: teléfono → WhatsApp con icono SVG oficial (#25D366) + enlace wa.me/5492216219596.
 22. ✅ Home: fix category card text overflow (overflow-hidden, line-clamp-2, break-words).
+23. ✅ Notificaciones Telegram: bot @dankoshop_alertas_bot ("DankoShop Alertas"),
+    chat_id 5745227724. Notifica en #pedidos canal: 🛒 NUEVO PEDIDO (al crear) y
+    ✅ PAGO CONFIRMADO (al aprobar MP). Env vars TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID
+    configuradas en Vercel (Production + Preview). Script vercel-env.sh actualizado.
+    Envía resumen HTML con: productos, subtotal, envío, total, datos cliente, forma de pago.
 
 ## Solución del Deploy en Railway (COMPLETADO)
 El despliegue de Medusa en Railway presentaba dos problemas principales:
