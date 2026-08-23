@@ -14,6 +14,9 @@ import time
 import requests
 import tempfile
 
+sys.path.insert(0, os.path.dirname(__file__))
+from sync_helpers import sync_inventory, fetch_source_inventory, sync_sales_channels, fetch_source_sales_channels, _api
+
 PROD_URL = "https://dankoshop-api-production.up.railway.app"
 LOCAL_URL = "http://localhost:9100"
 EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
@@ -97,10 +100,10 @@ def restore_product(url, token, product):
 
     if existing:
         r = requests.post(f"{url}/admin/products/{existing['id']}", headers=headers, json=payload, timeout=15)
-        return r.status_code == 200
+        return existing["id"] if r.status_code == 200 else None
     else:
         r = requests.post(f"{url}/admin/products", headers=headers, json=payload, timeout=15)
-        return r.status_code == 200
+        return r.json().get("product", {}).get("id") if r.status_code == 200 else None
 
 
 def main():
@@ -142,6 +145,13 @@ def main():
     products = get_all(PROD_URL, prod_token, "/admin/products")
     print(f"  {len(products)} productos descargados")
 
+    # Pre-fetch inventory and sales channels from source
+    print("\nLeyendo inventario y canales de venta de Producción...")
+    src_inv = fetch_source_inventory(PROD_URL, prod_token)
+    print(f"  Inventario: {len(src_inv)} SKUs")
+    src_sc = fetch_source_sales_channels(PROD_URL, prod_token)
+    print(f"  Canales: {len(src_sc)} productos con canales")
+
     # Restore to local
     print(f"\nRestaurando en local...")
     created = 0
@@ -154,9 +164,20 @@ def main():
         print(f"  [{i}/{len(products)}] {sku}: {title}", end="")
 
         try:
-            if restore_product(LOCAL_URL, local_token, p):
+            new_id = restore_product(LOCAL_URL, local_token, p)
+            if new_id:
                 print(" ✓")
                 created += 1
+                qty = src_inv.get(sku)
+                if qty is not None:
+                    r_prod = _api(LOCAL_URL, local_token, "GET", f"/admin/products/{new_id}")
+                    if r_prod.status_code == 200:
+                        variants = r_prod.json().get("product", {}).get("variants", [])
+                        if variants:
+                            sync_inventory(LOCAL_URL, local_token, variants[0]["id"], sku, qty)
+                ch = ", ".join(src_sc.get(p.get("id"), []))
+                if ch:
+                    sync_sales_channels(LOCAL_URL, local_token, new_id, ch)
             else:
                 print(" ✗")
                 errors += 1

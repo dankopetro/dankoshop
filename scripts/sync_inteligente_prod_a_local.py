@@ -12,6 +12,9 @@ import sys
 import time
 import requests
 
+sys.path.insert(0, os.path.dirname(__file__))
+from sync_helpers import sync_inventory, fetch_source_inventory, sync_sales_channels, fetch_source_sales_channels, _api
+
 LOCAL_URL = "http://localhost:9100"
 PROD_URL = "https://dankoshop-api-production.up.railway.app"
 EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
@@ -104,15 +107,15 @@ def create_product(url, token, payload):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     r = requests.post(f"{url}/admin/products", headers=headers, json=payload, timeout=15)
     if r.status_code == 200:
-        return True
-    # Si el handle ya existe, reintentar con handle único
+        return r.json().get("product", {}).get("id")
     if "already exists" in r.text and "handle" in r.text:
         sku = payload.get("variants", [{}])[0].get("sku", "")
         if sku:
             payload["handle"] = f"{payload.get('title', '').lower().replace(' ', '-').replace('/', '-')}-{sku}"
             r = requests.post(f"{url}/admin/products", headers=headers, json=payload, timeout=15)
-            return r.status_code == 200
-    return False
+            if r.status_code == 200:
+                return r.json().get("product", {}).get("id")
+    return None
 
 
 def update_product(url, token, product_id, payload):
@@ -167,6 +170,13 @@ def main():
     local_products = get_all(LOCAL_URL, local_token, "/admin/products")
     print(f"  {len(local_products)} productos en local")
 
+    # Pre-fetch inventory and sales channels from source
+    print("\nLeyendo inventario y canales de venta de Producción...")
+    src_inv = fetch_source_inventory(PROD_URL, prod_token)
+    print(f"  Inventario: {len(src_inv)} SKUs")
+    src_sc = fetch_source_sales_channels(PROD_URL, prod_token)
+    print(f"  Canales: {len(src_sc)} productos con canales")
+
     # Indexar por SKU
     prod_map = {}
     for p in prod_products:
@@ -203,14 +213,31 @@ def main():
                 if update_product(LOCAL_URL, local_token, dest_product["id"], payload):
                     print(f"  [{i}/{len(prod_map)}] {sku}: {title} → ACTUALIZAR")
                     updated += 1
+                    qty = src_inv.get(sku)
+                    if qty is not None and dest_product.get("variants"):
+                        sync_inventory(LOCAL_URL, local_token, dest_product["variants"][0]["id"], sku, qty)
+                    ch = ", ".join(src_sc.get(src_product.get("id"), []))
+                    if ch:
+                        sync_sales_channels(LOCAL_URL, local_token, dest_product["id"], ch)
                 else:
                     print(f"  [{i}/{len(prod_map)}] {sku}: {title} → ERROR")
                     errors += 1
         else:
             payload = build_payload(src_product)
-            if create_product(LOCAL_URL, local_token, payload):
+            new_id = create_product(LOCAL_URL, local_token, payload)
+            if new_id:
                 print(f"  [{i}/{len(prod_map)}] {sku}: {title} → CREAR")
                 created += 1
+                qty = src_inv.get(sku)
+                if qty:
+                    r_prod = _api(LOCAL_URL, local_token, "GET", f"/admin/products/{new_id}")
+                    if r_prod.status_code == 200:
+                        variants = r_prod.json().get("product", {}).get("variants", [])
+                        if variants:
+                            sync_inventory(LOCAL_URL, local_token, variants[0]["id"], sku, qty)
+                ch = ", ".join(src_sc.get(src_product.get("id"), []))
+                if ch:
+                    sync_sales_channels(LOCAL_URL, local_token, new_id, ch)
             else:
                 print(f"  [{i}/{len(prod_map)}] {sku}: {title} → ERROR")
                 errors += 1
