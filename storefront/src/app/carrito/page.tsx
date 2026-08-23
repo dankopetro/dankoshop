@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Trash2, ShoppingBag, ArrowRight } from "lucide-react"
+import { Trash2, ShoppingBag, ArrowRight, AlertTriangle } from "lucide-react"
 
 export default function CarritoPage() {
   const router = useRouter()
   const [cart, setCart] = useState<any[]>([])
+  const [stockWarnings, setStockWarnings] = useState<Record<string, number>>({})
+  const [checkingStock, setCheckingStock] = useState(false)
 
   useEffect(() => {
     // Load cart from localStorage or event
@@ -17,18 +19,65 @@ export default function CarritoPage() {
     }
   }, [])
 
+  useEffect(() => {
+    if (cart.length === 0) return
+    setCheckingStock(true)
+    const skus = cart.map((i: any) => i.sku).filter(Boolean)
+    if (skus.length === 0) { setCheckingStock(false); return }
+
+    const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+    const pk = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || ""
+
+    Promise.all(
+      skus.map(async (sku: string) => {
+        try {
+          const res = await fetch(`${backendUrl}/store/products?q=${sku}&limit=5`, {
+            headers: pk ? { "x-publishable-api-key": pk } : {},
+          })
+          if (!res.ok) return
+          const data = await res.json()
+          const match = (data.products || []).find((p: any) =>
+            p.variants?.some((v: any) => v.sku === sku)
+          )
+          if (match) {
+            const inv = match.variants?.[0]?.inventory_quantity
+            if (inv !== undefined && inv !== null) {
+              return { sku, stock: inv }
+            }
+          }
+        } catch {}
+        return null
+      })
+    ).then((results) => {
+      const map: Record<string, number> = {}
+      for (const r of results) {
+        if (r) map[r.sku] = r.stock
+      }
+      setStockWarnings(map)
+      setCheckingStock(false)
+    })
+  }, [cart])
+
   const removeItem = (sku: string) => {
     const updated = cart.filter(item => item.sku !== sku)
     setCart(updated)
     localStorage.setItem("dankoshop_cart", JSON.stringify(updated))
+    setStockWarnings((prev) => {
+      const next = { ...prev }
+      delete next[sku]
+      return next
+    })
   }
 
   const clearCart = () => {
     setCart([])
     localStorage.removeItem("dankoshop_cart")
+    setStockWarnings({})
   }
 
   const total = cart.reduce((acc, item) => acc + (item.price || 0) * (item.quantity || 1), 0)
+
+  const hasOutOfStock = Object.values(stockWarnings).some((s) => s === 0)
 
   const checkoutWhatsApp = () => {
     const itemsList = cart.map(i => `- ${i.name} (SKU: ${i.sku}) x${i.quantity || 1} - $%s`.replace("%s", (i.price || 0).toLocaleString("es-AR"))).join("%0A")
@@ -59,6 +108,16 @@ export default function CarritoPage() {
                   <div>
                     <h3 className="font-medium text-gray-900">{item.name}</h3>
                     <p className="text-sm text-gray-500">SKU: {item.sku}</p>
+                    {stockWarnings[item.sku] === 0 && (
+                      <span className="inline-flex items-center gap-1 text-xs text-red-600 font-semibold mt-1">
+                        <AlertTriangle className="w-3 h-3" /> Sin stock
+                      </span>
+                    )}
+                    {stockWarnings[item.sku] !== undefined && stockWarnings[item.sku] > 0 && stockWarnings[item.sku] <= 5 && (
+                      <span className="text-xs text-amber-600 font-medium mt-1 block">
+                        Quedan {stockWarnings[item.sku]} unidades
+                      </span>
+                    )}
                     <p className="text-blue-600 font-semibold mt-1">${(item.price || 0).toLocaleString("es-AR")}</p>
                   </div>
                 </div>
@@ -77,10 +136,15 @@ export default function CarritoPage() {
               <span>Total:</span>
               <span className="text-blue-600">${total.toLocaleString("es-AR")}</span>
             </div>
-            <button onClick={checkoutWhatsApp} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+            {hasOutOfStock && (
+              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-2">
+                Hay productos sin stock. Eliminalos del carrito para continuar.
+              </p>
+            )}
+            <button onClick={checkoutWhatsApp} disabled={hasOutOfStock} className="w-full bg-green-600 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
               Finalizar compra por WhatsApp 📲
             </button>
-            <button onClick={() => router.push("/checkout")} className="w-full bg-sky-600 hover:bg-sky-700 text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+            <button onClick={() => router.push("/checkout")} disabled={hasOutOfStock} className="w-full bg-sky-600 hover:bg-sky-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
               Continuar al checkout (pagos online) →
             </button>
             <p className="text-xs text-center text-gray-500">Retirá en nuestro local o pedí envío a domicilio.</p>

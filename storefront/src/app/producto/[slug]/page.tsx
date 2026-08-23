@@ -48,6 +48,17 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
               <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">{product.name}</h1>
               <p className="text-sm text-gray-400 mt-1">SKU: {product.sku}</p>
 
+              {product.stock === 0 && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-red-100 text-red-700 text-sm font-semibold rounded-full mt-2">
+                  Sin stock
+                </span>
+              )}
+              {product.stock !== null && product.stock > 0 && product.stock <= 5 && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-700 text-sm font-semibold rounded-full mt-2">
+                  Quedan {product.stock} unidades
+                </span>
+              )}
+
               <div className="mt-6 space-y-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
                 {product.prices.precio_efectivo && (
                   <div>
