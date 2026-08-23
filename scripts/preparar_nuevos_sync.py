@@ -81,7 +81,8 @@ def main():
     ws = wb.active
     ws.title = "Nuevos Sync"
     ws.append(["SKU", "Artículo", "Precio Ingresado", "Fecha Actualización",
-               "Imágenes JPG", "Precio Mayorista", "Envío Grande"])
+               "Imágenes JPG", "Precio Mayorista", "Envío Grande",
+               "Categoría", "Inventario", "Canales de Venta"])
 
     sin_imagen = []
     for p in nuevos:
@@ -100,6 +101,9 @@ def main():
             p["fecha"],
             ", ".join(imgs),
             mayorista,
+            "",
+            "",
+            None,
             "",
         ])
 
