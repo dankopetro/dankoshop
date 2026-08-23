@@ -101,12 +101,13 @@ python3 scripts/dedup_images.py
 ```
 
 ## Regla de precios (syncs de chat nuevos)
-Al generar el Excel de sync para un lote nuevo de chat (ej: `preparar_sync_14_15.py`):
+Al generar el Excel de sync para un lote nuevo de chat (ej: `generar_planillas_desde_chat.py`):
 - **Precio Compra Mayorista** = precio unitario tomado del mensaje —primero transferencia; si no existe, mayorista; si no existe, único precio disponible; si hay cantidades x1/x6/x12, tomar x1— **× 1,0606**.
 - **Precio Venta Bruto** = Precio Compra Mayorista **× 1,072** → es lo que va a Medusa (que aplica 15% y 25%).
 - **Envío Grande** siempre se copia desde la columna G de `Productos_Maestro.xlsx` (TRUE/FALSE), por SKU o por nombre; nunca se deja vacío si el Maestro tiene el dato.
+- **Categoría, Inventario, Canales de Venta** se copian desde el Maestro para productos existentes; para productos nuevos quedan vacíos (se llenan después en el admin de Medusa).
 - En `Control_14_15_Agosto.xlsx` la col H (Mayorista Efectivo) ya está corregida a mano por el dueño: **col C del sync = col H directa** (no re-aplicar ×1,0606).
-- Scripts: `preparar_sync_12_13.py` (formato viejo: Precio Ingresado → Precio Mayorista) y `preparar_sync_14_15.py` (formato nuevo: Precio Compra Mayorista → Precio Venta Bruto). Ambos generan `excel/Nuevos_*_Sync.xlsx` con hoja "Nuevos Sync".
+- Scripts: `generar_planillas_desde_chat.py` (pipeline completo chat→Control+Sync), `finalizar_control_corregido.py` (Control corregido a mano→Sync), `finalizar_sync_corregido.py` (Sync corregido a mano→Definitivo). Los viejos `preparar_sync_12_13.py` y `preparar_sync_14_15.py` ya NO se usan.
 
 ## Variables de entorno
 ### Frontend (Vercel) - CONFIGURADO
