@@ -322,6 +322,13 @@ HOST = "0.0.0.0"
 PORT = "9000"
 ```
 
+## Reglas importantes
+1. **ANTES de borrar/reinstalar node_modules o cualquier dependencia:** verificar que el error no es preexistente. Correr `tsc --noEmit` para confirmar si el código compila. Si el error es de build local (ej: `@vercel/turbopack/postcss`), NO intentar arreglarlo — Vercel usa su propio entorno.
+2. **Estructura del monorepo:** `node_modules` está en la RAÍZ (`dankoshop/node_modules`), NO en `storefront/node_modules`. El `package.json` raíz maneja workspaces.
+3. **NUNCA borrar `package-lock.json`** a menos que se pida explícitamente.
+4. **Antes de hacer cambios en scripts Python:** revisar qué columnas leen/escriben otros scripts que dependen del mismo Excel. Un cambio de índice de columna rompe toda la cadena.
+5. **Confirmar con el usuario** antes de hacer cambios destructivos (borrar archivos, reinstalar, forzar).
+
 ## Notas finales
 - El storefront en Vercel está conectado a Medusa en vivo (no usa products.ts hardcodeado).
 - Las imágenes están alojadas en Cloudinary.
