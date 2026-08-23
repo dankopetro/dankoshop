@@ -23,6 +23,7 @@ export interface Product {
   images: string[]
   slug: string
   envio_grande?: boolean
+  stock: number | null
 }
 
 export interface Category {
@@ -35,6 +36,7 @@ export interface Category {
 interface MedusaVariant {
   sku?: string
   calculated_price?: { calculated_amount?: number }
+  inventory_quantity?: number
 }
 
 interface MedusaProduct {
@@ -73,6 +75,7 @@ export function mapProduct(p: MedusaProduct): Product {
     images: (p.images?.map((i) => i.url) || []).filter(Boolean),
     slug: p.handle,
     envio_grande: m.envio_grande === true,
+    stock: firstVariant?.inventory_quantity ?? null,
   }
 }
 
@@ -138,4 +141,16 @@ export async function getCategories(): Promise<Category[]> {
   }
 
   return cats.map((c) => ({ id: c.id, name: c.name, slug: (c.handle || c.id).replace(/\//g, "-"), count: countByCat[c.name] || 0 }))
+}
+
+export async function checkStock(skus: string[]): Promise<Record<string, number>> {
+  const stockMap: Record<string, number> = {}
+  for (const sku of skus) {
+    const { products } = await getProducts({ q: sku, limit: "5" })
+    const match = products.find((p) => p.sku === sku)
+    if (match && match.stock !== null) {
+      stockMap[sku] = match.stock
+    }
+  }
+  return stockMap
 }

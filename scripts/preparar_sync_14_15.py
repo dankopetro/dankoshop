@@ -13,7 +13,10 @@ sync_excel_to_medusa.py:
   D (3): Fecha Actualización         (referencia)
   E (4): Imágenes JPG                (referencia manual, NO se sube a Medusa)
   F (5): Precio Venta Bruto          = round(Compra Mayorista * 1.072)
-  G (6): Envío Grande                (vacío)
+  G (6): Envío Grande                (del maestro por SKU)
+  H (7): Categoría                   (del maestro por SKU, vacío si es nuevo)
+  I (8): Inventario                  (del maestro por SKU, vacío si es nuevo)
+  J (9): Canales de Venta            (del maestro por SKU, vacío si es nuevo)
 
 Reglas:
 - Solo filas con Estado NUEVO o SIN SKU.
@@ -37,17 +40,54 @@ Uso:
 from pathlib import Path
 
 import openpyxl
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from excel_style import style_workbook
 
 BASE = Path(__file__).resolve().parent.parent
 CONTROL_PATH = BASE / "excel" / "Control_14_15_Agosto.xlsx"
 SYNC_PATH = BASE / "excel" / "Nuevos_14_15_Sync.xlsx"
+MAESTRO_PATH = BASE / "excel" / "Productos_Maestro.xlsx"
 FACTOR = 1.072
+
+
+def maestro_envios():
+    ws = openpyxl.load_workbook(MAESTRO_PATH, data_only=True).active
+    by_sku, by_name = {}, {}
+    for r in range(2, ws.max_row + 1):
+        sku = str(ws.cell(r, 1).value or "").strip().upper()
+        name = str(ws.cell(r, 2).value or "").strip().upper()
+        value = "TRUE" if str(ws.cell(r, 7).value or "").strip().upper() in {"TRUE", "1", "SI", "SÍ", "YES", "X"} else "FALSE"
+        if sku: by_sku[sku] = value
+        if name: by_name[name] = value
+    return by_sku, by_name
+
+
+def maestro_meta():
+    """Returns {sku: {categoria, inventario, canales}} from Productos_Maestro.xlsx."""
+    ws = openpyxl.load_workbook(MAESTRO_PATH, data_only=True).active
+    headers = [str(ws.cell(1, c).value or "").strip().lower() for c in range(1, ws.max_column + 1)]
+    cat_col = next((c for c, h in enumerate(headers, 1) if h == "categoría" or h == "categoria"), None)
+    inv_col = next((c for c, h in enumerate(headers, 1) if h == "inventario"), None)
+    sc_col = next((c for c, h in enumerate(headers, 1) if "canales" in h), None)
+    meta = {}
+    for r in range(2, ws.max_row + 1):
+        sku = str(ws.cell(r, 1).value or "").strip().upper()
+        if not sku:
+            continue
+        meta[sku] = {
+            "categoria": str(ws.cell(r, cat_col).value or "").strip() if cat_col else "",
+            "inventario": ws.cell(r, inv_col).value if inv_col else None,
+            "canales": str(ws.cell(r, sc_col).value or "").strip() if sc_col else "",
+        }
+    return meta
 
 
 def leer_control():
     wb = openpyxl.load_workbook(CONTROL_PATH, data_only=True)
     ws = wb["Control"]
     filas = []
+    envio_sku, envio_name = maestro_envios()
     for r in range(2, ws.max_row + 1):
         estado = str(ws.cell(r, 14).value or "").strip()
         if estado not in ("NUEVO", "SIN SKU"):
@@ -64,6 +104,7 @@ def leer_control():
             "imagen": str(ws.cell(r, 6).value or "").strip(),
             "mayorista": mayorista,
             "fecha": ws.cell(r, 1).value,
+            "envio_grande": envio_sku.get(str(ws.cell(r, 3).value or "").strip().upper(), envio_name.get(articulo.upper(), "FALSE")),
         })
     return filas
 
@@ -78,6 +119,8 @@ def main():
         for f in sin_precio:
             print(f"  row{f['row']}: {f['articulo']}")
     filas = [f for f in filas if f["mayorista"]]
+
+    meta = maestro_meta()
 
     agrupados = {}
     for f in filas:
@@ -103,6 +146,7 @@ def main():
         except (TypeError, ValueError):
             compra = ""
             venta = ""
+        m = meta.get(sku.upper(), {})
         productos.append({
             "sku": sku,
             "articulo": f["articulo"],
@@ -110,18 +154,24 @@ def main():
             "fecha": f["fecha"],
             "imagenes": ", ".join(imgs),
             "venta": venta,
-            "envio_grande": "",
+            "envio_grande": f.get("envio_grande", "FALSE"),
+            "categoria": m.get("categoria", ""),
+            "inventario": m.get("inventario"),
+            "canales": m.get("canales", ""),
         })
 
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Nuevos Sync"
     ws.append(["SKU", "Artículo", "Precio Compra Mayorista", "Fecha Actualización",
-               "Imágenes JPG", "Precio Venta Bruto", "Envío Grande"])
+               "Imágenes JPG", "Precio Venta Bruto", "Envío Grande",
+               "Categoría", "Inventario", "Canales de Venta"])
     for p in productos:
         ws.append([p["sku"], p["articulo"], p["compra"], p["fecha"],
-                   p["imagenes"], p["venta"], p["envio_grande"]])
+                   p["imagenes"], p["venta"], p["envio_grande"],
+                   p["categoria"], p["inventario"], p["canales"]])
 
+    style_workbook(wb)
     wb.save(SYNC_PATH)
     print(f"\nGuardado: {SYNC_PATH.name} ({len(productos)} productos)")
 

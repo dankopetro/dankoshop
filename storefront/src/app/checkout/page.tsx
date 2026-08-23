@@ -47,6 +47,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [enviando, setEnviando] = useState<null | "confirmar" | "pagar">(null)
+  const [stockError, setStockError] = useState<string[]>([])
 
   useEffect(() => {
     setCart(getCart())
@@ -66,6 +67,38 @@ export default function CheckoutPage() {
   const banco = getBankData()
 
   const set = (k: keyof Customer, v: string) => setCliente((c) => ({ ...c, [k]: v }))
+
+  const validarStock = useCallback(async (): Promise<boolean> => {
+    const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+    const pk = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || ""
+    const sinStock: string[] = []
+
+    for (const item of cart) {
+      try {
+        const res = await fetch(`${backendUrl}/store/products?q=${item.sku}&limit=5`, {
+          headers: pk ? { "x-publishable-api-key": pk } : {},
+        })
+        if (!res.ok) continue
+        const data = await res.json()
+        const match = (data.products || []).find((p: any) =>
+          p.variants?.some((v: any) => v.sku === item.sku)
+        )
+        if (match) {
+          const inv = match.variants?.[0]?.inventory_quantity
+          if (inv !== undefined && inv !== null && inv === 0) {
+            sinStock.push(item.name)
+          }
+        }
+      } catch {}
+    }
+
+    if (sinStock.length > 0) {
+      setStockError(sinStock)
+      return false
+    }
+    setStockError([])
+    return true
+  }, [cart])
 
   const validar = useCallback((): string => {
     if (cart.length === 0) return "Tu carrito está vacío."
@@ -94,6 +127,8 @@ export default function CheckoutPage() {
     const err = validar()
     if (err) return setError(err)
     setError("")
+    const stockOk = await validarStock()
+    if (!stockOk) return setError("Algunos productos sin stock. Volvé al carrito y eliminalos.")
     setEnviando("confirmar")
     const order = buildOrder(cliente, cart, "transferencia", "pendiente")
     await persistir(order)
@@ -105,6 +140,8 @@ export default function CheckoutPage() {
     const err = validar()
     if (err) return setError(err)
     setError("")
+    const stockOk = await validarStock()
+    if (!stockOk) return setError("Algunos productos sin stock. Volvé al carrito y eliminalos.")
     setEnviando("pagar")
 
     // guardar el pedido con estado pendiente antes de redirigir
@@ -361,6 +398,12 @@ export default function CheckoutPage() {
           </div>
 
           {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-2">{error}</p>}
+          {stockError.length > 0 && (
+            <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg p-2">
+              <p className="font-semibold mb-1">Sin stock:</p>
+              <ul className="list-disc list-inside">{stockError.map((n) => <li key={n}>{n}</li>)}</ul>
+            </div>
+          )}
 
           {metodo === "mercadopago" ? (
             <button
