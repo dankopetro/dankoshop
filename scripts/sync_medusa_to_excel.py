@@ -55,6 +55,7 @@ HEADER_COLORS = {
     "Precio Lista": "9C27B0",  # púrpura
     "Precio Mayorista": "FF9800", # naranja
     "Envío Grande": "00BCD4",  # cyan
+    "Precio Ingresado": "78909C", # gris azulado oscuro
 }
 
 
@@ -138,12 +139,12 @@ def fetch_inventory_map():
             break
         items = r.json().get("inventory_items", [])
         for item in items:
+            sku = item.get("sku")
+            if not sku:
+                continue
             levels = item.get("location_levels", []) or []
-            total = sum(l.get("available", 0) or 0 for l in levels)
-            for variant in item.get("variants", []) or []:
-                sku = variant.get("sku")
-                if sku:
-                    inv_map[sku] = total
+            total = sum(l.get("available_quantity", 0) or 0 for l in levels)
+            inv_map[sku] = total
         if len(items) < 100:
             break
         offset += 100
@@ -249,7 +250,11 @@ def write_excel(products_data, existing):
 
     # Col K: Precio Ingresado (se preserva del Excel anterior)
     cell = ws.cell(row=1, column=11, value="Precio Ingresado")
-    cell.font = Font(color="999999", size=8)
+    cell.font = Font(color="FFFFFF", bold=True, size=10)
+    cell.alignment = center
+    color = HEADER_COLORS.get("Precio Ingresado", "333333")
+    cell.fill = PatternFill(start_color=color, end_color=color, fill_type="solid")
+    cell.border = thin_border
 
     # Write data
     data_center = Alignment(horizontal="center", vertical="center")
