@@ -96,10 +96,16 @@ def read_excel():
         precio_mayorista_raw = row[2] if is_sync_sheet else row[5]
         envio_grande_raw = row[6] if len(row) > 6 else None
 
-        # Columnas nuevas: 7=Categoría, 8=Inventario, 9=Canales de Venta
-        categoria_raw = row[7] if len(row) > 7 else None
-        inventario_raw = row[8] if len(row) > 8 else None
-        canales_raw = row[9] if len(row) > 9 else None
+        # Maestro: col 7=H Inventario, col 8=I Canales de Venta
+        # Nuevos Sync: col 7=H Categoría, col 8=I Inventario, col 9=J Canales
+        inventario_raw = row[7] if len(row) > 7 else None
+        canales_raw = row[8] if len(row) > 8 else None
+        if is_sync_sheet:
+            categoria_raw = row[7] if len(row) > 7 else None
+            inventario_raw = row[8] if len(row) > 8 else None
+            canales_raw = row[9] if len(row) > 9 else None
+        else:
+            categoria_raw = ""
 
         mayorista = parse_price(precio_mayorista_raw)
         if mayorista is None:

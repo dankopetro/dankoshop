@@ -268,33 +268,29 @@ def write_excel(products_data, existing):
         ws.cell(row=row_idx, column=4, value=p["description"]).alignment = data_left
 
         precio_mayorista = p.get("precio_mayorista")
-        cell6 = ws.cell(row=row_idx, column=7, value=precio_mayorista)
+        cell6 = ws.cell(row=row_idx, column=6, value=precio_mayorista)
         cell6.alignment = data_center
         cell6.number_format = '#,##0'
 
         envio = "TRUE" if p.get("envio_grande") else ""
-        ws.cell(row=row_idx, column=8, value=envio).alignment = data_center
+        ws.cell(row=row_idx, column=7, value=envio).alignment = data_center
 
-        # Inventario (col 9)
         inv = p.get("inventory")
-        ws.cell(row=row_idx, column=9, value=inv if inv is not None else "").alignment = data_center
+        ws.cell(row=row_idx, column=8, value=inv if inv is not None else "").alignment = data_center
 
-        # Canales de Venta (col 10)
-        ws.cell(row=row_idx, column=10, value=p.get("sales_channels", "")).alignment = data_center
+        ws.cell(row=row_idx, column=9, value=p.get("sales_channels", "")).alignment = data_center
 
-        ws.cell(row=row_idx, column=11, value=p["medusa_id"])
+        ws.cell(row=row_idx, column=10, value=p["medusa_id"])
 
-        # Preservar Precio Ingresado del Excel anterior (col K)
         prev = existing_lookup(p)
         precio_ing = None
         if prev and prev.get("precio_ingresado") is not None:
             precio_ing = prev["precio_ingresado"]
         elif precio_mayorista:
             precio_ing = int(round(float(precio_mayorista) / 1.072))
-        ws.cell(row=row_idx, column=12, value=precio_ing)
+        ws.cell(row=row_idx, column=11, value=precio_ing)
 
-        # Apply borders
-        for col in range(1, 13):
+        for col in range(1, 12):
             ws.cell(row=row_idx, column=col).border = thin_border
 
     # Col E: control — fórmula en TODA la columna hasta fila 10000,
@@ -302,11 +298,10 @@ def write_excel(products_data, existing):
     # No se sube a Medusa.
     MAX_FILA = 10000
     for r in range(2, MAX_FILA + 1):
-        c5 = ws.cell(row=r, column=5, value=f'=IF(G{r}="","",G{r}*1.25)')
+        c5 = ws.cell(row=r, column=5, value=f'=IF(F{r}="","",F{r}*1.25)')
         c5.alignment = data_center
         c5.number_format = '#,##0'
-        # Col F: fórmula viva a partir de Precio Ingresado (col L)
-        c6 = ws.cell(row=r, column=6, value=f'=IF(L{r}="","",ROUND(L{r}*1.072,0))')
+        c6 = ws.cell(row=r, column=6, value=f'=IF(K{r}="","",ROUND(K{r}*1.072,0))')
         c6.alignment = data_center
         c6.number_format = '#,##0'
 
