@@ -169,6 +169,7 @@ def main():
     matched = 0
     new_products = 0
     no_price = 0
+    used_skus = set()
 
     for idx, cat_item in enumerate(catalogo, 2):
         art = cat_item["articulo"]
@@ -176,7 +177,7 @@ def main():
 
         m, score = best_match(art, maestro)
 
-        if score >= 0.5 and m:
+        if score >= 0.5 and m and m["sku"] not in used_skus:
             sku = m["sku"]
             cat_art = m["articulo"]
             categoria = m["categoria"]
@@ -184,6 +185,7 @@ def main():
             inv = m["inventario"]
             envio = m["envio_grande"]
             canales = m["canales"]
+            used_skus.add(sku)
             matched += 1
         else:
             new_sin += 1
