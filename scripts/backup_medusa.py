@@ -35,7 +35,7 @@ def login():
     return r.json()["token"]
 
 
-def get_all(token, endpoint, params=None):
+def get_all(token, endpoint, params=None, key=None):
     headers = {"Authorization": f"Bearer {token}"}
     all_items = []
     offset = 0
@@ -46,7 +46,10 @@ def get_all(token, endpoint, params=None):
         r = requests.get(f"{MEDUSA_URL}{endpoint}", headers=headers, params=p, timeout=15)
         r.raise_for_status()
         data = r.json()
-        items = data.get("products", data.get("collections", data.get("product_categories", data.get("shipping_options", []))))
+        if key:
+            items = data.get(key, [])
+        else:
+            items = data.get("products", data.get("collections", data.get("product_categories", data.get("shipping_options", []))))
         if not items:
             break
         all_items.extend(items)
@@ -81,17 +84,17 @@ def backup():
     print(f"  {len(categories)} categorías")
 
     print("Exportando inventario...")
-    inventory = get_all(token, "/admin/inventory-items")
+    inventory = get_all(token, "/admin/inventory-items", key="inventory_items")
     backup_data["inventory_items"] = inventory
     print(f"  {len(inventory)} items de inventario")
 
     print("Exportando ubicaciones de stock...")
-    locations = get_all(token, "/admin/stock-locations")
+    locations = get_all(token, "/admin/stock-locations", key="stock_locations")
     backup_data["stock_locations"] = locations
     print(f"  {len(locations)} ubicaciones")
 
     print("Exportando canales de venta...")
-    channels = get_all(token, "/admin/sales-channels")
+    channels = get_all(token, "/admin/sales-channels", key="sales_channels")
     backup_data["sales_channels"] = channels
     print(f"  {len(channels)} canales de venta")
 
