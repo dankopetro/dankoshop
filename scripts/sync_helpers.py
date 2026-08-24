@@ -44,12 +44,12 @@ def fetch_source_inventory(url, token):
             break
         items = r.json().get("inventory_items", [])
         for item in items:
+            sku = item.get("sku")
+            if not sku:
+                continue
             levels = item.get("location_levels", []) or []
-            total = sum(l.get("available", 0) or 0 for l in levels)
-            for variant in item.get("variants", []) or []:
-                sku = variant.get("sku")
-                if sku:
-                    inv_map[sku] = total
+            total = sum(l.get("available_quantity", 0) or 0 for l in levels)
+            inv_map[sku] = total
         if len(items) < 100:
             break
         offset += 100
