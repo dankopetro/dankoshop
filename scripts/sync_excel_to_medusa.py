@@ -381,8 +381,9 @@ def create_product(product, region_id):
             link_product_to_channels(new_id, ch_names)
         # Set inventory if provided
         inv = product.get("inventario")
-        if inv is not None and product["variants"]:
-            vid = r.json()["product"]["variants"][0]["id"]
+        created_variants = r.json().get("product", {}).get("variants", [])
+        if inv is not None and created_variants:
+            vid = created_variants[0]["id"]
             set_inventory(vid, product["sku"], inv)
         return new_id
     print(f"    CREATE FAILED: {r.status_code} {r.text[:200]}")
