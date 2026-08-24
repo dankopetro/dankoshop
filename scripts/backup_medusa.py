@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Backup de Medusa vía Admin API.
-Exporta productos, colecciones, categorías y opciones de envío.
+Exporta productos, colecciones, categorías, inventario, ubicaciones y canales de venta.
 
 Uso:
   export MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
@@ -79,6 +79,21 @@ def backup():
     categories = get_all(token, "/admin/product-categories")
     backup_data["categories"] = categories
     print(f"  {len(categories)} categorías")
+
+    print("Exportando inventario...")
+    inventory = get_all(token, "/admin/inventory-items")
+    backup_data["inventory_items"] = inventory
+    print(f"  {len(inventory)} items de inventario")
+
+    print("Exportando ubicaciones de stock...")
+    locations = get_all(token, "/admin/stock-locations")
+    backup_data["stock_locations"] = locations
+    print(f"  {len(locations)} ubicaciones")
+
+    print("Exportando canales de venta...")
+    channels = get_all(token, "/admin/sales-channels")
+    backup_data["sales_channels"] = channels
+    print(f"  {len(channels)} canales de venta")
 
     filename = f"backup_{ts}.json"
     filepath = os.path.join(BACKUP_DIR, filename)
