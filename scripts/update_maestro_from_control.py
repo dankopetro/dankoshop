@@ -68,7 +68,7 @@ def actualizar_maestro(skus_control, filas_maestro):
         if sku in filas_maestro and datos["d"]:
             fila = filas_maestro[sku]
             valor = max(datos["d"])
-            ws.cell(row=fila, column=9, value=valor)
+            ws.cell(row=fila, column=11, value=valor)
             actualizados += 1
 
     wb.save(MAESTRO_PATH)
