@@ -189,8 +189,8 @@ def write_workbooks(rows, out_dir, label):
                    item.get("name", ""), item.get("image", ""), item.get("source", ""), item.get("source_kind", ""),
                    "", "", item.get("envio_grande", ""), item.get("maestro_sku", ""), item.get("maestro_price", ""),
                    item.get("diff_pct", ""), item.get("match", "")])
-        ws.cell(row_num, 9).value = f"=G{row_num}*{FACTOR_COMPRA}"
-        ws.cell(row_num, 10).value = f"=I{row_num}*{FACTOR_VENTA}"
+        ws.cell(row_num, 9).value = f"=ROUND(G{row_num}*{FACTOR_COMPRA},0)"
+        ws.cell(row_num, 10).value = f"=ROUND(I{row_num}*{FACTOR_VENTA},0)"
     ws.freeze_panes = "A2"
     ws.auto_filter.ref = f"A1:O{ws.max_row}"
     for col, width in enumerate([12, 8, 22, 18, 58, 35, 16, 18, 18, 16, 14, 22, 16, 10, 22], 1):
