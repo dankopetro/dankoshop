@@ -185,7 +185,10 @@ def write_workbooks(rows, out_dir, label):
         cell.fill = PatternFill("solid", fgColor="34495E")
     for item in rows:
         row_num = ws.max_row + 1
-        ws.append([item[k] for k in ["date", "time", "sku", "other_skus", "name", "image", "source", "source_kind", "", "", "envio_grande", "maestro_sku", "maestro_price", "diff_pct", "match"]])
+        ws.append([item.get("date", ""), item.get("time", ""), item.get("sku", ""), item.get("other_skus", ""),
+                   item.get("name", ""), item.get("image", ""), item.get("source", ""), item.get("source_kind", ""),
+                   "", "", item.get("envio_grande", ""), item.get("maestro_sku", ""), item.get("maestro_price", ""),
+                   item.get("diff_pct", ""), item.get("match", "")])
         ws.cell(row_num, 9).value = f"=G{row_num}*{FACTOR_COMPRA}"
         ws.cell(row_num, 10).value = f"=I{row_num}*{FACTOR_VENTA}"
     ws.freeze_panes = "A2"
