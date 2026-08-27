@@ -228,6 +228,10 @@ def get_stock_location():
 
 
 def set_inventory(variant_id, sku, quantity):
+    """Set inventory level. Skips if quantity None/<=0 or stock already exists."""
+    if quantity is None or quantity <= 0:
+        return True
+
     r = api("GET", f"/admin/variants/{variant_id}", params={"expand": "inventory_items"})
     if r.status_code != 200:
         return False
@@ -239,10 +243,20 @@ def set_inventory(variant_id, sku, quantity):
         inv_item_id = r2.json().get("inventory_item", {}).get("id")
         if not inv_item_id:
             return False
-        r3 = api("POST", f"/admin/products/variants/{variant_id}/inventory-items", data={"inventory_item_id": inv_item_id})
+        r3 = api("POST", f"/admin/products/variants/{variant_id}/inventory-items", data={"inventory_item_id": inv_item_id, "required_quantity": 1})
         if r3.status_code != 200:
             return False
         inv_items = [{"inventory_item_id": inv_item_id}]
+    else:
+        inv_item_id = inv_items[0]["inventory_item_id"]
+        loc_id = get_stock_location()
+        if loc_id:
+            r_check = api("GET", f"/admin/inventory-items/{inv_item_id}/location-levels")
+            if r_check.status_code == 200:
+                levels = r_check.json().get("inventory_levels", [])
+                current_stock = sum(l.get("stocked_quantity", 0) for l in levels)
+                if current_stock > 0:
+                    return True
 
     inv_item_id = inv_items[0]["inventory_item_id"]
     loc_id = get_stock_location()

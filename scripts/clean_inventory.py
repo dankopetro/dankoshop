@@ -147,7 +147,7 @@ def create_inventory_for_skus(location_id):
             continue
 
         r3 = api("POST", f"/admin/products/{product_id}/variants/{variant_id}/inventory-items",
-                 data={"inventory_item_id": inv_id})
+                 data={"inventory_item_id": inv_id, "required_quantity": 1})
         if r3.status_code not in (200, 409):
             print(f"    WARN vincular: {r3.status_code}")
 

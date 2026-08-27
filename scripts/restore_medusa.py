@@ -305,10 +305,22 @@ def restore_inventory(token, backup_inventory, variant_sku_map, headers):
                     skipped += 1
                 continue
 
+            # Check current stock — don't overwrite if already > 0
+            r_check = requests.get(
+                f"{MEDUSA_URL}/admin/inventory-items/{item['id']}/location-levels",
+                headers=headers, timeout=15,
+            )
+            if r_check.status_code == 200:
+                levels = r_check.json().get("inventory_levels", [])
+                current = sum(l.get("stocked_quantity", 0) for l in levels)
+                if current > 0:
+                    skipped += 1
+                    continue
+
             r = requests.post(
                 f"{MEDUSA_URL}/admin/products/{variant_sku_map[sku]['product_id']}/variants/{vid}/inventory-items",
                 headers=headers,
-                json={"inventory_item_id": item["id"]},
+                json={"inventory_item_id": item["id"], "required_quantity": 1},
                 timeout=15,
             )
             if r.status_code not in (200, 409):
