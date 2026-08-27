@@ -243,7 +243,12 @@ def get_stock_location():
 
 
 def set_inventory(variant_id, sku, quantity):
-    """Set inventory level for a variant's inventory item."""
+    """Set inventory level for a variant's inventory item.
+    If quantity is None or <= 0, skip (no inventory item = checkout allows purchase).
+    """
+    if quantity is None or quantity <= 0:
+        return True
+
     # Find inventory item for this variant
     r = api("GET", f"/admin/variants/{variant_id}", params={"expand": "inventory_items"})
     if r.status_code != 200:

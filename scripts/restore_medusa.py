@@ -269,7 +269,15 @@ def restore_products(token, backup_products, sc_id_map, headers):
 
 def restore_inventory(token, backup_inventory, variant_sku_map, headers):
     print("\nRestaurando inventario...")
-    location_id = "sloc_01KZA87M6NGFV8MDTKG00YY5E3"
+
+    # Get first available stock location dynamically
+    r = requests.get(f"{MEDUSA_URL}/admin/stock-locations", headers=headers, params={"limit": 10}, timeout=15)
+    locations = r.json().get("stock_locations", []) if r.status_code == 200 else []
+    location_id = locations[0]["id"] if locations else None
+    if not location_id:
+        print("  ERR: no stock location found")
+        return
+    print(f"  Location: {locations[0]['name']} ({location_id})")
 
     restored = 0
     skipped = 0
