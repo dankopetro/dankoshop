@@ -245,6 +245,7 @@ def get_stock_location():
 def set_inventory(variant_id, sku, quantity):
     """Set inventory level for a variant's inventory item.
     If quantity is None or <= 0, skip (no inventory item = checkout allows purchase).
+    If stock already exists (> 0), skip (Medusa is source of truth after sales).
     """
     if quantity is None or quantity <= 0:
         return True
@@ -263,10 +264,21 @@ def set_inventory(variant_id, sku, quantity):
         if not inv_item_id:
             return False
         # Link to variant
-        r3 = api("POST", f"/admin/products/variants/{variant_id}/inventory-items", data={"inventory_item_id": inv_item_id})
+        r3 = api("POST", f"/admin/products/variants/{variant_id}/inventory-items", data={"inventory_item_id": inv_item_id, "required_quantity": 1})
         if r3.status_code != 200:
             return False
         inv_items = [{"inventory_item_id": inv_item_id}]
+    else:
+        # Check current stock — if > 0, don't overwrite (sales happened)
+        inv_item_id = inv_items[0]["inventory_item_id"]
+        loc_id = get_stock_location()
+        if loc_id:
+            r_check = api("GET", f"/admin/inventory-items/{inv_item_id}/location-levels")
+            if r_check.status_code == 200:
+                levels = r_check.json().get("inventory_levels", [])
+                current_stock = sum(l.get("stocked_quantity", 0) for l in levels)
+                if current_stock > 0:
+                    return True  # Stock exists, don't overwrite
 
     inv_item_id = inv_items[0]["inventory_item_id"]
     loc_id = get_stock_location()

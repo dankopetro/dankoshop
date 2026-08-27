@@ -61,6 +61,7 @@ def sync_inventory(url, token, variant_id, sku, quantity):
     Set inventory level for a variant in the destination instance.
     Creates inventory item + links to variant if needed.
     If quantity is None or <= 0, skip (no inventory item = checkout allows purchase).
+    If stock already exists (> 0), skip (don't overwrite sales).
     """
     if quantity is None or quantity <= 0:
         return True
@@ -81,10 +82,21 @@ def sync_inventory(url, token, variant_id, sku, quantity):
             return False
         # Link to variant
         r3 = _api(url, token, "POST", f"/admin/products/variants/{variant_id}/inventory-items",
-                   data={"inventory_item_id": inv_item_id})
+                   data={"inventory_item_id": inv_item_id, "required_quantity": 1})
         if r3.status_code != 200:
             return False
         inv_items = [{"inventory_item_id": inv_item_id}]
+    else:
+        # Check current stock — if > 0, don't overwrite (sales happened)
+        inv_item_id = inv_items[0]["inventory_item_id"]
+        loc_id = get_stock_location(url, token)
+        if loc_id:
+            r_check = _api(url, token, "GET", f"/admin/inventory-items/{inv_item_id}/location-levels")
+            if r_check.status_code == 200:
+                levels = r_check.json().get("inventory_levels", [])
+                current_stock = sum(l.get("stocked_quantity", 0) for l in levels)
+                if current_stock > 0:
+                    return True  # Stock exists, don't overwrite
 
     inv_item_id = inv_items[0]["inventory_item_id"]
     loc_id = get_stock_location(url, token)
