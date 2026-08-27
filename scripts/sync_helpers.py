@@ -60,7 +60,11 @@ def sync_inventory(url, token, variant_id, sku, quantity):
     """
     Set inventory level for a variant in the destination instance.
     Creates inventory item + links to variant if needed.
+    If quantity is None or <= 0, skip (no inventory item = checkout allows purchase).
     """
+    if quantity is None or quantity <= 0:
+        return True
+
     # Find or create inventory item for this variant
     r = _api(url, token, "GET", f"/admin/variants/{variant_id}", params={"expand": "inventory_items"})
     if r.status_code != 200:
