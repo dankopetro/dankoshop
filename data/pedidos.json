@@ -1,0 +1,34 @@
+[
+  {
+    "id": "DK-MTARL8H2",
+    "fecha": "2026-08-27T00:08:20.006Z",
+    "cliente": {
+      "nombre": "DANI",
+      "email": "mirandaclaudiodaniel@gmail.com",
+      "telefono": "02216219596",
+      "dni": "18559624",
+      "direccion": "",
+      "ciudad": "",
+      "provincia": "Buenos Aires",
+      "metodo_envio": "retiro",
+      "zona_envio": "laplata",
+      "velocidad_envio": "estandar"
+    },
+    "items": [
+      {
+        "sku": "6232",
+        "name": "Mesa Gamer GT-2310 Ultrom",
+        "price": 138397,
+        "price_lista": 150431,
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/xjuisove/image/upload/dankoshop/6232_3.jpg",
+        "envio_grande": false
+      }
+    ],
+    "subtotal": 138397,
+    "envio": 0,
+    "total": 138397,
+    "metodo_pago": "mercadopago",
+    "estado": "pendiente"
+  }
+]
