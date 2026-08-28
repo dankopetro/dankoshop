@@ -30,5 +30,37 @@
     "total": 138397,
     "metodo_pago": "mercadopago",
     "estado": "pendiente"
+  },
+  {
+    "id": "DK-MTCEJ7Q7",
+    "fecha": "2026-08-28T03:38:23.071Z",
+    "cliente": {
+      "nombre": "DANI",
+      "email": "mirandaclaudiodaniel@gmail.com",
+      "telefono": "221334455",
+      "dni": "23569098",
+      "direccion": "",
+      "ciudad": "",
+      "provincia": "Buenos Aires",
+      "metodo_envio": "retiro",
+      "zona_envio": "laplata",
+      "velocidad_envio": "estandar"
+    },
+    "items": [
+      {
+        "sku": "9694",
+        "name": "Mesa de Ping Pong",
+        "price": 248815,
+        "price_lista": 270451,
+        "quantity": 1,
+        "image": "https://res.cloudinary.com/xjuisove/image/upload/v1787886700/dankoshop/fd289c3e-3ec2-4041-b5fe-42a5184f5100_whatsapp_image_2026-08-27_at_16.19.56_2_.jpeg.jpg",
+        "envio_grande": false
+      }
+    ],
+    "subtotal": 248815,
+    "envio": 0,
+    "total": 248815,
+    "metodo_pago": "mercadopago",
+    "estado": "pendiente"
   }
 ]
