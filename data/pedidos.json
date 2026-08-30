@@ -92,5 +92,42 @@
     "subtotal": 35000,
     "envio": 0,
     "total": 35000
+  },
+  {
+    "id": "TEST-20260830144724",
+    "fecha": "30/08/2026 14:47",
+    "estado": "pendiente",
+    "metodo_pago": "transferencia",
+    "cliente": {
+      "nombre": "Test 2",
+      "email": "test2@dankoshop.com.ar",
+      "telefono": "221-9999999",
+      "dni": "99999999",
+      "direccion": "Calle de Prueba 456",
+      "ciudad": "La Plata",
+      "provincia": "Buenos Aires",
+      "metodo_envio": "envio",
+      "zona_envio": "laplata",
+      "velocidad_envio": "estandar"
+    },
+    "items": [
+      {
+        "sku": "6983",
+        "name": "Ventilador aconcawa 18 3 en 1",
+        "price": 35000,
+        "quantity": 1,
+        "price_lista": 40000
+      },
+      {
+        "sku": "SIN026",
+        "name": "SIN026 - Producto Test",
+        "price": 15000,
+        "quantity": 2,
+        "price_lista": 18000
+      }
+    ],
+    "subtotal": 65000,
+    "envio": 0,
+    "total": 65000
   }
 ]
