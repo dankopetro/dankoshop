@@ -151,79 +151,86 @@ def main():
         name = str(ws.cell(r, c_name).value or "").strip()
         if not name:
             continue
-        sku = str(ws.cell(r, c_sku).value or "").strip()
-        match = by_sku.get(sku.upper()) if sku else None
-        status = "SKU OK" if match else ""
-        if not match:
-            candidates = by_name.get(norm(name), [])
-            if candidates:
-                match = candidates[0]
-                sku = match["sku"]
-                status = "SKU COMPLETADO POR NOMBRE"
-        if not match:
-            status = "REVISAR SKU"
+        raw_sku = str(ws.cell(r, c_sku).value or "").strip()
+        skus = [s.strip() for s in raw_sku.replace(";", ",").split(",") if s.strip()] if raw_sku else []
 
         source = number(ws.cell(r, c_source).value)
-        compra = number(ws.cell(r, c_compra).value)
-        if compra is None and source is not None:
-            compra = round(source * 1.0606)
-        venta = round(compra * 1.072) if compra is not None else ""
+        compra_base = number(ws.cell(r, c_compra).value)
+        if compra_base is None and source is not None:
+            compra_base = round(source * 1.0606)
         envio_input = ws.cell(r, c_envio).value if c_envio else None
-        envio = envio_flag(envio_input) if str(envio_input or "").strip() else envio_flag(match.get("envio") if match else None)
-        if compra is None:
-            status = "REVISAR PRECIO"
-        if sku.upper() in seen and sku:
-            status = "DUPLICADO"
-        else:
-            seen.add(sku.upper())
 
-        old = match.get("price") if match else ""
-        diff = round((compra - old) / old * 100, 2) if compra is not None and number(old) else ""
-        if compra is None:
-            accion = "REVISAR PRECIO"
-        elif not match:
-            accion = "CREAR / REVISAR PRODUCTO"
-        elif medusa_ok and sku.upper() not in medusa_prices:
-            accion = "CREAR / REVISAR PRODUCTO"
-        elif medusa_ok:
-            current_metadata = medusa_prices.get(sku.upper())
-            if current_metadata is None:
-                accion = "CREAR / REVISAR PRODUCTO"
+        for idx, sku in enumerate(skus if skus else [""]):
+            other_skus = ", ".join(s for s in skus if s != sku) if len(skus) > 1 else ""
+
+            match = by_sku.get(sku.upper()) if sku else None
+            status = "SKU OK" if match else ""
+            if not match:
+                candidates = by_name.get(norm(name), [])
+                if candidates:
+                    match = candidates[0]
+                    sku = match["sku"]
+                    other_skus = raw_sku.replace(sku, "").strip(" ,;")
+                    status = "SKU COMPLETADO POR NOMBRE"
+            if not match:
+                status = "REVISAR SKU"
+
+            compra = compra_base
+            envio = envio_flag(envio_input) if str(envio_input or "").strip() else envio_flag(match.get("envio") if match else None)
+            if compra is None:
+                status = "REVISAR PRECIO"
+            if sku.upper() in seen and sku:
+                status = "DUPLICADO"
             else:
-                nuevo = {
-                    "precio_lista": round(compra * 1.25),
-                    "precio_efectivo": round(compra * 1.15),
-                    "precio_mayorista": round(compra),
-                    "cuota_valor_3": round(round(compra * 1.25) / 3),
-                    "cuota_valor_6": round(round(compra * 1.25) / 6),
-                }
-                # Replica también el cálculo de cuotas a 12 del sincronizador.
-                tasa = 0.12
-                factor = ((1 + tasa) ** 12 - 1) / (tasa * (1 + tasa) ** 12)
-                nuevo["cuota_valor_12"] = round(round(compra * 1.25) / factor)
-                if envio == "TRUE":
-                    nuevo["envio_grande"] = True
-                cambios = any(current_metadata.get(k) != v for k, v in nuevo.items())
-                if envio != "TRUE" and "envio_grande" in current_metadata:
-                    cambios = True
-                accion = "ACTUALIZAR PRECIO" if cambios else "SIN CAMBIOS"
-        elif number(old) is not None and compra != number(old):
-            accion = "ACTUALIZAR PRECIO"
-        else:
-            accion = "SIN CAMBIOS"
-        row = [
-            ws.cell(r, c_fecha).value, ws.cell(r, c_hora).value, sku,
-            ws.cell(r, c_other).value or "", name, ws.cell(r, c_img).value or "",
-            source or "", "", compra or "", venta, old, diff, status,
-        ]
-        row.insert(10, envio)
-        rows.append(row)
-        review.append([r, sku, name, compra or "", status, accion])
-        if status != "DUPLICADO" and sku and compra is not None:
-            sync_rows.append([sku, name, compra, ws.cell(r, c_fecha).value or "", ws.cell(r, c_img).value or "", venta, envio,
-                              match.get("categoria", "") if match else "",
-                              match.get("inventario") if match else None,
-                              match.get("canales", "") if match else ""])
+                seen.add(sku.upper())
+
+            venta = round(compra * 1.072) if compra is not None else ""
+            old = match.get("price") if match else ""
+            diff = round((compra - old) / old * 100, 2) if compra is not None and number(old) else ""
+            if compra is None:
+                accion = "REVISAR PRECIO"
+            elif not match:
+                accion = "CREAR / REVISAR PRODUCTO"
+            elif medusa_ok and sku.upper() not in medusa_prices:
+                accion = "CREAR / REVISAR PRODUCTO"
+            elif medusa_ok:
+                current_metadata = medusa_prices.get(sku.upper())
+                if current_metadata is None:
+                    accion = "CREAR / REVISAR PRODUCTO"
+                else:
+                    nuevo = {
+                        "precio_lista": round(compra * 1.25),
+                        "precio_efectivo": round(compra * 1.15),
+                        "precio_mayorista": round(compra),
+                        "cuota_valor_3": round(round(compra * 1.25) / 3),
+                        "cuota_valor_6": round(round(compra * 1.25) / 6),
+                    }
+                    tasa = 0.12
+                    factor = ((1 + tasa) ** 12 - 1) / (tasa * (1 + tasa) ** 12)
+                    nuevo["cuota_valor_12"] = round(round(compra * 1.25) / factor)
+                    if envio == "TRUE":
+                        nuevo["envio_grande"] = True
+                    cambios = any(current_metadata.get(k) != v for k, v in nuevo.items())
+                    if envio != "TRUE" and "envio_grande" in current_metadata:
+                        cambios = True
+                    accion = "ACTUALIZAR PRECIO" if cambios else "SIN CAMBIOS"
+            elif number(old) is not None and compra != number(old):
+                accion = "ACTUALIZAR PRECIO"
+            else:
+                accion = "SIN CAMBIOS"
+            row = [
+                ws.cell(r, c_fecha).value, ws.cell(r, c_hora).value, sku,
+                other_skus, name, ws.cell(r, c_img).value or "",
+                source or "", "", compra or "", venta, old, diff, status,
+            ]
+            row.insert(10, envio)
+            rows.append(row)
+            review.append([r, sku, name, compra or "", status, accion])
+            if status != "DUPLICADO" and sku and compra is not None:
+                sync_rows.append([sku, name, compra, ws.cell(r, c_fecha).value or "", ws.cell(r, c_img).value or "", venta, envio,
+                                  match.get("categoria", "") if match else "",
+                                  match.get("inventario") if match else None,
+                                  match.get("canales", "") if match else ""])
 
     out = openpyxl.Workbook()
     cw = out.active
