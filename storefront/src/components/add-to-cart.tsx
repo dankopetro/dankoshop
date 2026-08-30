@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ShoppingCart, Check } from "lucide-react"
+import { ShoppingCart, Check, AlertTriangle } from "lucide-react"
 import { getCart, saveCart } from "@/lib/checkout"
 import { Product } from "@/lib/medusa"
 
@@ -12,9 +12,7 @@ interface AddToCartProps {
 export default function AddToCart({ product }: AddToCartProps) {
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
-
-  const outOfStock = product.stock === 0
-  const lowStock = product.stock !== null && product.stock > 0 && product.stock <= 5
+  const [stockMsg, setStockMsg] = useState("")
 
   const priceEfectivo =
     product.prices.precio_efectivo ??
@@ -23,8 +21,31 @@ export default function AddToCart({ product }: AddToCartProps) {
 
   const priceLista = product.prices.precio_lista ?? priceEfectivo
 
-  const handleAdd = () => {
-    if (outOfStock) return
+  const handleAdd = async () => {
+    setStockMsg("")
+
+    // Check stock via API
+    try {
+      const res = await fetch("/api/check-stock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ skus: [product.sku] }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        const stockLevel = data.stock?.[product.sku]
+        // stockLevel === null means no inventory item → allow purchase
+        // stockLevel === 0 means out of stock → block
+        // stockLevel > 0 means in stock → allow
+        if (stockLevel === 0) {
+          setStockMsg("Sin stock disponible")
+          return
+        }
+      }
+    } catch {
+      // If API fails, allow purchase (don't block)
+    }
+
     const items = getCart()
     const existing = items.find((i) => i.sku === product.sku)
     if (existing) {
@@ -48,25 +69,12 @@ export default function AddToCart({ product }: AddToCartProps) {
     setTimeout(() => setAdded(false), 1500)
   }
 
-  if (outOfStock) {
-    return (
-      <div className="flex flex-col gap-2">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-100 text-red-700 text-sm font-semibold rounded-full w-fit">
-          Sin stock
-        </span>
-        <button disabled className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-medium bg-gray-300 text-gray-500 cursor-not-allowed">
-          <ShoppingCart className="w-5 h-5" />
-          No disponible
-        </button>
-      </div>
-    )
-  }
-
   return (
     <div className="flex flex-col gap-2">
-      {lowStock && (
-        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 text-amber-700 text-sm font-semibold rounded-full w-fit">
-          Quedan {product.stock} unidades
+      {stockMsg && (
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-100 text-red-700 text-sm font-semibold rounded-full w-fit">
+          <AlertTriangle className="w-4 h-4" />
+          {stockMsg}
         </span>
       )}
       <div className="flex flex-col sm:flex-row gap-3">
@@ -79,7 +87,7 @@ export default function AddToCart({ product }: AddToCartProps) {
           </button>
           <span className="w-10 text-center font-medium">{qty}</span>
           <button
-            onClick={() => setQty((q) => Math.min(product.stock ?? 999, q + 1))}
+            onClick={() => setQty((q) => q + 1)}
             className="w-10 h-11 text-lg text-gray-600 hover:bg-gray-100 rounded-r-lg"
           >
             +

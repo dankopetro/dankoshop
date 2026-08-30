@@ -69,28 +69,24 @@ export default function CheckoutPage() {
   const set = (k: keyof Customer, v: string) => setCliente((c) => ({ ...c, [k]: v }))
 
   const validarStock = useCallback(async (): Promise<boolean> => {
-    const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
-    const pk = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || ""
     const sinStock: string[] = []
 
-    for (const item of cart) {
-      try {
-        const res = await fetch(`${backendUrl}/store/products?q=${item.sku}&limit=5`, {
-          headers: pk ? { "x-publishable-api-key": pk } : {},
-        })
-        if (!res.ok) continue
+    try {
+      const res = await fetch("/api/check-stock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ skus: cart.map((i) => i.sku) }),
+      })
+      if (res.ok) {
         const data = await res.json()
-        const match = (data.products || []).find((p: any) =>
-          p.variants?.some((v: any) => v.sku === item.sku)
-        )
-        if (match) {
-          const inv = match.variants?.[0]?.inventory_quantity
-          if (inv !== undefined && inv !== null && inv === 0) {
+        for (const item of cart) {
+          const stockLevel = data.stock?.[item.sku]
+          if (stockLevel === 0) {
             sinStock.push(item.name)
           }
         }
-      } catch {}
-    }
+      }
+    } catch {}
 
     if (sinStock.length > 0) {
       setStockError(sinStock)
