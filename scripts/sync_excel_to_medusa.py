@@ -370,6 +370,21 @@ def find_product(sku):
     return None
 
 
+def remove_inventory_if_empty(sku):
+    """Remove auto-created inventory item (Medusa v2 creates one with stock=0 by default).
+    Call when Excel says no inventory — otherwise checkout blocks with 'Sin stock'."""
+    r = api("GET", "/admin/inventory-items", params={"q": sku})
+    if r.status_code != 200:
+        return
+    for item in r.json().get("inventory_items", []):
+        if item.get("sku") == sku:
+            stock = sum(l.get("stocked_quantity", 0) for l in item.get("location_levels", []))
+            if stock == 0:
+                api("DELETE", f"/admin/inventory-items/{item['id']}")
+                print(f"    Inventario: eliminado item vacío (Medusa lo creó automático)")
+            break
+
+
 def create_product(product, region_id):
     metadata = calc_metadata(product["precio_mayorista"])
     if product["envio_grande"]:
@@ -412,6 +427,9 @@ def create_product(product, region_id):
             inv_result = set_inventory(vid, product["sku"], inv, product_id=new_id)
             if inv_result == "set":
                 print(f"    Inventario: {inv} unidades")
+        else:
+            # Remove auto-created inventory item so checkout allows purchase
+            remove_inventory_if_empty(product["sku"])
         return new_id
     print(f"    CREATE FAILED: {r.status_code} {r.text[:200]}")
     return None
@@ -444,6 +462,8 @@ def update_product(product, existing, region_id):
                 print(f"    Inventario: {inv} unidades")
             elif inv_result == "skip" and inv and inv > 0:
                 print(f"    Inventario: ya tiene stock, sin cambios")
+        elif inv is None or (inv is not None and inv <= 0):
+            remove_inventory_if_empty(product["sku"])
         return "skip"
 
     # Actualizar solo metadata de precios/cuotas
@@ -470,6 +490,8 @@ def update_product(product, existing, region_id):
             print(f"    Inventario: {inv} unidades")
         elif inv_result == "skip" and inv and inv > 0:
             print(f"    Inventario: ya tiene stock, sin cambios")
+    elif inv is None or (inv is not None and inv <= 0):
+        remove_inventory_if_empty(product["sku"])
 
     return product_id
 
