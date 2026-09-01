@@ -244,11 +244,10 @@ def get_stock_location():
 
 def set_inventory(variant_id, sku, quantity, product_id=None):
     """Set inventory level for a variant's inventory item.
-    If quantity is None or <= 0, skip (no inventory item = checkout allows purchase).
-    If stock already exists (> 0), skip (Medusa is source of truth after sales).
+    Returns: "set" if stock was set, "skip" if no change needed, "error" on failure.
     """
     if quantity is None or quantity <= 0:
-        return True
+        return "skip"
 
     # Search inventory item by SKU (Medusa v2 doesn't have GET /admin/variants/{id})
     r = api("GET", "/admin/inventory-items", params={"q": sku})
@@ -268,27 +267,27 @@ def set_inventory(variant_id, sku, quantity, product_id=None):
                 levels = r_check.json().get("inventory_levels", [])
                 current_stock = sum(l.get("stocked_quantity", 0) for l in levels)
                 if current_stock > 0:
-                    return True
+                    return "skip"
     else:
         # Create inventory item
         r2 = api("POST", "/admin/inventory-items", data={"sku": sku})
         if r2.status_code != 200:
             print(f"    INV CREATE FAILED: {r2.status_code} {r2.text[:200]}")
-            return False
+            return "error"
         inv_item_id = r2.json().get("inventory_item", {}).get("id")
         if not inv_item_id:
             print(f"    INV CREATE NO ID: {r2.text[:200]}")
-            return False
+            return "error"
         # Link to variant (needs product_id)
         if product_id:
             r3 = api("POST", f"/admin/products/{product_id}/variants/{variant_id}/inventory-items", data={"inventory_item_id": inv_item_id, "required_quantity": 1})
             if r3.status_code != 200:
                 print(f"    INV LINK FAILED: {r3.status_code} {r3.text[:200]}")
-                return False
+                return "error"
 
     loc_id = get_stock_location()
     if not loc_id:
-        return False
+        return "error"
 
     # Set level
     r4 = api("POST", f"/admin/inventory-items/{inv_item_id}/location-levels", data={
@@ -297,7 +296,6 @@ def set_inventory(variant_id, sku, quantity, product_id=None):
     })
     # If level exists, recreate it
     if r4.status_code != 200:
-        # Find existing level id
         r_levels = api("GET", f"/admin/inventory-items/{inv_item_id}/location-levels")
         if r_levels.status_code == 200:
             for lvl in r_levels.json().get("inventory_levels", []):
@@ -307,7 +305,7 @@ def set_inventory(variant_id, sku, quantity, product_id=None):
             "stocked_quantity": quantity,
             "location_id": loc_id,
         })
-    return r4.status_code == 200
+    return "set" if r4.status_code == 200 else "error"
 
 
 # ---------------------------------------------------------------------------
@@ -411,7 +409,9 @@ def create_product(product, region_id):
         created_variants = r.json().get("product", {}).get("variants", [])
         if inv is not None and created_variants:
             vid = created_variants[0]["id"]
-            set_inventory(vid, product["sku"], inv, product_id=new_id)
+            inv_result = set_inventory(vid, product["sku"], inv, product_id=new_id)
+            if inv_result == "set":
+                print(f"    Inventario: {inv} unidades")
         return new_id
     print(f"    CREATE FAILED: {r.status_code} {r.text[:200]}")
     return None
@@ -439,7 +439,11 @@ def update_product(product, existing, region_id):
         inv = product.get("inventario")
         if inv is not None and existing.get("variants"):
             vid = existing["variants"][0]["id"]
-            set_inventory(vid, product["sku"], inv, product_id=product_id)
+            inv_result = set_inventory(vid, product["sku"], inv, product_id=product_id)
+            if inv_result == "set":
+                print(f"    Inventario: {inv} unidades")
+            elif inv_result == "skip" and inv and inv > 0:
+                print(f"    Inventario: ya tiene stock, sin cambios")
         return "skip"
 
     # Actualizar solo metadata de precios/cuotas
@@ -461,7 +465,11 @@ def update_product(product, existing, region_id):
     inv = product.get("inventario")
     if inv is not None and existing.get("variants"):
         vid = existing["variants"][0]["id"]
-        set_inventory(vid, product["sku"], inv, product_id=product_id)
+        inv_result = set_inventory(vid, product["sku"], inv, product_id=product_id)
+        if inv_result == "set":
+            print(f"    Inventario: {inv} unidades")
+        elif inv_result == "skip" and inv and inv > 0:
+            print(f"    Inventario: ya tiene stock, sin cambios")
 
     return product_id
 
