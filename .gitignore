@@ -59,10 +59,28 @@ env/
 data/organized_images/
 data/backups/
 data/pedidos.json
+data/comparacion_precios_*.txt
 medusa_backup*.json
 *.xlsx
 *.xls
 .~lock.*
+
+# ===== Outputs generados (PDFs, catálogos, imágenes) =====
+outputs/
+
+# ===== Archivos privados =====
+GUIA-ADMINISTRADORA-DANKOSHOP.md
+
+# ===== Scripts obsoletos =====
+scripts/seed.py
+scripts/procesar_chat_12_13.py
+scripts/procesar_chat_14_15.py
+scripts/aumentar_precios_medusa_10.py
+scripts/build_today_excel.mjs
+scripts/crear_catalogo_xlsx.mjs
+scripts/excel_style.py
+scripts/normalizar_metadata_medusa.py
+scripts/zapzap_extraer_catalogo.js
 
 # ===== Vercel =====
 .vercel

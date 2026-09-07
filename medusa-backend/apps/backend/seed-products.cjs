@@ -20,6 +20,35 @@ function slugify(input) {
     .slice(0, 200)
 }
 
+const PRICE_METADATA_KEYS = [
+  "precio_lista", "precio_efectivo", "precio_mayorista",
+  "cuota_valor_3", "cuota_valor_6", "cuota_valor_12",
+]
+const ALLOWED_METADATA_KEYS = new Set([...PRICE_METADATA_KEYS, "envio_grande"])
+
+function canonicalMetadata(mayorista, envioGrande = false, existingMetadata = {}) {
+  const m = Number(mayorista)
+  if (!Number.isFinite(m) || m <= 0) return null
+  const lista = Math.round(m * 1.25)
+  const tasa = 0.12
+  const factor = ((1 + tasa) ** 12 - 1) / (tasa * (1 + tasa) ** 12)
+  const metadata = {
+    precio_lista: lista,
+    precio_efectivo: Math.round(m * 1.15),
+    precio_mayorista: Math.round(m),
+    cuota_valor_3: Math.round(lista / 3),
+    cuota_valor_6: Math.round(lista / 6),
+    cuota_valor_12: Math.round(lista / factor),
+  }
+  if (envioGrande) metadata.envio_grande = true
+  for (const key of Object.keys(existingMetadata || {})) {
+    if (!ALLOWED_METADATA_KEYS.has(key) || (key === "envio_grande" && !envioGrande)) {
+      metadata[key] = ""
+    }
+  }
+  return metadata
+}
+
 module.exports = {
   default: async function seedProducts({ container }) {
     console.log("=== Starting product seeding (upsert) ===")
@@ -143,7 +172,7 @@ module.exports = {
     console.log("Using default option:", defaultOption.id)
 
     // --- Load existing products by handle ---
-    const existingProducts = await productModule.listProducts({}, { take: 500, select: ["id", "handle", "title"] })
+    const existingProducts = await productModule.listProducts({}, { take: 500, select: ["id", "handle", "title", "metadata"] })
     const existingByHandle = {}
     for (const p of existingProducts) {
       existingByHandle[p.handle] = p.id
@@ -161,18 +190,13 @@ module.exports = {
         const images = (imageUrls[sku] || (Array.isArray(product.images) ? product.images : [])).slice(0, 10)
         const prices = product.prices || {}
 
-        const metadata = {
-          precio_lista: prices.precio_lista ?? null,
-          precio_efectivo: prices.precio_efectivo ?? null,
-          precio_transferencia: prices.precio_transferencia ?? null,
-          precio_mayorista: prices.precio_mayorista ?? null,
-          precio_mayorista_transferencia: prices.precio_mayorista_transferencia ?? null,
-          cuotas: prices.cuotas ?? null,
-          cuota_valor: prices.cuota_valor ?? null,
+        const existing = existingByHandle[handle]
+        const mayorista = prices.precio_mayorista ?? existing?.metadata?.precio_mayorista
+        const envioGrande = product.envio_grande === true || existing?.metadata?.envio_grande === true
+        const metadata = canonicalMetadata(mayorista, envioGrande, existing?.metadata)
+        if (!metadata) {
+          throw new Error(`missing valid precio_mayorista for ${sku}`)
         }
-        Object.keys(metadata).forEach((k) => {
-          if (metadata[k] === null || metadata[k] === "") delete metadata[k]
-        })
 
         const categoryIds = product.category && categoryMap[product.category] ? [categoryMap[product.category]] : []
 
@@ -200,9 +224,9 @@ module.exports = {
           ],
         }
 
-        if (existingByHandle[handle]) {
+        if (existing) {
           // Update existing product metadata only (variant already exists)
-          await productModule.updateProducts({ id: existingByHandle[handle] }, { metadata })
+          await productModule.updateProducts({ id: existing.id }, { metadata })
           updatedCount++
           console.log(`Updated metadata: ${product.name} (${handle})`)
         } else {
