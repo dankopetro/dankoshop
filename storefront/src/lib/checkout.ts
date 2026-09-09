@@ -39,7 +39,6 @@ export interface Order {
 
 export const CART_KEY = "dankoshop_cart"
 export const ORDERS_KEY = "dankoshop_orders"
-export const ENVIO_GRATIS_DESDE = 50000
 
 export function formatARS(n: number): string {
   return "$" + Math.round(n).toLocaleString("es-AR")
@@ -68,8 +67,9 @@ export function cartSubtotal(items: CartItem[]): number {
 
 export function calcEnvio(subtotal: number, metodo: Customer["metodo_envio"]): number {
   if (metodo === "retiro") return 0
-  if (subtotal >= ENVIO_GRATIS_DESDE) return 0
   const fee = Number(process.env.NEXT_PUBLIC_ENVIO_FEE || 0)
+  if (subtotal >= 200000) return 0
+  if (subtotal >= 100000) return Math.round(fee * 0.5)
   return fee
 }
 

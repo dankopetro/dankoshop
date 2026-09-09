@@ -3,7 +3,7 @@ import { ArrowRight, Truck, Shield, RotateCcw, Headphones } from "lucide-react"
 import { getCategories } from "@/lib/medusa"
 
 const benefits = [
-  { icon: Truck, title: "Envío gratis", desc: "En compras superiores a $50.000" },
+  { icon: Truck, title: "Envío gratis", desc: "En compras +$200.000" },
   { icon: Shield, title: "Compra 100% segura", desc: "SSL certificado y pagos protegidos" },
   { icon: RotateCcw, title: "Devoluciones fáciles", desc: "30 días para cambiar o devolver" },
   { icon: Headphones, title: "Soporte 24/7", desc: "Mary nuestra IA te atiende siempre" },
@@ -28,7 +28,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="max-w-xl">
               <span className="inline-block px-4 py-1.5 rounded-full bg-white/25 backdrop-blur-sm text-sm font-medium text-gray-900 mb-6">
-                🚀 Envío gratis en compras +$50.000 • Descuento en efectivo • Hasta 12 cuotas con tarjeta
+                🚀 Envío gratis en compras +$200.000 • 50% OFF en compras +$100.000 • Hasta 12 cuotas con tarjeta
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900">
                 Todo para tu hogar <br />en un solo lugar

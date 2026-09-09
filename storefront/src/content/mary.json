@@ -31,7 +31,7 @@
     },
     {
       "keywords": ["envio", "envios", "demora", "tarda", "cuando llega", "correo", "cadete"],
-      "answer": "Los envíos a CABA y Gran Buenos Aires se realizan en 2 a 5 días hábiles, y al resto del país entre 5 y 10 días hábiles. Tenés envío gratis en compras mayores a $50.000. El plazo exacto se confirma al momento de la compra."
+      "answer": "Los envíos a CABA y Gran Buenos Aires se realizan en 2 a 5 días hábiles, y al resto del país entre 5 y 10 días hábiles. Tenés envío gratis en compras mayores a $200.000, y 50% OFF en compras de $100.000 a $199.999. El plazo exacto se confirma al momento de la compra."
     },
     {
       "keywords": ["cuota", "cuotas", "financiacion", "financiar", "tarjeta", "credito", "interes"],
@@ -71,7 +71,7 @@
     },
     {
       "keywords": ["descuento", "oferta", "promocion", "bonificacion", "off", "remate"],
-      "answer": "Ofrecemos descuentos por pago en efectivo o transferencia (se muestran en cada producto), envío gratis en compras +$50.000, y promociones en cuotas sin interés. También tenemos precios mayoristas para revendedores."
+      "answer": "Ofrecemos descuentos por pago en efectivo o transferencia (se muestran en cada producto), envío gratis en compras +$200.000, 50% OFF en envío desde $100.000, y promociones en cuotas sin interés. También tenemos precios mayoristas para revendedores."
     }
   ]
 }

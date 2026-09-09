@@ -73,7 +73,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { icon: Truck, title: "Envío gratis", desc: "En compras +$50.000" },
+              { icon: Truck, title: "Envío gratis", desc: "En compras +$200.000" },
               { icon: Shield, title: "Compra segura", desc: "SSL certificado" },
               { icon: RotateCcw, title: "Devoluciones", desc: "30 días gratis" },
               { icon: Headphones, title: "Soporte 24/7", desc: "Mary IA" },
