@@ -305,9 +305,13 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {subtotal >= ENVIO_GRATIS_DESDE ? (
+                {subtotal >= 200000 ? (
                   <p className="text-sm text-green-600 font-medium">
-                    Envío gratis por superar {formatARS(ENVIO_GRATIS_DESDE)}.
+                    🎉 Envío gratis por superar {formatARS(200000)}
+                  </p>
+                ) : subtotal >= 100000 ? (
+                  <p className="text-sm text-blue-600 font-medium">
+                    ✨ 50% OFF en envío por superar {formatARS(100000)}
                   </p>
                 ) : (
                   <p className="text-sm text-gray-600">
