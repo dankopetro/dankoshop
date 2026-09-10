@@ -322,10 +322,14 @@ export default function CheckoutPage() {
               </div>
             )}
             {hasBigItems && (
-              <div className="mt-3 bg-blue-50 border border-blue-200 rounded-lg p-3 text-xs text-blue-700">
-                <p className="font-medium mb-1">Envío de productos grandes</p>
-                <p>Dentro de La Plata, Berisso y Ensenada coordinamos el envío sin costo adicional en compras mayores a {formatARS(100000)}.</p>
-                <p className="mt-1">Fuera de esta zona, el costo es similar al de un flete. Te contactamos después de la compra para coordinar.</p>
+              <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-700">
+                <p className="font-medium mb-1">📦 Productos grandes en tu compra</p>
+                <p>Los productos grandes (heladeras, lavarropas, TVs, bicicletas) requieren coordinación especial.</p>
+                <ul className="mt-2 space-y-1 list-disc list-inside">
+                  <li><strong>Retiro gratis:</strong> Coordiná por WhatsApp y pasá a buscar a nuestro domicilio</li>
+                  <li><strong>Envío coordinado:</strong> Escribinos al 221 621 9596 para coordinar fecha y costo de entrega</li>
+                </ul>
+                <p className="mt-2 text-xs opacity-80">El costo de envío de productos grandes no está incluido en esta cotización.</p>
               </div>
             )}
           </section>

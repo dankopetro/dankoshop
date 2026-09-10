@@ -20,6 +20,59 @@ export const ENVIO_SUBSIDIO_DESDE = 100000
 export const ENVIO_SUBSIDIO_PORCENTAJE = 0.5
 export const ENVIO_GRATIS_MAX_ABSORBIDO = 10000
 
+// ===================================================================
+// FUTURO: Integración con couriers (activar cuando tengas monotributo)
+// ===================================================================
+// Requiere: CUIT, Cuenta en MiCorreo/Andreani, API keys
+//
+// export const MICORREO_API_URL = "https://api.correoargentino.com.ar/micorreofr/api/v1"
+// export const MICORREO_API_KEY = process.env.MICORREO_API_KEY || ""
+// export const MICORREO_CUIT = process.env.MICORREO_CUIT || ""
+//
+// export const ANDREANI_API_URL = "https://api.andreani.com/v1"
+// export const ANDREANI_API_KEY = process.env.ANDREANI_API_KEY || ""
+//
+// export async function cotizarEnvioCA(
+//   peso: number,
+//   cp_destino: string,
+//   tipo: "sucursal" | "domicilio"
+// ): Promise<number> {
+//   const response = await fetch(`${MICORREO_API_URL}/cotizar`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": `Bearer ${MICORREO_API_KEY}`,
+//     },
+//     body: JSON.stringify({
+//       peso,
+//       cp_destino,
+//       tipo,
+//     }),
+//   })
+//   const data = await response.json()
+//   return data.costo
+// }
+//
+// export async function cotizarEnvioAndreani(
+//   peso: number,
+//   cp_destino: string,
+// ): Promise<number> {
+//   const response = await fetch(`${ANDREANI_API_URL}/cotizar`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "x-api-key": ANDREANI_API_KEY,
+//     },
+//     body: JSON.stringify({
+//       peso,
+//       cp_destino,
+//     }),
+//   })
+//   const data = await response.json()
+//   return data.costo
+// }
+// ===================================================================
+
 export function calcEnvioCosto(
   subtotal: number,
   zona: EnvioZona | null,
