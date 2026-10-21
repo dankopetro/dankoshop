@@ -6,7 +6,7 @@ Restaura: categorías, colecciones, canales de venta, productos, e inventario.
 Uso:
   export MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
   export MEDUSA_ADMIN_EMAIL=admin@dankoshop.com
-  export MEDUSA_ADMIN_PASSWORD=***PASSWORD_ROTADA***
+  export MEDUSA_ADMIN_PASSWORD=<tu-password>
   python3 scripts/restore_medusa.py data/backups/backup_20260823_211003.json
 """
 
@@ -16,10 +16,13 @@ import json
 import time
 import requests
 
-MEDUSA_URL = os.environ.get("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
-EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-PASSWORD = os.environ.get("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
+from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
+MEDUSA_URL = os.environ.get("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
+EMAIL, PASSWORD = get_admin_credentials()
 if len(sys.argv) < 2:
     print("Uso: python3 restore_medusa.py <backup_file.json> [--dry-run]")
     sys.exit(1)
@@ -29,14 +32,10 @@ DRY_RUN = "--dry-run" in sys.argv
 
 if DRY_RUN:
     print("*** MODO DRY-RUN: no se hará ningún cambio en Medusa ***\n")
-
-
 def login():
     r = requests.post(f"{MEDUSA_URL}/auth/user/emailpass", json={"email": EMAIL, "password": PASSWORD}, timeout=10)
     r.raise_for_status()
     return r.json()["token"]
-
-
 def get_all(token, endpoint, key=None):
     headers = {"Authorization": f"Bearer {token}"}
     all_items = []
@@ -57,8 +56,6 @@ def get_all(token, endpoint, key=None):
         offset += 100
         time.sleep(0.2)
     return all_items
-
-
 def restore_categories(token, backup_categories, headers):
     print("Restaurando categorías...")
     existing = get_all(token, "/admin/product-categories", key="product_categories")
@@ -104,8 +101,6 @@ def restore_categories(token, backup_categories, headers):
 
     print(f"  Creadas: {created}, Ya existían: {skipped}")
     return id_map
-
-
 def restore_sales_channels(token, backup_channels, headers):
     print("Restaurando canales de venta...")
     existing = get_all(token, "/admin/sales-channels", key="sales_channels")
@@ -150,8 +145,6 @@ def restore_sales_channels(token, backup_channels, headers):
 
     print(f"  Creados: {created}, Ya existían: {skipped}")
     return id_map
-
-
 def restore_products(token, backup_products, sc_id_map, headers):
     print("Restaurando productos...")
     current = get_all(token, "/admin/products")
@@ -265,8 +258,6 @@ def restore_products(token, backup_products, sc_id_map, headers):
     print(f"  Omitidos:     {skipped}")
     print(f"  Errores:      {errors}")
     return variant_sku_map
-
-
 def restore_inventory(token, backup_inventory, variant_sku_map, headers):
     print("\nRestaurando inventario...")
 
@@ -352,8 +343,6 @@ def restore_inventory(token, backup_inventory, variant_sku_map, headers):
     print(f"\n  Stock restaurado: {restored}")
     print(f"  Sin stock/omitidos: {skipped}")
     print(f"  Errores: {errors}")
-
-
 def restore():
     print(f"Conectando a {MEDUSA_URL}...")
     token = login()

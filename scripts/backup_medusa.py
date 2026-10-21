@@ -15,26 +15,22 @@ import sys
 import json
 import time
 import requests
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
 from datetime import datetime
 
 MEDUSA_URL = os.environ.get("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
-EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-PASSWORD = os.environ.get("MEDUSA_ADMIN_PASSWORD", "")
-
-if not PASSWORD:
-    print("ERROR: Setear MEDUSA_ADMIN_PASSWORD")
-    sys.exit(1)
+EMAIL, PASSWORD = get_admin_credentials()
 
 BACKUP_DIR = os.path.join(os.path.dirname(__file__), "..", "data", "backups")
 os.makedirs(BACKUP_DIR, exist_ok=True)
-
-
 def login():
     r = requests.post(f"{MEDUSA_URL}/auth/user/emailpass", json={"email": EMAIL, "password": PASSWORD}, timeout=10)
     r.raise_for_status()
     return r.json()["token"]
-
-
 def get_all(token, endpoint, params=None, key=None):
     headers = {"Authorization": f"Bearer {token}"}
     all_items = []
@@ -58,8 +54,6 @@ def get_all(token, endpoint, params=None, key=None):
         offset += 100
         time.sleep(0.3)
     return all_items
-
-
 def backup():
     print(f"Conectando a {MEDUSA_URL}...")
     token = login()

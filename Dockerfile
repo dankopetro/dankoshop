@@ -22,4 +22,4 @@ RUN cp -r /app/medusa-backend/apps/backend/.medusa /app/medusa-backend/.medusa
 
 # 3. Runtime from apps/backend (where medusa start expects to run)
 EXPOSE 9000
-CMD ["sh", "-c", "echo '=== Waiting for DB ===' && sleep 5 && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && (echo '=== Creating admin user ===' && pnpm exec medusa user --email admin@dankoshop.com --password ***PASSWORD_ROTADA*** 2>&1 || true) && echo '=== Starting server on 0.0.0.0:9000 ===' && exec ./node_modules/.bin/medusa start"]
+CMD ["sh", "-c", "echo '=== Waiting for DB ===' && sleep 5 && echo '=== Running migration ===' && pnpm exec medusa db:migrate 2>&1 && (echo '=== Creating admin user ===' && if [ -n \"$MEDUSA_ADMIN_PASSWORD\" ]; then pnpm exec medusa user --email \"${MEDUSA_ADMIN_EMAIL:-admin@dankoshop.com}\" --password \"$MEDUSA_ADMIN_PASSWORD\" 2>&1 || true; else echo 'MEDUSA_ADMIN_PASSWORD no seteado: se omite la creacion del admin'; fi) && echo '=== Starting server on 0.0.0.0:9000 ===' && exec ./node_modules/.bin/medusa start"]

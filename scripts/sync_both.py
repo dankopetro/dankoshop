@@ -16,7 +16,7 @@ Env vars:
   MEDUSA_LOCAL_URL     (default: http://localhost:9100)
   MEDUSA_PROD_URL      (default: https://dankoshop-api-production.up.railway.app)
   MEDUSA_ADMIN_EMAIL   (default: admin@dankoshop.com)
-  MEDUSA_ADMIN_PASSWORD (default: ***PASSWORD_ROTADA***)
+  MEDUSA_ADMIN_PASSWORD (sin default: se lee de .env.production o del entorno)
 """
 
 import os
@@ -28,6 +28,9 @@ import subprocess
 import requests
 from pathlib import Path
 from dataclasses import dataclass, field
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
 from typing import Optional
 
 # Force unbuffered output
@@ -39,8 +42,6 @@ sys.stderr.reconfigure(line_buffering=True)
 # ---------------------------------------------------------------------------
 DEFAULT_LOCAL_URL = "http://localhost:9100"
 DEFAULT_PROD_URL = "https://dankoshop-api-production.up.railway.app"
-DEFAULT_EMAIL = "admin@dankoshop.com"
-DEFAULT_PASSWORD = "***PASSWORD_ROTADA***"
 
 ALLOWED_METADATA_KEYS = {
     "precio_lista", "precio_efectivo", "precio_mayorista",
@@ -51,6 +52,7 @@ ALLOWED_METADATA_KEYS = {
 # ---------------------------------------------------------------------------
 # Shared utility functions (Medusa-agnostic)
 # ---------------------------------------------------------------------------
+
 def parse_price(val):
     if val is None:
         return None
@@ -58,8 +60,6 @@ def parse_price(val):
         return float(str(val).replace("$", "").replace(",", "").strip())
     except Exception:
         return None
-
-
 def calc_metadata(mayorista):
     if mayorista is None:
         return {}
@@ -79,8 +79,6 @@ def calc_metadata(mayorista):
         "cuota_valor_6": cuota_6,
         "cuota_valor_12": cuota_12,
     }
-
-
 def metadata_payload(metadata, envio_grande, existing_metadata):
     payload = dict(metadata)
     if envio_grande:
@@ -89,16 +87,12 @@ def metadata_payload(metadata, envio_grande, existing_metadata):
         if key not in ALLOWED_METADATA_KEYS or (key == "envio_grande" and not envio_grande):
             payload[key] = ""
     return payload
-
-
 def slugify(value):
     import unicodedata
     s = unicodedata.normalize("NFD", value)
     s = "".join(c for c in s if not unicodedata.combining(c)).lower()
     s = "".join(c if c.isalnum() else "-" for c in s)
     return s.strip("-")[:200] or "producto"
-
-
 def read_excel(excel_path):
     import openpyxl
     wb = openpyxl.load_workbook(excel_path, data_only=True)
@@ -164,6 +158,7 @@ def read_excel(excel_path):
 # ---------------------------------------------------------------------------
 # MedusaClient - encapsula toda la lógica de conexión/sync por instancia
 # ---------------------------------------------------------------------------
+
 class MedusaClient:
     def __init__(self, name, url, email, password):
         self.name = name
@@ -484,19 +479,30 @@ class MedusaClient:
         return product_id
 
     # -- Sync orchestrator --
-    def sync(self, products):
+    def sync(self, products, dry_run=False):
         region_id = self.ensure_region()
         if not region_id:
             print(f"  ❌ No se pudo asegurar región ARS en {self.name}")
             return {"created": 0, "updated": 0, "skipped": 0, "failed": 0}
 
         created = updated = skipped = failed = 0
+        detail = []
 
         for i, p in enumerate(products, 1):
             print(f"  [{i}/{len(products)}] {p['sku']}: {p['name'][:50]}")
             existing = self.find_product(p["sku"])
 
             if existing:
+                if dry_run:
+                    accion, detalle = self.preview_update(p, existing)
+                    if accion == "crear":
+                        created += 1
+                    elif accion == "actualizar":
+                        updated += 1
+                    else:
+                        skipped += 1
+                    print(f"    {detalle}")
+                    continue
                 pid = self.update_product(p, existing, region_id)
                 if pid == "skip":
                     skipped += 1
@@ -507,6 +513,10 @@ class MedusaClient:
                 else:
                     failed += 1
             else:
+                if dry_run:
+                    created += 1
+                    print(f"    ⚠️  SE CREARÍA (no existe en {self.name})")
+                    continue
                 pid = self.create_product(p, region_id)
                 if pid:
                     created += 1
@@ -516,10 +526,26 @@ class MedusaClient:
 
         return {"created": created, "updated": updated, "skipped": skipped, "failed": failed}
 
+    def preview_update(self, product, existing):
+        """Calcula qué cambiaría sin escribir nada."""
+        meta = calc_metadata(product["precio_mayorista"])
+        payload = metadata_payload(meta, product["envio_grande"], existing.get("metadata"))
+        cambios = []
+        for key, value in payload.items():
+            actual = (existing.get("metadata") or {}).get(key)
+            if actual != value:
+                cambios.append(f"{key}: {actual} -> {value}")
+        if existing.get("status") == "draft":
+            cambios.append("estado: borrador (no visible en la web)")
+        if not cambios:
+            return "sin_cambios", "Sin cambios"
+        return "actualizar", "SE ACTUALIZARÍA: " + "; ".join(cambios[:4])
+
 
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Excel → Medusa sync (local + producción)",
@@ -535,9 +561,9 @@ Ejemplos:
     parser.add_argument("excel", nargs="?", default=None, help="Archivo Excel (default: Productos_Maestro.xlsx)")
     parser.add_argument("--prod-only", action="store_true", help="Solo sincronizar a producción (Railway)")
     parser.add_argument("--local-only", action="store_true", help="Solo sincronizar a local (localhost:9100)")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Solo mostrar qué se crearía/actualizaría. No escribe nada.")
     return parser.parse_args()
-
-
 def main():
     args = parse_args()
 
@@ -552,19 +578,19 @@ def main():
     # Resolve URLs
     local_url = os.getenv("MEDUSA_LOCAL_URL", DEFAULT_LOCAL_URL)
     prod_url = os.getenv("MEDUSA_PROD_URL", DEFAULT_PROD_URL)
-    email = os.getenv("MEDUSA_ADMIN_EMAIL", DEFAULT_EMAIL)
-    password = os.getenv("MEDUSA_ADMIN_PASSWORD", DEFAULT_PASSWORD)
+    prod_email, prod_password = get_admin_credentials()
+    local_email, local_password = get_admin_credentials(local=True)
 
     # Create clients
-    prod_client = MedusaClient("PRODUCCIÓN", prod_url, email, password)
-    local_client = MedusaClient("LOCAL", local_url, email, password)
+    prod_client = MedusaClient("PRODUCCIÓN", prod_url, prod_email, prod_password)
+    local_client = MedusaClient("LOCAL", local_url, local_email, local_password)
 
     # Auto-start local Medusa if needed
     local_was_running = False
     local_started_by_us = False
     medusa_local_sh = Path(__file__).resolve().parent / "medusa-local.sh"
 
-    if not args.prod_only and medusa_local_sh.exists():
+    if not args.prod_only and not args.dry_run and medusa_local_sh.exists():
         # Check if local is already running
         try:
             r = requests.get(f"{local_url}/health", timeout=5)
@@ -646,22 +672,28 @@ def main():
     if do_prod:
         print(f"\n{'═'*60}")
         print(f"  📦 PRODUCCIÓN (Railway)")
+        if args.dry_run:
+            print("  🔍 MODO DRY-RUN: no se escribe nada")
         print(f"{'═'*60}")
-        results_prod = prod_client.sync(products)
+        results_prod = prod_client.sync(products, dry_run=args.dry_run)
 
     # Sync local
     results_local = None
     if do_local:
         print(f"\n{'═'*60}")
         print(f"  🏠 LOCAL (localhost:9100)")
+        if args.dry_run:
+            print("  🔍 MODO DRY-RUN: no se escribe nada")
         print(f"{'═'*60}")
-        results_local = local_client.sync(products)
+        results_local = local_client.sync(products, dry_run=args.dry_run)
 
     # Summary
     print(f"\n{'═'*60}")
     print(f"  📊 RESUMEN")
     print(f"{'═'*60}")
     print(f"  Archivo: {excel_path.name} ({len(products)} productos)")
+    if args.dry_run:
+        print("  Modo: DRY-RUN (no se escribió nada)")
     print()
 
     if results_prod:

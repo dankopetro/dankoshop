@@ -25,11 +25,13 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 # DejaVu Sans for Unicode support in PDF
 FONT_DIR = "/usr/share/fonts/truetype/dejavu"
 FONT_REGULAR = os.path.join(FONT_DIR, "DejaVuSans.ttf")
 FONT_BOLD = os.path.join(FONT_DIR, "DejaVuSans-Bold.ttf")
-
 def strip_emoji(text):
     """Remove emojis and non-latin chars that break PDF fonts."""
     emoji_pattern = re.compile(
@@ -64,8 +66,7 @@ EXCEL_PATH = ROOT / "excel" / "Productos_Maestro.xlsx"
 OUTPUT_DIR = ROOT / "outputs"
 
 MEDUSA_URL = os.environ.get("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
-ADMIN_EMAIL = "admin@dankoshop.com"
-ADMIN_PASSWORD = "***PASSWORD_ROTADA***"
+ADMIN_EMAIL, ADMIN_PASSWORD = get_admin_credentials()
 
 # Category colors (RGB tuples for Excel, hex for PDF)
 CAT_COLORS = {
@@ -123,7 +124,6 @@ MONEY_FORMAT = '#,##0'
 # Auth
 # ---------------------------------------------------------------------------
 _token = None
-
 def get_token():
     global _token
     if _token:
@@ -143,6 +143,7 @@ def get_token():
 # ---------------------------------------------------------------------------
 # Read products from Maestro Excel
 # ---------------------------------------------------------------------------
+
 def read_products(categoria_filter=None):
     wb = openpyxl.load_workbook(EXCEL_PATH, data_only=True)
     ws = wb.active
@@ -194,13 +195,16 @@ def read_products(categoria_filter=None):
 # ---------------------------------------------------------------------------
 # Fetch thumbnails from Medusa
 # ---------------------------------------------------------------------------
+
 def fetch_thumbnails(products):
+    """Trae miniaturas y metadata de precios de Medusa (misma request, sin costo extra)."""
     token = get_token()
     if not token:
         print("  WARN: No se pudo autenticar con Medusa, PDF sin imágenes")
-        return {}
+        return {}, {}
     headers = {"Authorization": f"Bearer {token}"}
     thumbnails = {}
+    medusa_precios = {}
     skus = [p["sku"] for p in products]
 
     # Fetch all products at once (Medusa supports limit up to 100)
@@ -223,17 +227,82 @@ def fetch_thumbnails(products):
     # Build thumbnail map
     sku_set = set(skus)
     for p in all_products:
+        meta = p.get("metadata") or {}
         for v in p.get("variants", []):
             sku = v.get("sku")
             if sku in sku_set and p.get("thumbnail"):
                 thumbnails[sku] = p["thumbnail"]
+            if sku in sku_set:
+                medusa_precios[sku] = {
+                    "precio_lista": meta.get("precio_lista"),
+                    "precio_efectivo": meta.get("precio_efectivo"),
+                    "precio_mayorista": meta.get("precio_mayorista"),
+                    "status": p.get("status"),
+                }
 
-    return thumbnails
+    return thumbnails, medusa_precios
+
+
+UMBRAL_DIFERENCIA = 0.005
+
+
+def verificar_frescura(products, medusa_precios, mayorista=False):
+    """Compara la lista contra los precios reales de la web. Solo avisa, no bloquea."""
+    if not medusa_precios:
+        print("\n  ⚠️  No se pudo comparar con la web (sin acceso a Medusa).")
+        return
+
+    campo = "precio_mayorista" if mayorista else "precio_lista"
+    no_en_web = []
+    borradores = []
+    distintos = []
+
+    for p in products:
+        web = medusa_precios.get(p["sku"])
+        if web is None:
+            no_en_web.append(p)
+            continue
+        if web.get("status") == "draft":
+            borradores.append(p)
+        valor_web = web.get(campo)
+        valor_lista = p[campo]
+        if valor_web in (None, 0) or valor_lista in (None, 0):
+            continue
+        dif = abs(float(valor_lista) - float(valor_web)) / float(valor_web)
+        if dif > UMBRAL_DIFERENCIA:
+            distintos.append((p, valor_lista, valor_web, dif))
+
+    if not no_en_web and not borradores and not distintos:
+        print(f"\n  ✅ La lista coincide con la web ({len(products)} productos).")
+        return
+
+    if no_en_web:
+        print(f"\n  ⚠️  {len(no_en_web)} producto(s) de la lista NO están en la web (no se pueden comprar):")
+        for p in no_en_web[:15]:
+            print(f"      - {p['sku']} | {p['name'][:48]}")
+        if len(no_en_web) > 15:
+            print(f"      ... y {len(no_en_web) - 15} más")
+
+    if borradores:
+        print(f"\n  ⚠️  {len(borradores)} producto(s) están en BORRADOR (no se ven en la web):")
+        for p in borradores[:15]:
+            print(f"      - {p['sku']} | {p['name'][:48]}")
+        if len(borradores) > 15:
+            print(f"      ... y {len(borradores) - 15} más")
+
+    if distintos:
+        print(f"\n  ⚠️  {len(distintos)} producto(s) con precio distinto a la web (>{UMBRAL_DIFERENCIA:.1%}):")
+        for p, lista, web, dif in distintos[:15]:
+            print(f"      - {p['sku']} | {p['name'][:40]} | lista ${lista:,.0f} vs web ${web:,.0f} ({dif:.2%})")
+        if len(distintos) > 15:
+            print(f"      ... y {len(distintos) - 15} más")
+        print("      → Sincronizá el Excel con la web antes de mandar la lista: python3 scripts/sync_both.py <archivo>")
 
 
 # ---------------------------------------------------------------------------
 # Generate Excel
 # ---------------------------------------------------------------------------
+
 def generate_excel(products, output_path, mayorista=False):
     cols = COLS_MAYORISTA if mayorista else COLS_RETAIL
     ncols = len(cols)
@@ -321,6 +390,7 @@ def generate_excel(products, output_path, mayorista=False):
 # ---------------------------------------------------------------------------
 # Generate PDF
 # ---------------------------------------------------------------------------
+
 def download_thumb(url):
     """Download a single thumbnail, return bytes or None."""
     try:
@@ -331,8 +401,6 @@ def download_thumb(url):
     except Exception:
         pass
     return None
-
-
 def generate_pdf(products, thumbnails, output_path, mayorista=False):
     from fpdf import FPDF
 
@@ -546,6 +614,7 @@ def generate_pdf(products, thumbnails, output_path, mayorista=False):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 def main():
     parser = argparse.ArgumentParser(description="Genera lista de precios (Excel + PDF)")
     parser.add_argument("--solo-excel", action="store_true", help="Solo generar Excel")
@@ -579,12 +648,16 @@ def main():
         print("\nGenerando Excel...")
         generate_excel(products, excel_path, mayorista=args.mayorista)
 
+    print("\nConsultando Medusa (imágenes + precios de la web)...")
+    thumbnails, medusa_precios = fetch_thumbnails(products)
+    print(f"  Imágenes encontradas: {len(thumbnails)}/{len(products)}")
+
     if not args.solo_excel:
-        print("\nBuscando imágenes de productos en Medusa...")
-        thumbnails = fetch_thumbnails(products)
-        print(f"  Imágenes encontradas: {len(thumbnails)}/{len(products)}")
         print("\nGenerando PDF...")
         generate_pdf(products, thumbnails, pdf_path, mayorista=args.mayorista)
+
+    print("\nVerificando contra los precios de la web...")
+    verificar_frescura(products, medusa_precios, mayorista=args.mayorista)
 
     print("\n" + "=" * 50)
     print("  ¡Listo!")

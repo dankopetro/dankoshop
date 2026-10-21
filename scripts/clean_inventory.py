@@ -3,8 +3,8 @@
 crea location 'Local Warehouse' y setea stock para SKUs específicos.
 
 Usage:
-  MEDUSA_ADMIN_PASSWORD=***PASSWORD_ROTADA*** python3 scripts/clean_inventory.py
-  MEDUSA_ADMIN_PASSWORD=***PASSWORD_ROTADA*** python3 scripts/clean_inventory.py --dry-run
+  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/clean_inventory.py
+  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/clean_inventory.py --dry-run
 """
 
 import os
@@ -12,9 +12,13 @@ import sys
 import time
 import requests
 
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
-EMAIL = os.getenv("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-PASSWORD = os.getenv("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
+EMAIL, PASSWORD = get_admin_credentials()
 DRY_RUN = "--dry-run" in sys.argv
 
 STOCK_OVERRIDES = {
@@ -23,8 +27,6 @@ STOCK_OVERRIDES = {
 }
 
 _token = None
-
-
 def get_token():
     global _token
     if _token:
@@ -36,8 +38,6 @@ def get_token():
         return _token
     print(f"AUTH FAILED: {r.status_code}")
     return None
-
-
 def api(method, endpoint, data=None, params=None):
     token = get_token()
     if not token:
@@ -47,8 +47,6 @@ def api(method, endpoint, data=None, params=None):
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         json=data, params=params, timeout=30,
     )
-
-
 def delete_all_inventory_items():
     print("\n1. Borrando inventory items...")
     offset = 0
@@ -76,8 +74,6 @@ def delete_all_inventory_items():
             break
         offset += 100
     print(f"  {'Would delete' if DRY_RUN else 'Eliminados'}: {total}")
-
-
 def ensure_location():
     print("\n2. Configurando stock location...")
     r = api("GET", "/admin/stock-locations", params={"limit": 100})
@@ -109,8 +105,6 @@ def ensure_location():
         return loc_id
     print("  ERR: no se pudo crear location")
     return None
-
-
 def create_inventory_for_skus(location_id):
     print("\n3. Creando inventory items para SKUs con stock...")
     created = 0
@@ -161,8 +155,6 @@ def create_inventory_for_skus(location_id):
         time.sleep(0.1)
 
     print(f"\n  {'Would create' if DRY_RUN else 'Creados'}: {created}")
-
-
 def main():
     print("=" * 60)
     print("  Medusa Inventory Cleanup")

@@ -18,18 +18,19 @@ import requests
 sys.path.insert(0, os.path.dirname(__file__))
 from sync_helpers import sync_inventory, fetch_source_inventory, sync_sales_channels, fetch_source_sales_channels, _api
 
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 LOCAL_URL = "http://localhost:9100"
 PROD_URL = "https://dankoshop-api-production.up.railway.app"
-EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-PASSWORD = os.environ.get("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
-
+EMAIL, PASSWORD = get_admin_credentials()
 
 def login(url):
     r = requests.post(f"{url}/auth/user/emailpass", json={"email": EMAIL, "password": PASSWORD}, timeout=10)
     r.raise_for_status()
     return r.json()["token"]
-
-
 def get_all(url, token, endpoint):
     headers = {"Authorization": f"Bearer {token}"}
     all_items = []
@@ -47,13 +48,9 @@ def get_all(url, token, endpoint):
         offset += 100
         time.sleep(0.3)
     return all_items
-
-
 def get_sku(product):
     variants = product.get("variants", [])
     return variants[0].get("sku") if variants else None
-
-
 def normalize_product(product):
     """Extrae los campos comparables de un producto"""
     return {
@@ -70,8 +67,6 @@ def normalize_product(product):
         "metadata": product.get("metadata", {}),
         "categories": sorted([c.get("id", "") for c in product.get("categories", []) if c.get("id")]),
     }
-
-
 def build_payload(product):
     """Construye el payload para crear/actualizar un producto"""
     variants = product.get("variants", [])
@@ -107,8 +102,6 @@ def build_payload(product):
     if product.get("metadata"):
         payload["metadata"] = {k: v for k, v in product["metadata"].items() if not k.startswith("_")}
     return payload
-
-
 def find_product_by_sku(url, token, sku):
     headers = {"Authorization": f"Bearer {token}"}
     r = requests.get(f"{url}/admin/products", headers=headers, params={"q": sku, "limit": 20}, timeout=15)
@@ -118,8 +111,6 @@ def find_product_by_sku(url, token, sku):
                 if v.get("sku") == sku:
                     return p
     return None
-
-
 def create_product(url, token, payload):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     r = requests.post(f"{url}/admin/products", headers=headers, json=payload, timeout=15)
@@ -133,14 +124,10 @@ def create_product(url, token, payload):
             if r.status_code == 200:
                 return r.json().get("product", {}).get("id")
     return None
-
-
 def update_product(url, token, product_id, payload):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     r = requests.post(f"{url}/admin/products/{product_id}", headers=headers, json=payload, timeout=15)
     return r.status_code == 200
-
-
 def sync(source_name, source_url, source_token, dest_name, dest_url, dest_token):
     print(f"\n{'='*60}")
     print(f"  Sync: {source_name} → {dest_name}")
@@ -241,8 +228,6 @@ def sync(source_name, source_url, source_token, dest_name, dest_url, dest_token)
     if source_name == "Local":
         print(f"\n  ⚠️  Para BORRAR productos, hacelo manualmente en {dest_name}")
         print(f"     (el sync NUNCA borra productos)")
-
-
 def main():
     parser = argparse.ArgumentParser(description="Sync inteligente Local ↔ Producción")
     group = parser.add_mutually_exclusive_group(required=True)

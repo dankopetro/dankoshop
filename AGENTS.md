@@ -88,6 +88,13 @@ python3 scripts/sync_both.py                              # ambos (Productos_Mae
 python3 scripts/sync_both.py excel/Control_xxx.xlsx       # ambos con Excel custom
 python3 scripts/sync_both.py --prod-only                  # solo producción
 python3 scripts/sync_both.py --local-only                 # solo local
+python3 scripts/sync_both.py --dry-run                    # preview: qué se crearía/actualizaría (NO escribe)
+
+# Lista de precios (Excel + PDF con fotos) — abre el Excel y guardalo antes (fórmulas)
+python3 scripts/generar_lista_precios.py                  # minorista
+python3 scripts/generar_lista_precios.py --mayorista      # solo precio mayorista
+python3 scripts/generar_lista_precios.py --categoria TVs  # filtrar por categoría
+# Salida: outputs/lista_precios_[mayorista]_AAAA-MM-DD.{xlsx,pdf}
 
 # ⚠️ DEPRECATED: sync_excel_to_medusa.py / sync_excel_to_medusa_local.py
 
@@ -180,15 +187,26 @@ NODE_ENV=production
 - **ESTADO: ✅ ONLINE con 496 productos, metadata de precios, y región ARS.**
 
 ## Catálogo Medusa (estado al 21/10/2026)
-- **Producción (Railway): 496 productos** con SKUs únicos.
-- **Local (`:9100`): 496 productos** — ✅ clone exacto (mismo set de SKUs y mismos precios).
-  - Se borraron del local 11 huérfanos que producción NO tenía: `6252`, `6334`,
-    `AUTO-20260731111239-1`, `AUTO-20260731111239-13`, `SIN0019`, `SIN032`, `SIN053`,
-    `SIN056`, `SIN058`, `SIN064`, `SIN076`.
-  - Producción es subconjunto estricto: si se crean productos solo en local, hay que
-    borrarlos del local (o sincronizarlos con `sync_both.py`).
+- **Producción (Railway): 499 productos** en el admin, de los cuales **496 están publicados**
+  y 3 están en **borrador** (no visibles en la web): `AUTO-20260731111239-1`,
+  `AUTO-20260731111239-13`, `6252`. Están en el Maestro pero **no se publican** hasta
+  que haya stock (el usuario pidió no tocarlos).
+- **Local (`:9100`): 499 productos** — ✅ clone exacto de producción (mismos SKUs, mismos
+  precios, mismos 3 en borrador).
 - El Excel `Productos_Maestro.xlsx` es la fuente de precios; `sync_both.py` sincroniza
   ambos. Los SKUs `SIN*` / `AUTO-*` son productos sin SKU en el Maestro.
+- `sync_both.py --dry-run` muestra qué se crearía/actualizaría sin escribir nada:
+  avisa los que están en borrador, los que se crearían y los cambios de precio.
+
+## Credenciales (seguridad)
+- **Los secretos NO están en el código.** `scripts/medusa_auth.py` los lee de
+  `MEDUSA_ADMIN_EMAIL` / `MEDUSA_ADMIN_PASSWORD` (o `MEDUSA_LOCAL_ADMIN_*` para el
+  local), con fallback al `.env.production` local (gitignored).
+- La password del admin NO se hardcodea en ningún script (18 scripts corregidos).
+- El `Dockerfile` crea el admin con `$MEDUSA_ADMIN_PASSWORD` de Railway (si falta, no
+  lo crea y avisa). Railway debe tener `MEDUSA_ADMIN_EMAIL` y `MEDUSA_ADMIN_PASSWORD`.
+- ⚠️ El access token de MercadoPago estuvo filtrado en el historial del repo (commit
+  `816dbaea`) — hay que rotarlo en el panel de MP y actualizar Vercel + `.env.production`.
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)

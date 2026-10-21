@@ -24,28 +24,23 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from excel_style import style_workbook
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 BASE = Path(__file__).resolve().parent.parent
 MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
-MEDUSA_EMAIL = os.getenv("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-MEDUSA_PASSWORD = os.getenv("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
-
+MEDUSA_EMAIL, MEDUSA_PASSWORD = get_admin_credentials()
 
 def norm(value):
     value = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode()
     return re.sub(r"\s+", " ", re.sub(r"[^A-Za-z0-9]+", " ", value.upper())).strip()
-
-
 def number(value):
     try:
         return round(float(str(value).replace("$", "").replace(",", "").strip()))
     except (TypeError, ValueError):
         return None
-
-
 def envio_flag(value):
     return "TRUE" if str(value or "").strip().upper() in {"TRUE", "1", "SI", "SÍ", "YES", "X"} else "FALSE"
-
-
 def medusa_index(backup_path=None):
     """Obtiene los precios actuales de Medusa para replicar su criterio de sync."""
     if backup_path:
@@ -90,8 +85,6 @@ def medusa_index(backup_path=None):
         return result, True
     except requests.RequestException:
         return {}, False
-
-
 def master_indexes(path):
     wb = openpyxl.load_workbook(path, data_only=True)
     ws = wb.active
@@ -114,8 +107,6 @@ def master_indexes(path):
         by_sku[sku.upper()] = item
         by_name[norm(name)].append(item)
     return by_sku, by_name
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("control", type=Path)

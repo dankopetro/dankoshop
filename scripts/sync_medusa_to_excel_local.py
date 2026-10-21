@@ -35,9 +35,11 @@ from datetime import datetime
 import requests
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "http://localhost:9100")
-ADMIN_EMAIL = os.getenv("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-ADMIN_PASSWORD = os.getenv("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
+ADMIN_EMAIL, ADMIN_PASSWORD = get_admin_credentials(local=True)
 EXCEL_PATH = Path(__file__).resolve().parent.parent / "excel" / "Productos_Local.xlsx"
 if len(sys.argv) > 1:
     EXCEL_PATH = Path(sys.argv[1])
@@ -57,8 +59,6 @@ HEADER_COLORS = {
     "Envío Grande": "00BCD4",  # cyan
     "Precio Ingresado": "78909C", # gris azulado oscuro
 }
-
-
 def get_token():
     global _token
     if _token:
@@ -74,8 +74,6 @@ def get_token():
         return _token
     print(f"AUTH FAILED ({r.status_code}): {r.text[:200]}")
     return None
-
-
 def api(method, endpoint, data=None, params=None):
     token = get_token()
     if not token:
@@ -88,8 +86,6 @@ def api(method, endpoint, data=None, params=None):
         params=params,
         timeout=30,
     )
-
-
 def fetch_all_products():
     products = []
     offset = 0
@@ -104,8 +100,6 @@ def fetch_all_products():
             break
         offset += 100
     return products
-
-
 def fetch_category_map():
     """Build {product_id: category_name} by querying each category."""
     cat_map = {}
@@ -127,8 +121,6 @@ def fetch_category_map():
             for p in r.json().get("products", []):
                 cat_map[p["id"]] = cat["name"]
     return cat_map
-
-
 def fetch_inventory_map():
     """Build {sku: inventory_quantity} from inventory items."""
     inv_map = {}
@@ -149,8 +141,6 @@ def fetch_inventory_map():
             break
         offset += 100
     return inv_map
-
-
 def fetch_sales_channel_map():
     """Build {product_id: channel_names} from sales channels."""
     sc_map = {}
@@ -175,8 +165,6 @@ def fetch_sales_channel_map():
                 break
             offset += 100
     return sc_map
-
-
 def read_existing_excel():
     """Returns {medusa_id: {row, sku, ...}} from existing Excel"""
     import openpyxl
@@ -203,8 +191,6 @@ def read_existing_excel():
                 "precio_ingresado": precio_ingresado,
             }
     return existing
-
-
 def write_excel(products_data, existing):
     """
     products_data: list of dicts with keys:
@@ -358,8 +344,6 @@ def write_excel(products_data, existing):
         print(f"  Backup guardado: {backup}")
     except Exception as e:
         print(f"  WARN: backup falló: {e}")
-
-
 def main():
     print("=" * 60)
     print("  Medusa (LOCAL) → Excel Sync")

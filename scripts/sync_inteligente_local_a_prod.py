@@ -15,18 +15,19 @@ import requests
 sys.path.insert(0, os.path.dirname(__file__))
 from sync_helpers import sync_inventory, fetch_source_inventory, sync_sales_channels, fetch_source_sales_channels, _api
 
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 LOCAL_URL = "http://localhost:9100"
 PROD_URL = "https://dankoshop-api-production.up.railway.app"
-EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-PASSWORD = os.environ.get("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
-
+EMAIL, PASSWORD = get_admin_credentials()
 
 def login(url):
     r = requests.post(f"{url}/auth/user/emailpass", json={"email": EMAIL, "password": PASSWORD}, timeout=10)
     r.raise_for_status()
     return r.json()["token"]
-
-
 def get_all(url, token, endpoint):
     headers = {"Authorization": f"Bearer {token}"}
     all_items = []
@@ -44,13 +45,9 @@ def get_all(url, token, endpoint):
         offset += 100
         time.sleep(0.3)
     return all_items
-
-
 def get_sku(product):
     variants = product.get("variants", [])
     return variants[0].get("sku") if variants else None
-
-
 def normalize_product(product):
     return {
         "title": product.get("title", ""),
@@ -66,8 +63,6 @@ def normalize_product(product):
         "metadata": product.get("metadata", {}),
         "categories": sorted([c.get("id", "") for c in product.get("categories", []) if c.get("id")]),
     }
-
-
 def build_payload(product):
     variants = product.get("variants", [])
 
@@ -101,8 +96,6 @@ def build_payload(product):
     if product.get("metadata"):
         payload["metadata"] = {k: v for k, v in product["metadata"].items() if not k.startswith("_")}
     return payload
-
-
 def create_product(url, token, payload):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     r = requests.post(f"{url}/admin/products", headers=headers, json=payload, timeout=15)
@@ -116,14 +109,10 @@ def create_product(url, token, payload):
             if r.status_code == 200:
                 return r.json().get("product", {}).get("id")
     return None
-
-
 def update_product(url, token, product_id, payload):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     r = requests.post(f"{url}/admin/products/{product_id}", headers=headers, json=payload, timeout=15)
     return r.status_code == 200
-
-
 def main():
     print("=" * 60)
     print("  Sync Inteligente: Local → Producción")

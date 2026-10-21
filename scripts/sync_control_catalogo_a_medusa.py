@@ -20,8 +20,8 @@ Columnas del Excel:
   8: Precio Medusa (el que se sube a Medusa)
 
 Usage:
-  MEDUSA_ADMIN_PASSWORD=***PASSWORD_ROTADA*** python3 scripts/sync_control_catalogo_a_medusa.py
-  MEDUSA_ADMIN_PASSWORD=***PASSWORD_ROTADA*** python3 scripts/sync_control_catalogo_a_medusa.py --dry-run
+  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/sync_control_catalogo_a_medusa.py
+  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/sync_control_catalogo_a_medusa.py --dry-run
 """
 
 import os
@@ -31,9 +31,11 @@ import math
 import requests
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 MEDUSA_URL = os.getenv("MEDUSA_BACKEND_URL", "https://dankoshop-api-production.up.railway.app")
-ADMIN_EMAIL = os.getenv("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-ADMIN_PASSWORD = os.getenv("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
+ADMIN_EMAIL, ADMIN_PASSWORD = get_admin_credentials()
 DRY_RUN = "--dry-run" in sys.argv
 EXCEL_PATH = Path(__file__).resolve().parent.parent / "excel" / "Control_Catalogo_24_Agosto.xlsx"
 
@@ -42,8 +44,6 @@ ALLOWED_METADATA_KEYS = {
     "precio_lista", "precio_efectivo", "precio_mayorista",
     "cuota_valor_3", "cuota_valor_6", "cuota_valor_12", "envio_grande",
 }
-
-
 def get_token():
     global _token
     if _token:
@@ -59,8 +59,6 @@ def get_token():
         return _token
     print(f"AUTH FAILED ({r.status_code}): {r.text[:200]}")
     return None
-
-
 def api(method, endpoint, data=None, params=None):
     token = get_token()
     if not token:
@@ -74,8 +72,6 @@ def api(method, endpoint, data=None, params=None):
         timeout=30,
     )
     return r
-
-
 def parse_price(val):
     if val is None:
         return None
@@ -83,8 +79,6 @@ def parse_price(val):
         return float(str(val).replace("$", "").replace(",", "").strip())
     except Exception:
         return None
-
-
 def read_excel():
     import openpyxl
     wb = openpyxl.load_workbook(EXCEL_PATH, data_only=True)
@@ -129,8 +123,6 @@ def read_excel():
             "descripcion": str(descripcion_raw).strip() if descripcion_raw else "",
         })
     return products
-
-
 def calc_metadata(mayorista):
     if mayorista is None:
         return {}
@@ -150,8 +142,6 @@ def calc_metadata(mayorista):
         "cuota_valor_6": cuota_6,
         "cuota_valor_12": cuota_12,
     }
-
-
 def metadata_payload(metadata, envio_grande, existing_metadata):
     payload = dict(metadata)
     if envio_grande:
@@ -160,8 +150,6 @@ def metadata_payload(metadata, envio_grande, existing_metadata):
         if key not in ALLOWED_METADATA_KEYS or (key == "envio_grande" and not envio_grande):
             payload[key] = ""
     return payload
-
-
 def slugify(value):
     import unicodedata
     s = unicodedata.normalize("NFD", value)
@@ -174,7 +162,6 @@ def slugify(value):
 # Category helpers (only for NEW products)
 # ---------------------------------------------------------------------------
 _category_cache = {}
-
 def _fetch_all_categories():
     if _category_cache:
         return _category_cache
@@ -189,8 +176,6 @@ def _fetch_all_categories():
             break
         offset += 100
     return _category_cache
-
-
 def resolve_category(category_name):
     if not category_name or not category_name.strip():
         return None
@@ -213,7 +198,6 @@ def resolve_category(category_name):
 # Inventory helpers (for both new and existing products)
 # ---------------------------------------------------------------------------
 _stock_location_id = None
-
 def get_stock_location():
     global _stock_location_id
     if _stock_location_id:
@@ -225,8 +209,6 @@ def get_stock_location():
             _stock_location_id = locs[0]["id"]
             return _stock_location_id
     return None
-
-
 def set_inventory(variant_id, sku, quantity, product_id=None):
     """Set inventory level. Skips if quantity None/<=0 or stock already exists."""
     if quantity is None or quantity <= 0:
@@ -289,6 +271,7 @@ def set_inventory(variant_id, sku, quantity, product_id=None):
 # ---------------------------------------------------------------------------
 # Sales channel helpers (only for NEW products)
 # ---------------------------------------------------------------------------
+
 def get_or_create_sales_channel(name="DankoShop"):
     r = api("GET", "/admin/sales-channels", params={"limit": 100})
     if r.status_code == 200:
@@ -299,8 +282,6 @@ def get_or_create_sales_channel(name="DankoShop"):
     if r2.status_code == 200:
         return r2.json().get("sales_channel", {}).get("id")
     return None
-
-
 def link_product_to_channels(product_id, channel_names):
     if not channel_names:
         return
@@ -319,8 +300,6 @@ def link_product_to_channels(product_id, channel_names):
     })
     if r.status_code != 200:
         print(f"    WARN: no se pudo vincular canales de venta")
-
-
 def ensure_region():
     r = api("GET", "/admin/regions", params={"limit": 100})
     if r.status_code == 200:
@@ -334,8 +313,6 @@ def ensure_region():
     if r.status_code == 200:
         return r.json()["region"]["id"]
     return None
-
-
 def find_product(sku):
     r = api("GET", "/admin/products", params={"q": sku, "limit": 20})
     if r.status_code != 200:
@@ -345,8 +322,6 @@ def find_product(sku):
             if v.get("sku") == sku:
                 return p
     return None
-
-
 def remove_inventory_if_empty(sku):
     """Remove auto-created inventory item (Medusa v2 creates one with stock=0 by default)."""
     r = api("GET", "/admin/inventory-items", params={"q": sku})
@@ -359,8 +334,6 @@ def remove_inventory_if_empty(sku):
                 api("DELETE", f"/admin/inventory-items/{item['id']}")
                 print(f"    Inventario: eliminado item vacío (Medusa lo creó automático)")
             break
-
-
 def create_product(product, region_id):
     metadata = calc_metadata(product["precio_mayorista"])
     if product["envio_grande"]:
@@ -409,8 +382,6 @@ def create_product(product, region_id):
         return new_id
     print(f"    CREATE FAILED: {r.status_code} {r.text[:200]}")
     return None
-
-
 def update_product(product, existing, region_id):
     product_id = existing["id"]
     metadata = calc_metadata(product["precio_mayorista"])
@@ -470,8 +441,6 @@ def update_product(product, existing, region_id):
         remove_inventory_if_empty(product["sku"])
 
     return product_id
-
-
 def main():
     print("=" * 60)
     print("  Control Catálogo → Medusa Sync")

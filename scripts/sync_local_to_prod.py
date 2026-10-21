@@ -16,18 +16,19 @@ import requests
 sys.path.insert(0, os.path.dirname(__file__))
 from sync_helpers import sync_inventory, fetch_source_inventory, sync_sales_channels, fetch_source_sales_channels, _api
 
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import get_admin_credentials
+
 LOCAL_URL = "http://localhost:9100"
 PROD_URL = "https://dankoshop-api-production.up.railway.app"
-EMAIL = os.environ.get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-PASSWORD = os.environ.get("MEDUSA_ADMIN_PASSWORD", "***PASSWORD_ROTADA***")
-
+EMAIL, PASSWORD = get_admin_credentials()
 
 def login(url):
     r = requests.post(f"{url}/auth/user/emailpass", json={"email": EMAIL, "password": PASSWORD}, timeout=10)
     r.raise_for_status()
     return r.json()["token"]
-
-
 def get_all(url, token, endpoint):
     headers = {"Authorization": f"Bearer {token}"}
     all_items = []
@@ -45,8 +46,6 @@ def get_all(url, token, endpoint):
         offset += 100
         time.sleep(0.3)
     return all_items
-
-
 def restore_product(url, token, product):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     variants = product.get("variants", [])
@@ -103,8 +102,6 @@ def restore_product(url, token, product):
     else:
         r = requests.post(f"{url}/admin/products", headers=headers, json=payload, timeout=15)
         return r.json().get("product", {}).get("id") if r.status_code == 200 else None
-
-
 def main():
     print("=" * 60)
     print("  Local → Producción (Railway)")
