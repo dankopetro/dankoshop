@@ -181,10 +181,12 @@ NODE_ENV=production
 
 ## Catálogo Medusa (estado al 21/10/2026)
 - **Producción (Railway): 496 productos** con SKUs únicos.
-- **Local (`:9100`): 507 productos** — tiene 11 que producción NO tiene (huérfanos locales):
-  `6252`, `6334`, `AUTO-20260731111239-1`, `AUTO-20260731111239-13`, `SIN0019`, `SIN032`,
-  `SIN053`, `SIN056`, `SIN058`, `SIN064`, `SIN076`.
-  Para volver a ser clone exacto, borrarlos del local (producción es subconjunto estricto).
+- **Local (`:9100`): 496 productos** — ✅ clone exacto (mismo set de SKUs y mismos precios).
+  - Se borraron del local 11 huérfanos que producción NO tenía: `6252`, `6334`,
+    `AUTO-20260731111239-1`, `AUTO-20260731111239-13`, `SIN0019`, `SIN032`, `SIN053`,
+    `SIN056`, `SIN058`, `SIN064`, `SIN076`.
+  - Producción es subconjunto estricto: si se crean productos solo en local, hay que
+    borrarlos del local (o sincronizarlos con `sync_both.py`).
 - El Excel `Productos_Maestro.xlsx` es la fuente de precios; `sync_both.py` sincroniza
   ambos. Los SKUs `SIN*` / `AUTO-*` son productos sin SKU en el Maestro.
 
