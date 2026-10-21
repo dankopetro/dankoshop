@@ -90,3 +90,7 @@ scripts/zapzap_extraer_catalogo.js
 .docker/
 docker-compose.override.yml
 .env*
+
+# ===== Herramientas de desarrollo (opencode/ECC) =====
+.opencode/
+opencode.json
