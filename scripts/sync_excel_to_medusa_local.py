@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED: Usar scripts/sync_both.py en su lugar.
+   Ejemplo: python3 scripts/sync_both.py --local-only excel/Productos_Maestro.xlsx
+
 sync_excel_to_medusa_local.py - Excel → Medusa (LOCAL) sync
 Lee Productos_Local.xlsx o Nuevos_*_Sync.xlsx y sincroniza precios, metadata,
 categorías, inventario y canales de venta en Medusa LOCAL.

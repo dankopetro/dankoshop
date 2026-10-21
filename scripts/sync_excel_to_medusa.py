@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """
+⚠️ DEPRECATED: Usar scripts/sync_both.py en su lugar.
+   Ejemplo: python3 scripts/sync_both.py --prod-only excel/Productos_Maestro.xlsx
+
 sync_excel_to_medusa.py - Excel → Medusa sync
 Lee Productos_Maestro.xlsx o Nuevos_*_Sync.xlsx y sincroniza precios, metadata,
 categorías, inventario y canales de venta.

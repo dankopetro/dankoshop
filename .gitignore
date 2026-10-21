@@ -70,6 +70,7 @@ outputs/
 
 # ===== Archivos privados =====
 GUIA-ADMINISTRADORA-DANKOSHOP.md
+data/telegram_test.txt
 
 # ===== Scripts obsoletos =====
 scripts/seed.py

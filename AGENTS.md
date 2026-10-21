@@ -50,7 +50,8 @@ dankoshop/
 - Puerto: 9100 (en `.env` local; el storefront local apunta a 9100)
 - Admin URL: http://localhost:9100/app
 - Admin credentials: admin@dankoshop.com / ***PASSWORD_ROTADA***
-- Publishable key local: `pk_8eee05fa38bf73afe6aa4e6cb494c0a57b01e30aed7533dec018f7fef1e6dcd9`
+- Publishable key local: `pk_5b602d00f5665e44ef70c53954917a636d4ff6f0d6952115d330a9c48b1f05e5`
+  (cambió al re-seedear la DB; se lee de la tabla `api_key` del Postgres local)
 - Auth API: POST /auth/user/emailpass (Medusa v2, NO /admin/auth)
 - DB migrate: `pnpm exec medusa db:migrate`
 - Seed: `python3 scripts/seed.py`
@@ -82,11 +83,13 @@ nvm use 20 && cd storefront && npm run dev
 ./scripts/medusa-local.sh status   # contenedores + instancia + memoria
 ./scripts/medusa-local.sh restart
 
-# Sync Excel → Medusa v2 (REST API)
-MEDUSA_BACKEND_URL=http://localhost:9100 python3 scripts/sync_excel_to_medusa_local.py
+# Sync Excel → Medusa (local + producción en un solo comando)
+python3 scripts/sync_both.py                              # ambos (Productos_Maestro.xlsx)
+python3 scripts/sync_both.py excel/Control_xxx.xlsx       # ambos con Excel custom
+python3 scripts/sync_both.py --prod-only                  # solo producción
+python3 scripts/sync_both.py --local-only                 # solo local
 
-# Sync contra producción Railway
-python3 scripts/sync_excel_to_medusa.py
+# ⚠️ DEPRECATED: sync_excel_to_medusa.py / sync_excel_to_medusa_local.py
 
 # Seed upsert de productos (migración Medusa, corre en cada deploy)
 # Docker
@@ -174,7 +177,16 @@ NODE_ENV=production
 - Admin Dashboard URL: https://dankoshop-api-production.up.railway.app/app
 - Publishable Key: pk_fc06e44a06bc2556affab5c23313b32a8bf5213371a09a482c9479f3ec82fc17
 - Región Argentina (ARS): reg_01KZCDHFKD3X8KMZ45NPV8HKZF
-- **ESTADO: ✅ ONLINE con 114 productos, metadata de precios, y región ARS.**
+- **ESTADO: ✅ ONLINE con 496 productos, metadata de precios, y región ARS.**
+
+## Catálogo Medusa (estado al 21/10/2026)
+- **Producción (Railway): 496 productos** con SKUs únicos.
+- **Local (`:9100`): 507 productos** — tiene 11 que producción NO tiene (huérfanos locales):
+  `6252`, `6334`, `AUTO-20260731111239-1`, `AUTO-20260731111239-13`, `SIN0019`, `SIN032`,
+  `SIN053`, `SIN056`, `SIN058`, `SIN064`, `SIN076`.
+  Para volver a ser clone exacto, borrarlos del local (producción es subconjunto estricto).
+- El Excel `Productos_Maestro.xlsx` es la fuente de precios; `sync_both.py` sincroniza
+  ambos. Los SKUs `SIN*` / `AUTO-*` son productos sin SKU en el Maestro.
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)
@@ -187,7 +199,7 @@ NODE_ENV=production
 8. ✅ Docker PostgreSQL + Redis corriendo
 9. ✅ Backend Medusa v2 desplegado y ONLINE en Railway
 10. ✅ Seed upsert de metadata de precios minoristas (efectivo, transferencia, cuotas)
-11. ✅ Sync Excel → Medusa v2 (scripts/sync_excel_to_medusa.py) — precios ARS + metadata
+11. ✅ Sync Excel → Medusa v2 (scripts/sync_both.py) — local + producción en un solo comando
 12. ✅ Storefront conectado a Medusa en vivo (productos, categorías, búsqueda)
 13. ✅ Env vars de Vercel configuradas (Medusa URL, publishable key, admin password)
 14. ✅ Editor de contenido /admin-contenido con JSON + GitHub API
@@ -340,7 +352,7 @@ PORT = "9000"
 - Admin Dashboard URL activa: `https://dankoshop-api-production.up.railway.app/app`
 - Storefront URL activa: `https://dankoshop.com.ar` (redirige a www)
 - Editor de contenido: `https://dankoshop.com.ar/admin-contenido` (contraseña: danko-admin-2026)
-- Sync Excel → Medusa: `python3 scripts/sync_excel_to_medusa.py` (producción) o `sync_excel_to_medusa_local.py` (local)
+- Sync Excel → Medusa: `python3 scripts/sync_both.py` (local + producción en un solo comando)
 - Precios: web pública muestra solo minorista (efectivo, transferencia, cuotas). Mayorista es interno/admin.
 - Email: `ventas@dankoshop.com.ar` (ImprovMX → Gmail).
 - Teléfono/WhatsApp: 221 621 9596.
