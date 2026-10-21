@@ -90,6 +90,28 @@ CAT_COLORS = {
 
 DEFAULT_COLOR = ((158, 158, 158), "#9E9E9E")
 
+EFECTIVO_SOBRE_LISTA = 1.15 / 1.25
+LISTA_SOBRE_MAYORISTA = 1.25
+EFECTIVO_SOBRE_MAYORISTA = 1.15
+
+COLS_RETAIL = [
+    ("SKU", 18),
+    ("Artículo", 45),
+    ("Categoría", 25),
+    ("Precio Lista", 15),
+    ("Precio Efectivo", 16),
+    ("Precio Mayorista", 18),
+    ("Envío Grande", 14),
+]
+
+COLS_MAYORISTA = [
+    ("SKU", 18),
+    ("Artículo", 45),
+    ("Categoría", 25),
+    ("Precio Mayorista", 18),
+    ("Envío Grande", 14),
+]
+
 # Excel header colors
 HEADER_FILL = PatternFill(start_color="1A237E", end_color="1A237E", fill_type="solid")
 HEADER_FONT = Font(name="Calibri", bold=True, color="FFFFFF", size=11)
@@ -149,7 +171,12 @@ def read_products(categoria_filter=None):
         except (TypeError, ValueError):
             precio_mayorista = 0
 
-        precio_efectivo = int(round(precio_lista * 0.85)) if precio_lista else 0
+        if precio_mayorista:
+            precio_lista = int(round(precio_mayorista * LISTA_SOBRE_MAYORISTA))
+            precio_efectivo = int(round(precio_mayorista * EFECTIVO_SOBRE_MAYORISTA))
+        else:
+            precio_lista = int(round(precio_lista * 1.25)) if precio_lista else 0
+            precio_efectivo = int(round(precio_lista * EFECTIVO_SOBRE_LISTA)) if precio_lista else 0
 
         products.append({
             "sku": sku,
@@ -207,21 +234,25 @@ def fetch_thumbnails(products):
 # ---------------------------------------------------------------------------
 # Generate Excel
 # ---------------------------------------------------------------------------
-def generate_excel(products, output_path):
+def generate_excel(products, output_path, mayorista=False):
+    cols = COLS_MAYORISTA if mayorista else COLS_RETAIL
+    ncols = len(cols)
+    last_col = get_column_letter(ncols)
+
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Lista de Precios"
 
     # Title row
-    ws.merge_cells("A1:G1")
+    ws.merge_cells(f"A1:{last_col}1")
     title_cell = ws["A1"]
-    title_cell.value = f"LISTA DE PRECIOS - DankoShop"
+    title_cell.value = "LISTA DE PRECIOS MAYORISTA - DankoShop" if mayorista else "LISTA DE PRECIOS - DankoShop"
     title_cell.font = Font(name="Calibri", bold=True, size=16, color="1A237E")
     title_cell.alignment = Alignment(horizontal="center", vertical="center")
     ws.row_dimensions[1].height = 35
 
     # Date row
-    ws.merge_cells("A2:G2")
+    ws.merge_cells(f"A2:{last_col}2")
     date_cell = ws["A2"]
     date_cell.value = f"Generada: {datetime.now().strftime('%d/%m/%Y %H:%M')}"
     date_cell.font = Font(name="Calibri", size=10, italic=True, color="666666")
@@ -229,8 +260,7 @@ def generate_excel(products, output_path):
     ws.row_dimensions[2].height = 20
 
     # Header row
-    headers = ["SKU", "Artículo", "Categoría", "Precio Lista", "Precio Efectivo", "Precio Mayorista", "Envío Grande"]
-    for col, header in enumerate(headers, 1):
+    for col, (header, _) in enumerate(cols, 1):
         cell = ws.cell(row=4, column=col, value=header)
         cell.font = HEADER_FONT
         cell.fill = HEADER_FILL
@@ -244,7 +274,7 @@ def generate_excel(products, output_path):
         # Category separator
         if p["category"] != current_cat:
             current_cat = p["category"]
-            ws.merge_cells(f"A{row_num}:G{row_num}")
+            ws.merge_cells(f"A{row_num}:{last_col}{row_num}")
             cat_cell = ws.cell(row=row_num, column=1, value=f"  {current_cat}")
             rgb = CAT_COLORS.get(current_cat, DEFAULT_COLOR)[0]
             cat_fill = PatternFill(start_color=f"{rgb[0]:02X}{rgb[1]:02X}{rgb[2]:02X}",
@@ -256,27 +286,32 @@ def generate_excel(products, output_path):
             row_num += 1
 
         # Data row
-        row_data = [
-            p["sku"], p["name"], p["category"],
-            p["precio_lista"], p["precio_efectivo"], p["precio_mayorista"],
-            "Sí" if p["envio_grande"] else ""
-        ]
+        if mayorista:
+            row_data = [p["sku"], p["name"], p["category"], p["precio_mayorista"],
+                        "Sí" if p["envio_grande"] else ""]
+            money_cols = (4,)
+        else:
+            row_data = [
+                p["sku"], p["name"], p["category"],
+                p["precio_lista"], p["precio_efectivo"], p["precio_mayorista"],
+                "Sí" if p["envio_grande"] else ""
+            ]
+            money_cols = (4, 5, 6)
         for col, val in enumerate(row_data, 1):
             cell = ws.cell(row=row_num, column=col, value=val)
             cell.font = BODY_FONT
             cell.border = Border(
                 bottom=Side(style="thin", color="CCCCCC"),
             )
-            if col in (4, 5, 6) and isinstance(val, (int, float)):
+            if col in money_cols and isinstance(val, (int, float)):
                 cell.number_format = MONEY_FORMAT
                 cell.alignment = Alignment(horizontal="right")
-            if col == 7:
+            if col == ncols:
                 cell.alignment = Alignment(horizontal="center")
         row_num += 1
 
     # Column widths
-    widths = [18, 45, 25, 15, 16, 18, 14]
-    for i, w in enumerate(widths, 1):
+    for i, (_, w) in enumerate(cols, 1):
         ws.column_dimensions[get_column_letter(i)].width = w
 
     wb.save(output_path)
@@ -298,7 +333,7 @@ def download_thumb(url):
     return None
 
 
-def generate_pdf(products, thumbnails, output_path):
+def generate_pdf(products, thumbnails, output_path, mayorista=False):
     from fpdf import FPDF
 
     class PriceListPDF(FPDF):
@@ -363,7 +398,7 @@ def generate_pdf(products, thumbnails, output_path):
     pdf.set_xy(20, 115)
     pdf.set_font(f"{FONT}", "", 18)
     pdf.set_text_color(100, 100, 100)
-    pdf.cell(170, 10, "LISTA DE PRECIOS", align="C")
+    pdf.cell(170, 10, "LISTA DE PRECIOS MAYORISTA" if mayorista else "LISTA DE PRECIOS", align="C")
 
     # Date
     pdf.set_xy(20, 135)
@@ -460,25 +495,35 @@ def generate_pdf(products, thumbnails, output_path):
             # Prices on the right
             price_x = 135
 
-            # Precio Lista (credito)
-            pdf.set_xy(price_x, y + 2)
-            pdf.set_font(f"{FONT}", "", 7)
-            pdf.set_text_color(150, 150, 150)
-            pdf.cell(55, 4, "Precio Lista (Credito)")
-            pdf.set_xy(price_x, y + 6)
-            pdf.set_font(f"{FONT}", "B", 11)
-            pdf.set_text_color(33, 33, 33)
-            pdf.cell(55, 6, f"${p['precio_lista']:,}")
+            if mayorista:
+                pdf.set_xy(price_x, y + 2)
+                pdf.set_font(f"{FONT}", "", 7)
+                pdf.set_text_color(150, 150, 150)
+                pdf.cell(55, 4, "Precio Mayorista")
+                pdf.set_xy(price_x, y + 6)
+                pdf.set_font(f"{FONT}", "B", 13)
+                pdf.set_text_color(26, 35, 126)
+                pdf.cell(55, 6, f"${p['precio_mayorista']:,}")
+            else:
+                # Precio Lista (credito)
+                pdf.set_xy(price_x, y + 2)
+                pdf.set_font(f"{FONT}", "", 7)
+                pdf.set_text_color(150, 150, 150)
+                pdf.cell(55, 4, "Precio Lista (Credito)")
+                pdf.set_xy(price_x, y + 6)
+                pdf.set_font(f"{FONT}", "B", 11)
+                pdf.set_text_color(33, 33, 33)
+                pdf.cell(55, 6, f"${p['precio_lista']:,}")
 
-            # Precio Efectivo
-            pdf.set_xy(price_x, y + 13)
-            pdf.set_font(f"{FONT}", "", 7)
-            pdf.set_text_color(76, 175, 80)
-            pdf.cell(55, 4, "Precio Efectivo/Transferencia")
-            pdf.set_xy(price_x, y + 17)
-            pdf.set_font(f"{FONT}", "B", 12)
-            pdf.set_text_color(76, 175, 80)
-            pdf.cell(55, 6, f"${p['precio_efectivo']:,}")
+                # Precio Efectivo
+                pdf.set_xy(price_x, y + 13)
+                pdf.set_font(f"{FONT}", "", 7)
+                pdf.set_text_color(76, 175, 80)
+                pdf.cell(55, 4, "Precio Efectivo/Transferencia")
+                pdf.set_xy(price_x, y + 17)
+                pdf.set_font(f"{FONT}", "B", 12)
+                pdf.set_text_color(76, 175, 80)
+                pdf.cell(55, 6, f"${p['precio_efectivo']:,}")
 
             # Envio Grande badge
             if p["envio_grande"]:
@@ -526,19 +571,20 @@ def main():
 
     OUTPUT_DIR.mkdir(exist_ok=True)
     today = datetime.now().strftime("%Y-%m-%d")
-    excel_path = OUTPUT_DIR / f"lista_precios_{today}.xlsx"
-    pdf_path = OUTPUT_DIR / f"lista_precios_{today}.pdf"
+    suffix = "_mayorista" if args.mayorista else ""
+    excel_path = OUTPUT_DIR / f"lista_precios{suffix}_{today}.xlsx"
+    pdf_path = OUTPUT_DIR / f"lista_precios{suffix}_{today}.pdf"
 
     if not args.solo_pdf:
         print("\nGenerando Excel...")
-        generate_excel(products, excel_path)
+        generate_excel(products, excel_path, mayorista=args.mayorista)
 
     if not args.solo_excel:
         print("\nBuscando imágenes de productos en Medusa...")
         thumbnails = fetch_thumbnails(products)
         print(f"  Imágenes encontradas: {len(thumbnails)}/{len(products)}")
         print("\nGenerando PDF...")
-        generate_pdf(products, thumbnails, pdf_path)
+        generate_pdf(products, thumbnails, pdf_path, mayorista=args.mayorista)
 
     print("\n" + "=" * 50)
     print("  ¡Listo!")
