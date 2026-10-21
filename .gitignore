@@ -94,3 +94,4 @@ docker-compose.override.yml
 # ===== Herramientas de desarrollo (opencode/ECC) =====
 .opencode/
 opencode.json
+data/guia_envios.md
