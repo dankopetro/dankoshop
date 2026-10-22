@@ -213,43 +213,36 @@ NODE_ENV=production
   `supersecret` reemplazados) + force push. Backup previo en `/tmp` (no versionado).
   GitHub puede servir commits huérfanos por SHA hasta su GC; por eso el token viejo
   se rotó igual.
-- 🔴 **PENDIENTE: el backend de producción corre con el `JWT_SECRET` POR DEFECTO**
-  (`super-secret-jwt`, público en el repo) porque Railway no tenía esa variable.
-  Con ese secret se pueden **forjar tokens de admin** (verificado: 200 en /admin/users
-  con un user_id inventado). Las variables correctas ya están puestas en Railway, pero
-  un deployment activo **congela sus variables**: hace falta un redeploy.
-  `scripts/esperar_redeploy.py` reintenta el redeploy solo hasta que Railway lo permita
-  (log en `/tmp/opencode/redeploy.log`). Al aplicarse, el forjado vuelve a dar 401.
+- ✅ **`JWT_SECRET`/`COOKIE_SECRET` aplicados en producción** (redeploy hecho
+  22/10/2026): el token forjado con `super-secret-jwt` ahora da **401** (verificado).
+  Vigilante (`danko@192.168.0.200` → `~/esperar_redeploy.py`) completó su trabajo.
 - ✅ Password del admin de producción rotada a una clave fuerte
   (`KbaP-5%i^W+9d#nDTm!N`); la vieja `supersecret` ya no da acceso al panel.
-  El login quedó con `admin-temporal@dankoshop.com` (Vercel y `.env.production`
-  apuntan ahí). Para volver a `admin@dankoshop.com` hace falta 1 SQL (ver abajo).
+- ✅ **Login restaurado a `admin@dankoshop.com`** (22/10/2026): el usuario original
+  se re-creó con la password nueva, Vercel (`MEDUSA_ADMIN_EMAIL`/`_PASSWORD`) y
+  `.env.production` apuntan ahí, y `check-stock` responde 200. Los usuarios
+  temporales `admin-temporal@dankoshop.com` y `probe1@dankoshop.com` fueron
+  eliminados de la DB (login da 401).
 
-### Incident Railway 21/10/2026 (builds pausados)
-- Todos los deploys están pausados por un incidente de seguridad de la plataforma.
-  Los servicios corriendo NO se ven afectados (la tienda funciona).
-- El vigilante de redeploy corre en **otra notebook** (siempre encendida, `danko@192.168.0.200`,
-  `~/esperar_redeploy.py`, log en `~/redeploy.log`) porque esta se suspende a los 15 min.
-  Reintenta cada **300 s** (Railway pide no disparar el mismo deploy más de una vez:
-  su cola es global) y avisa por Telegram cuando se aplica el fix.
+### Incident Railway 21/10/2026 (builds pausados) — RESUELTO 22/10
+- Los builds estaban pausados por un incidente de seguridad de la plataforma.
+  El vigilante de redeploy (en **otra notebook** siempre encendida: `danko@192.168.0.200`,
+  `~/esperar_redeploy.py`, log en `~/redeploy.log`) logró aplicar el redeploy y
+  avisó por Telegram.
   - Prueba 3 vías: redeploy con imagen previa (rápido, aplica las variables nuevas),
     build del último commit (aplica además el Dockerfile nuevo) y serviceInstanceRedeploy.
   - Ojo: en esa notebook el CLI de Railway debe ser el build **musl** (el gnu da segfault en Mint 22.3).
   - Sesión de Railway copiada a `~/.railway/config.json` (el CLI refresca el token solo).
-  - El workspace es plan **HOBBY** → los builds de Hobby se habilitan después de
-    Pro/Enterprise (ver https://status.railway.com).
-- **Si el automático falla, manual:** Railway → `dankoshop-api` → **Redeploy** (reutiliza la
-  imagen, no necesita build). Después verificar que el token forjado da 401.
-- Pendiente cuando vuelvan los builds, en este orden:
-  1. Redeploy de la API → aplica el `JWT_SECRET`/`COOKIE_SECRET` nuevos (cierra el forjado).
-  2. Rotar la password de Postgres (Postgres → Database → Config → Connection →
+- ✅ Resultado: `JWT_SECRET`/`COOKIE_SECRET` activos (token forjado → 401).
+- Pendientes de seguridad restantes (orden sugerido, con builds activos):
+  1. Rotar la password de Postgres (Postgres → Database → Config → Connection →
      Regenerate). **El `DATABASE_URL` de la API está pegado como string**, no como
      referencia `${{Postgres.DATABASE_URL}}` → hay que actualizarlo a mano y redeployar,
      o pasarlo a referencia para que las rotaciones futuras se apliquen solas.
-  3. Rotar Redis (mismo criterio) y `CLOUDINARY_API_SECRET`.
-  4. Verificar: `railway connect Postgres` → `SELECT rolname FROM pg_roles;` y
+  2. Rotar Redis (mismo criterio) y `CLOUDINARY_API_SECRET`.
+  3. Verificar: `railway connect Postgres` → `SELECT rolname FROM pg_roles;` y
      `SELECT pid, usename, client_addr, state FROM pg_stat_activity;`
-- ⛔ **NO regenerar la password de la DB mientras los deploys estén pausados**: la API
+- ⛔ **NO regenerar la password de la DB sin tener el redeploy listo**: la API
   perdería acceso a la base y la web caería hasta que se pueda redeployar.
 - ✅ Public Access del Postgres **eliminado** (ya no es alcanzable desde internet).
 
