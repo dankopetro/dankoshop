@@ -116,16 +116,20 @@ def railway_api(query, timeout=90):
         return json.dumps({"errors": [{"message": str(e)}]})
 
 
-def try_deploy_ways():
-    """Prueba las vías de redeploy. Devuelve (hecho, mensaje)."""
-    vias = [
-        ("deploymentRedeploy (imagen previa)",
-         f'mutation {{ deploymentRedeploy(id: "{DEPLOYMENT_ID}", usePreviousImageTag: true) {{ id status }} }}'),
-        ("serviceInstanceRedeploy",
-         f'mutation {{ serviceInstanceRedeploy(environmentId: "{ENVIRONMENT_ID}", serviceId: "{SERVICE_ID}") }}'),
-    ]
-    for nombre, query in vias:
-        out = railway_api(query)
+VIAS = [
+    ("deploymentRedeploy (imagen previa, sin build)",
+     f'mutation {{ deploymentRedeploy(id: "{DEPLOYMENT_ID}", usePreviousImageTag: true) {{ id status }} }}', 120),
+    ("serviceInstanceDeploy (build del ultimo commit)",
+     f'mutation {{ serviceInstanceDeploy(environmentId: "{ENVIRONMENT_ID}", serviceId: "{SERVICE_ID}", latestCommit: true) }}', 120),
+    ("serviceInstanceRedeploy",
+     f'mutation {{ serviceInstanceRedeploy(environmentId: "{ENVIRONMENT_ID}", serviceId: "{SERVICE_ID}") }}', 120),
+]
+
+
+def intentar_deploy():
+    """Prueba las vías de redeploy en orden. Devuelve (hecho, vía, mensaje)."""
+    for nombre, query, timeout in VIAS:
+        out = railway_api(query, timeout=timeout)
         if '"errors"' in out:
             try:
                 msg = json.loads(out)["errors"][0]["message"]
@@ -134,8 +138,8 @@ def try_deploy_ways():
             log(f"  · {nombre}: {msg}")
             continue
         log(f"  · {nombre}: OK")
-        return True, nombre
-    return False, "todas pausadas"
+        return True, nombre, "ok"
+    return False, None, "todas pausadas"
 
 
 # --------------------------------------------------------------------------- verificación
@@ -157,11 +161,23 @@ def verificar():
     return "indefinido", f"default={st_default} nuevo={st_nuevo}"
 
 
+def esperar_healthy(timeout_min=5):
+    """Espera a que el backend responda. Devuelve True si levantó."""
+    deadline = time.time() + timeout_min * 60
+    while time.time() < deadline:
+        if http_status(f"{API}/health") == 200:
+            return True
+        time.sleep(5)
+    return False
+
+
 def main():
     parser = argparse.ArgumentParser(description="Espera y aplica el redeploy del backend")
-    parser.add_argument("--cada", type=int, default=60, help="Segundos entre intentos")
+    parser.add_argument("--cada", type=int, default=300, help="Segundos entre intentos")
     parser.add_argument("--una-vez", action="store_true", help="Un solo intento y salir")
     parser.add_argument("--sin-telegram", action="store_true", help="No enviar avisos")
+    parser.add_argument("--build-tras-fix", action="store_true", default=True,
+                        help="Después del fix, pedir un build para aplicar el Dockerfile nuevo")
     args = parser.parse_args()
 
     global TELEGRAM_TOKEN, TELEGRAM_CHAT
@@ -173,6 +189,7 @@ def main():
     log("=" * 62)
     log(f"  API:          {API}")
     log(f"  Deployment:   {DEPLOYMENT_ID[:8]}...")
+    log(f"  Intervalo:    {args.cada}s")
     log(f"  Telegram:     {'sí' if TELEGRAM_TOKEN else 'no'}")
 
     intento = 0
@@ -180,20 +197,27 @@ def main():
     while True:
         intento += 1
         log(f"intento {intento}: intentando redeploy...")
-        hecho, mensaje = try_deploy_ways()
+        hecho, via, mensaje = intentar_deploy()
         if hecho:
-            log(f"✅ redeploy disparado vía {mensaje}. Esperando que el backend levante...")
-            for _ in range(60):
-                if http_status(f"{API}/health") == 200:
-                    break
-                time.sleep(5)
-            time.sleep(10)
+            log(f"✅ redeploy disparado vía {via}. Esperando que el backend levante...")
+            wait_min = 15 if "build" in via else 5
+            if not esperar_healthy(wait_min):
+                log("  el backend no volvió a tiempo; sigo esperando")
+            else:
+                time.sleep(10)
             estado, detalle = verificar()
             if estado == "ok":
                 log(f"🎉 RESUELTO: {detalle}")
                 telegram("🔐 <b>JWT secret rotado en producción</b>\n"
                          "El forjado de tokens de admin quedó cerrado.\n"
                          "Podés revisar el panel con normalidad.")
+                if args.build_tras_fix:
+                    log("  pidiendo build del último commit (para aplicar el Dockerfile nuevo)...")
+                    out = railway_api(VIAS[1][1], timeout=120)
+                    if '"errors"' in out:
+                        log("  el build no se pudo pedir (se puede hacer a mano desde el dashboard)")
+                    else:
+                        log("  build solicitado. Subirá con el Dockerfile nuevo (admin con $MEDUSA_ADMIN_PASSWORD).")
             else:
                 log(f"⚠️  redeploy aplicado pero la verificación da: {detalle}")
                 telegram(f"⚠️ <b>Redeploy aplicado</b> pero la verificación dio: {detalle}")

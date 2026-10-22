@@ -230,9 +230,14 @@ NODE_ENV=production
   Los servicios corriendo NO se ven afectados (la tienda funciona).
 - El vigilante de redeploy corre en **otra notebook** (siempre encendida, `danko@192.168.0.200`,
   `~/esperar_redeploy.py`, log en `~/redeploy.log`) porque esta se suspende a los 15 min.
-  Reintenta cada 60 s y avisa por Telegram cuando se aplica el fix.
+  Reintenta cada **300 s** (Railway pide no disparar el mismo deploy más de una vez:
+  su cola es global) y avisa por Telegram cuando se aplica el fix.
+  - Prueba 3 vías: redeploy con imagen previa (rápido, aplica las variables nuevas),
+    build del último commit (aplica además el Dockerfile nuevo) y serviceInstanceRedeploy.
   - Ojo: en esa notebook el CLI de Railway debe ser el build **musl** (el gnu da segfault en Mint 22.3).
   - Sesión de Railway copiada a `~/.railway/config.json` (el CLI refresca el token solo).
+  - El workspace es plan **HOBBY** → los builds de Hobby se habilitan después de
+    Pro/Enterprise (ver https://status.railway.com).
 - **Si el automático falla, manual:** Railway → `dankoshop-api` → **Redeploy** (reutiliza la
   imagen, no necesita build). Después verificar que el token forjado da 401.
 - Pendiente cuando vuelvan los builds, en este orden:
