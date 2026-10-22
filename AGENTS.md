@@ -213,9 +213,17 @@ NODE_ENV=production
   `supersecret` reemplazados) + force push. Backup previo en `/tmp` (no versionado).
   GitHub puede servir commits huérfanos por SHA hasta su GC; por eso el token viejo
   se rotó igual.
-- ⏳ **Password del admin en producción**: la local ya está rotada. La de producción
-  requiere acceso a la DB de Railway (o SQL manual) + actualizar Vercel
-  (`MEDUSA_ADMIN_PASSWORD`) y `.env.production`.
+- 🔴 **PENDIENTE: el backend de producción corre con el `JWT_SECRET` POR DEFECTO**
+  (`super-secret-jwt`, público en el repo) porque Railway no tenía esa variable.
+  Con ese secret se pueden **forjar tokens de admin** (verificado: 200 en /admin/users
+  con un user_id inventado). Las variables correctas ya están puestas en Railway, pero
+  un deployment activo **congela sus variables**: hace falta un redeploy.
+  `scripts/esperar_redeploy.py` reintenta el redeploy solo hasta que Railway lo permita
+  (log en `/tmp/opencode/redeploy.log`). Al aplicarse, el forjado vuelve a dar 401.
+- ✅ Password del admin de producción rotada a una clave fuerte
+  (`KbaP-5%i^W+9d#nDTm!N`); la vieja `supersecret` ya no da acceso al panel.
+  El login quedó con `admin-temporal@dankoshop.com` (Vercel y `.env.production`
+  apuntan ahí). Para volver a `admin@dankoshop.com` hace falta 1 SQL (ver abajo).
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)
