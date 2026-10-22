@@ -225,6 +225,21 @@ NODE_ENV=production
   El login quedó con `admin-temporal@dankoshop.com` (Vercel y `.env.production`
   apuntan ahí). Para volver a `admin@dankoshop.com` hace falta 1 SQL (ver abajo).
 
+### Incident Railway 21/10/2026 (builds pausados)
+- Todos los deploys están pausados por un incidente de seguridad de la plataforma.
+  Los servicios corriendo NO se ven afectados (la tienda funciona).
+- Pendiente cuando vuelvan los builds, en este orden:
+  1. Redeploy de la API → aplica el `JWT_SECRET`/`COOKIE_SECRET` nuevos (cierra el forjado).
+  2. Rotar la password de Postgres (Postgres → Database → Config → Connection →
+     Regenerate). **El `DATABASE_URL` de la API está pegado como string**, no como
+     referencia `${{Postgres.DATABASE_URL}}` → hay que actualizarlo a mano y redeployar,
+     o pasarlo a referencia para que las rotaciones futuras se apliquen solas.
+  3. Rotar Redis (mismo criterio).
+  4. Verificar: `railway connect Postgres` → `SELECT rolname FROM pg_roles;` y
+     `SELECT pid, usename, client_addr, state FROM pg_stat_activity;`
+- ⛔ **NO regenerar la password de la DB mientras los deploys estén pausados**: la API
+  perdería acceso a la base y la web caería hasta que se pueda redeployar.
+
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)
 2. ✅ 114 productos parseados con precios e imágenes
