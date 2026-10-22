@@ -228,17 +228,25 @@ NODE_ENV=production
 ### Incident Railway 21/10/2026 (builds pausados)
 - Todos los deploys están pausados por un incidente de seguridad de la plataforma.
   Los servicios corriendo NO se ven afectados (la tienda funciona).
+- El vigilante de redeploy corre en **otra notebook** (siempre encendida, `danko@192.168.0.200`,
+  `~/esperar_redeploy.py`, log en `~/redeploy.log`) porque esta se suspende a los 15 min.
+  Reintenta cada 60 s y avisa por Telegram cuando se aplica el fix.
+  - Ojo: en esa notebook el CLI de Railway debe ser el build **musl** (el gnu da segfault en Mint 22.3).
+  - Sesión de Railway copiada a `~/.railway/config.json` (el CLI refresca el token solo).
+- **Si el automático falla, manual:** Railway → `dankoshop-api` → **Redeploy** (reutiliza la
+  imagen, no necesita build). Después verificar que el token forjado da 401.
 - Pendiente cuando vuelvan los builds, en este orden:
   1. Redeploy de la API → aplica el `JWT_SECRET`/`COOKIE_SECRET` nuevos (cierra el forjado).
   2. Rotar la password de Postgres (Postgres → Database → Config → Connection →
      Regenerate). **El `DATABASE_URL` de la API está pegado como string**, no como
      referencia `${{Postgres.DATABASE_URL}}` → hay que actualizarlo a mano y redeployar,
      o pasarlo a referencia para que las rotaciones futuras se apliquen solas.
-  3. Rotar Redis (mismo criterio).
+  3. Rotar Redis (mismo criterio) y `CLOUDINARY_API_SECRET`.
   4. Verificar: `railway connect Postgres` → `SELECT rolname FROM pg_roles;` y
      `SELECT pid, usename, client_addr, state FROM pg_stat_activity;`
 - ⛔ **NO regenerar la password de la DB mientras los deploys estén pausados**: la API
   perdería acceso a la base y la web caería hasta que se pueda redeployar.
+- ✅ Public Access del Postgres **eliminado** (ya no es alcanzable desde internet).
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)

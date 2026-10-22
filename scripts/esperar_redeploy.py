@@ -1,126 +1,209 @@
 #!/usr/bin/env python3
 """
-esperar_redeploy.py - Reintenta el redeploy del backend hasta que Railway lo permita.
+esperar_redeploy.py - Vigila y aplica el redeploy del backend hasta que Railway lo permita.
 
-Contexto (21/10/2026): Railway tuvo un incidente que pausó todos los builds.
-El backend quedó corriendo con el JWT_SECRET por defecto (público en el repo),
-lo que permite forjar tokens de admin. Las variables correctas YA están en
-Railway, pero un deployment activo congela sus propias variables: hace falta
-un redeploy para que se apliquen.
+Contexto (21/10/2026): Railway tuvo un incidente de seguridad que pausó todos los
+deploys. El backend quedó corriendo con el JWT_SECRET por defecto (público en el
+repo), lo que permite forjar tokens de admin. Las variables correctas ya están en
+Railway, pero un deployment activo congela sus variables: hace falta un redeploy.
 
-Este script reintenta el redeploy (reutilizando la imagen actual, sin build) cada
-N segundos. Cuando lo logra, verifica que el token forjado ya no sirva.
+Este script reintenta el redeploy (probando varias vías) y, cuando lo logra,
+verifica que el token forjado ya no sirva y avisa por Telegram.
+
+No necesita instalar nada: solo Python 3.8+ (stdlib) y el CLI de Railway.
 
 Uso:
-  python3 scripts/esperar_redeploy.py            # reintenta cada 2 minutos
-  python3 scripts/esperar_redeploy.py --cada 60  # reintenta cada 60 segundos
-  python3 scripts/esperar_redeploy.py --una-vez  # un solo intento
+  python3 esperar_redeploy.py                    # reintenta cada 60s
+  python3 esperar_redeploy.py --cada 30          # más seguido
+  python3 esperar_redeploy.py --una-vez          # un intento y salir
+  python3 esperar_redeploy.py --sin-telegram     # sin avisos
+
+Variables de entorno (opcionales):
+  TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID  -> para avisar cuando se aplique
+  JWT_SECRET_NUEVO                     -> secret nuevo (para la verificación)
+  RAILWAY_BIN                          -> ruta al CLI (default: railway)
 """
 
 import argparse
+import base64
+import hashlib
+import hmac
 import json
+import os
 import subprocess
 import sys
 import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 
-import requests
+API = os.environ.get("MEDUSA_PROD_URL", "https://dankoshop-api-production.up.railway.app")
+DEPLOYMENT_ID = os.environ.get("RAILWAY_DEPLOYMENT_ID", "44e88348-ca6a-40e9-b996-8cec151e0943")
+ENVIRONMENT_ID = os.environ.get("RAILWAY_ENVIRONMENT_ID", "00edf817-87ee-4988-9b15-1a75a12a9432")
+SERVICE_ID = os.environ.get("RAILWAY_SERVICE_ID", "e26fbbdb-e502-44c6-acee-a91a273dfa59")
+ACTOR_ID = os.environ.get("MEDUSA_ADMIN_USER_ID", "user_01M5GHJZ58R2X0D58EPXR5X32Z")
+SECRET_DEFAULT = "super-secret-jwt"   # el que quedó en el contenedor (público en el repo)
+RAILWAY_BIN = os.environ.get("RAILWAY_BIN", "railway")
+LOG_PATH = Path(os.environ.get("REDEPLOY_LOG", Path(__file__).resolve().parent / "redeploy.log"))
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT = os.environ.get("TELEGRAM_CHAT_ID", "")
+AVISOS_UMBRAL = int(os.environ.get("AVISOS_UMBRAL", "30"))
 
-ROOT = Path(__file__).resolve().parent.parent
-LOG = Path("/tmp/opencode/redeploy.log")
-API = "https://dankoshop-api-production.up.railway.app"
-DEPLOYMENT_ID = "44e88348-ca6a-40e9-b996-8cec151e0943"
-TOKEN_DEFAULT = "super-secret-jwt"   # el que quedó en el contenedor
 
-
+# --------------------------------------------------------------------------- utils
 def log(msg):
-    line = f"[{time.strftime('%H:%M:%S')}] {msg}"
+    line = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {msg}"
     print(line, flush=True)
     try:
-        with open(LOG, "a", encoding="utf-8") as f:
+        with open(LOG_PATH, "a", encoding="utf-8") as f:
             f.write(line + "\n")
     except OSError:
         pass
 
 
-def railway_api(query):
-    r = subprocess.run(["railway", "api", query], capture_output=True, text=True, timeout=120)
-    return r.stdout
+def telegram(text):
+    if not (TELEGRAM_TOKEN and TELEGRAM_CHAT):
+        return False
+    try:
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
+            data=json.dumps({"chat_id": TELEGRAM_CHAT, "text": text, "parse_mode": "HTML"}).encode(),
+            headers={"Content-Type": "application/json"}, method="POST")
+        urllib.request.urlopen(req, timeout=20).read()
+        return True
+    except Exception as e:
+        log(f"  (no se pudo avisar por Telegram: {e})")
+        return False
 
 
-def try_redeploy():
-    out = railway_api(
-        f'mutation {{ deploymentRedeploy(id: "{DEPLOYMENT_ID}", usePreviousImageTag: true) {{ id status }} }}'
-    )
-    if '"errors"' in out:
-        try:
-            msg = json.loads(out)["errors"][0]["message"]
-        except Exception:
-            msg = out[:120]
-        return False, msg
-    return True, "ok"
+def b64(raw: bytes) -> str:
+    return base64.urlsafe_b64encode(raw).rstrip(b"=").decode()
 
 
-def wait_healthy(timeout=240):
-    deadline = time.time() + timeout
-    while time.time() < deadline:
-        try:
-            if requests.get(f"{API}/health", timeout=8).status_code == 200:
-                return True
-        except Exception:
-            pass
-        time.sleep(5)
-    return False
+def forge_token(secret: str, actor_id: str, ttl: int = 300) -> str:
+    """Forja un JWT HS256 (mismo formato que usa Medusa)."""
+    now = int(time.time())
+    header = {"alg": "HS256", "typ": "JWT"}
+    payload = {"actor_id": actor_id, "actor_type": "user", "auth_provider": "emailpass",
+               "app_metadata": {"user_id": actor_id}, "user_metadata": {},
+               "iat": now, "exp": now + ttl}
+
+    def enc(d):
+        return b64(json.dumps(d, separators=(",", ":")).encode())
+
+    signing_input = f"{enc(header)}.{enc(payload)}"
+    sig = hmac.new(secret.encode(), signing_input.encode(), hashlib.sha256).digest()
+    return f"{signing_input}.{b64(sig)}"
 
 
-def forged_token():
-    """Token forjado con el secret por defecto (el que está en el contenedor)."""
-    code = (
-        "const jwt=require('jsonwebtoken');"
-        "const fs=require('fs');"
-        "const p={actor_id:'user_01ZZZZZZZZZZZZZZZZZZZZZZZZZ',actor_type:'user',auth_provider:'emailpass',"
-        "app_metadata:{user_id:'user_01ZZZZZZZZZZZZZZZZZZZZZZZZZ'},user_metadata:{},"
-        "iat:Math.floor(Date.now()/1000),exp:Math.floor(Date.now()/1000)+300};"
-        f"fs.writeFileSync('/tmp/opencode/f_retry.txt', jwt.sign(p,{TOKEN_DEFAULT!r},{{algorithm:'HS256'}}));"
-    )
-    subprocess.run(["node", "-e", code], cwd=str(ROOT / "medusa-backend"),
-                   capture_output=True, text=True, timeout=60)
-    p = Path("/tmp/opencode/f_retry.txt")
-    return p.read_text().strip() if p.exists() else None
+def http_status(url, token=None, timeout=20):
+    headers = {"Authorization": f"Bearer {token}"} if token else {}
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        return urllib.request.urlopen(req, timeout=timeout).status
+    except urllib.error.HTTPError as e:
+        return e.code
+    except Exception:
+        return 0
 
 
-def verify():
-    tok = forged_token()
-    if not tok:
-        return None
-    r = requests.get(f"{API}/admin/users", headers={"Authorization": f"Bearer {tok}"}, timeout=20)
-    return r.status_code
+# --------------------------------------------------------------------------- railway
+def railway_api(query, timeout=90):
+    try:
+        r = subprocess.run([RAILWAY_BIN, "api", query], capture_output=True, text=True, timeout=timeout)
+        return r.stdout or ""
+    except Exception as e:
+        return json.dumps({"errors": [{"message": str(e)}]})
+
+
+def try_deploy_ways():
+    """Prueba las vías de redeploy. Devuelve (hecho, mensaje)."""
+    vias = [
+        ("deploymentRedeploy (imagen previa)",
+         f'mutation {{ deploymentRedeploy(id: "{DEPLOYMENT_ID}", usePreviousImageTag: true) {{ id status }} }}'),
+        ("serviceInstanceRedeploy",
+         f'mutation {{ serviceInstanceRedeploy(environmentId: "{ENVIRONMENT_ID}", serviceId: "{SERVICE_ID}") }}'),
+    ]
+    for nombre, query in vias:
+        out = railway_api(query)
+        if '"errors"' in out:
+            try:
+                msg = json.loads(out)["errors"][0]["message"]
+            except Exception:
+                msg = out[:100]
+            log(f"  · {nombre}: {msg}")
+            continue
+        log(f"  · {nombre}: OK")
+        return True, nombre
+    return False, "todas pausadas"
+
+
+# --------------------------------------------------------------------------- verificación
+def verificar():
+    """Devuelve (estado, detalle). estado: 'ok' | 'vulnerable' | 'indefinido'"""
+    secret_nuevo = os.environ.get("JWT_SECRET_NUEVO", "").strip()
+
+    st_default = http_status(f"{API}/admin/users", forge_token(SECRET_DEFAULT, ACTOR_ID))
+    st_nuevo = http_status(f"{API}/admin/users", forge_token(secret_nuevo, ACTOR_ID)) if secret_nuevo else 0
+    st_login = http_status(f"{API}/health")
+
+    log(f"  verificación -> default={st_default} nuevo={st_nuevo} health={st_login}")
+    if st_default == 200:
+        return "vulnerable", "el secret por defecto TODAVIA sirve"
+    if secret_nuevo and st_nuevo == 200:
+        return "ok", "secret nuevo activo y el viejo rechazado"
+    if st_default == 401 and st_login == 200:
+        return "ok", "el secret por defecto fue rechazado y el backend responde"
+    return "indefinido", f"default={st_default} nuevo={st_nuevo}"
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--cada", type=int, default=120, help="Segundos entre intentos")
+    parser = argparse.ArgumentParser(description="Espera y aplica el redeploy del backend")
+    parser.add_argument("--cada", type=int, default=60, help="Segundos entre intentos")
     parser.add_argument("--una-vez", action="store_true", help="Un solo intento y salir")
+    parser.add_argument("--sin-telegram", action="store_true", help="No enviar avisos")
     args = parser.parse_args()
 
-    log("Iniciando espera de redeploy del backend (Railway paused builds)...")
+    global TELEGRAM_TOKEN, TELEGRAM_CHAT
+    if args.sin_telegram:
+        TELEGRAM_TOKEN = TELEGRAM_CHAT = ""
+
+    log("=" * 62)
+    log("  Vigilante de redeploy (backend DankoShop)")
+    log("=" * 62)
+    log(f"  API:          {API}")
+    log(f"  Deployment:   {DEPLOYMENT_ID[:8]}...")
+    log(f"  Telegram:     {'sí' if TELEGRAM_TOKEN else 'no'}")
+
     intento = 0
+    avisado = False
     while True:
         intento += 1
-        ok, msg = try_redeploy()
-        if ok:
-            log(f"✅ Redeploy disparado (intento {intento}). Esperando que levante...")
-            if wait_healthy():
-                code = verify()
-                if code == 401:
-                    log("🎉 RESUELTO: el token forjado ahora es rechazado (401). El JWT_SECRET nuevo está aplicado.")
-                else:
-                    log(f"⚠️  El redeploy subió pero el token forjado sigue funcionando (HTTP {code}). Revisar.")
-                log("Recordar: actualizar MEDUSA_ADMIN_* en Vercel si todavía apuntan al admin viejo.")
-                return
-            log("El backend no volvió a tiempo; vuelvo a intentar.")
-        else:
-            log(f"intento {intento}: todavía pausado ({msg})")
+        log(f"intento {intento}: intentando redeploy...")
+        hecho, mensaje = try_deploy_ways()
+        if hecho:
+            log(f"✅ redeploy disparado vía {mensaje}. Esperando que el backend levante...")
+            for _ in range(60):
+                if http_status(f"{API}/health") == 200:
+                    break
+                time.sleep(5)
+            time.sleep(10)
+            estado, detalle = verificar()
+            if estado == "ok":
+                log(f"🎉 RESUELTO: {detalle}")
+                telegram("🔐 <b>JWT secret rotado en producción</b>\n"
+                         "El forjado de tokens de admin quedó cerrado.\n"
+                         "Podés revisar el panel con normalidad.")
+            else:
+                log(f"⚠️  redeploy aplicado pero la verificación da: {detalle}")
+                telegram(f"⚠️ <b>Redeploy aplicado</b> pero la verificación dio: {detalle}")
+            return
+        if not avisado and intento >= AVISOS_UMBRAL:
+            avisado = True
+            log("avisando por Telegram que sigue pausado")
+            telegram("⏳ <b>Railway sigue con los deploys pausados</b>\n"
+                     "El fix del JWT secret todavía no se pudo aplicar.\n"
+                     "Cuando puedas: Railway → <code>dankoshop-api</code> → <b>Redeploy</b>.")
         if args.una_vez:
             return
         time.sleep(args.cada)
