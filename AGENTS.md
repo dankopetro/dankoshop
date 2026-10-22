@@ -175,6 +175,7 @@ NODE_ENV=production
   - NEXT_PUBLIC_BASE_URL=https://dankoshop.com.ar
   - CONTENT_ADMIN_PASSWORD=danko-admin-2026
   - MERCADOPAGO_ACCESS_TOKEN / MERCADOPAGO_PUBLIC_KEY / NEXT_PUBLIC_BANCO_* = CONFIGURADOS
+    (los de MP existen **solo en Production**, no en Preview)
   - GITHUB_TOKEN=**CONFIGURADO** (fine-grained, repo dankoshop, Contents: Read and Write — editor /admin-contenido funcional)
 
 ## Railway Setup (COMPLETADO Y ONLINE)
@@ -205,8 +206,16 @@ NODE_ENV=production
 - La password del admin NO se hardcodea en ningún script (18 scripts corregidos).
 - El `Dockerfile` crea el admin con `$MEDUSA_ADMIN_PASSWORD` de Railway (si falta, no
   lo crea y avisa). Railway debe tener `MEDUSA_ADMIN_EMAIL` y `MEDUSA_ADMIN_PASSWORD`.
-- ⚠️ El access token de MercadoPago estuvo filtrado en el historial del repo (commit
-  `816dbaea`) — hay que rotarlo en el panel de MP y actualizar Vercel + `.env.production`.
+- ✅ **Token de MercadoPago rotado** (21/10/2026): el nuevo está en Vercel (Production)
+  y en `.env.production`. MP deja activo el token viejo **12 h** después de renovar
+  (docs de MP), así que el token filtrado queda muerto solo.
+- ✅ **Historial purgado** con `git filter-repo` (commit `816dbaea` y todos los
+  `supersecret` reemplazados) + force push. Backup previo en `/tmp` (no versionado).
+  GitHub puede servir commits huérfanos por SHA hasta su GC; por eso el token viejo
+  se rotó igual.
+- ⏳ **Password del admin en producción**: la local ya está rotada. La de producción
+  requiere acceso a la DB de Railway (o SQL manual) + actualizar Vercel
+  (`MEDUSA_ADMIN_PASSWORD`) y `.env.production`.
 
 ## Lo que está hecho
 1. ✅ Parser de chat de WhatsApp (scripts/parse_chat.py)
