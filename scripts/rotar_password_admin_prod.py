@@ -2,30 +2,31 @@
 """
 rotar_password_admin_prod.py - Rota la password del admin de Medusa en PRODUCCIÓN.
 
-No necesita la dashboard: usa el CLI de Railway (túnel SSH a Postgres).
+Hace todo por la API de Medusa, salvo un paso de SQL (no hay acceso a la base
+desde afuera porque el proxy TCP de Railway está cerrado y los builds están
+pausados por el incidente del 21/10/2026).
+
+PASO ÚNICO (lo corrés vos en Railway → Postgres → Console):
+
+  UPDATE auth_identity SET app_metadata = '{}'::jsonb
+  WHERE id = (SELECT auth_identity_id FROM provider_identity
+              WHERE entity_id='admin@dankoshop.com' AND provider='emailpass');
+
+Eso deja la identidad "claimable" (sin actor). Con eso, este script:
+
+  1. POST /auth/user/emailpass/register  -> aplica la password nueva (la vieja muere)
+  2. POST /admin/invites + accept        -> crea el usuario y lo vincula
+  3. Verificación                          -> login con la nueva (200) y con la vieja (401)
+  4. Borra el admin temporal               -> queda un solo admin
 
 Uso:
-  railway login                              # solo la primera vez (la sesión caduca)
   python3 scripts/rotar_password_admin_prod.py
-
-Qué hace:
-  1. Lee las variables del servicio Postgres (PGUSER / PGPASSWORD / PGDATABASE)
-  2. Abre un túnel SSH a la base (railway connect --tunnel-only)
-  3. Actualiza el hash scrypt de la password en provider_identity
-  4. Verifica: login con la nueva (200) y con la vieja (401)
-
-La password nueva sale de .env.production (MEDUSA_LOCAL_ADMIN_PASSWORD) o de
---password. Después hay que actualizarla en Vercel (MEDUSA_ADMIN_PASSWORD).
+  python3 scripts/rotar_password_admin_prod.py --password 'mi-clave-nueva'
 """
 
 import argparse
-import base64
-import json
 import os
-import socket
-import subprocess
 import sys
-import time
 from pathlib import Path
 
 import requests
@@ -33,12 +34,8 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 ENV_FILE = ROOT / ".env.production"
 PROD_URL = os.getenv("MEDUSA_PROD_URL", "https://dankoshop-api-production.up.railway.app")
-LOCAL_PORT = int(os.getenv("RAILWAY_TUNNEL_PORT", "5433"))
-SERVICE = os.getenv("RAILWAY_PG_SERVICE", "Postgres")
-
-
-def run(cmd, timeout=60, cwd=None):
-    return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=cwd)
+EMAIL_DEFAULT = "admin@dankoshop.com"
+TEMP_EMAIL = "admin-temporal@dankoshop.com"
 
 
 def env_file_values():
@@ -55,9 +52,17 @@ def env_file_values():
     return values
 
 
-def target_password(arg_password):
-    if arg_password:
-        return arg_password
+def api(method, path, token=None, data=None, params=None, timeout=30):
+    headers = {}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return requests.request(method, PROD_URL + path, headers=headers, json=data,
+                            params=params, timeout=timeout)
+
+
+def target_password(arg):
+    if arg:
+        return arg
     env = env_file_values()
     for key in ("MEDUSA_NUEVA_ADMIN_PASSWORD", "MEDUSA_LOCAL_ADMIN_PASSWORD"):
         if env.get(key):
@@ -69,148 +74,106 @@ def target_password(arg_password):
     sys.exit(1)
 
 
-def scrypt_hash(password):
-    """Genera el hash con el mismo formato que Medusa (scrypt-kdf, logN=15, r=8, p=1)."""
-    pwd_file = ROOT / ".tmp_pwd.txt"
-    hash_file = ROOT / ".tmp_hash.txt"
-    code = (
-        "const scrypt=require('scrypt-kdf');"
-        "const fs=require('fs');"
-        "const pwd=fs.readFileSync(" + repr(str(pwd_file)) + ",'utf8').trim();"
-        "scrypt.kdf(pwd,{logN:15,r:8,p:1}).then(h=>{"
-        "fs.writeFileSync(" + repr(str(hash_file)) + ",h.toString('base64'));});"
-    )
-    pwd_file.write_text(password, encoding="utf-8")
-    pwd_file.chmod(0o600)
-    try:
-        r = run(["node", "-e", code], timeout=60, cwd=str(ROOT / "medusa-backend"))
-        if r.returncode != 0 or not hash_file.exists():
-            raise RuntimeError(r.stderr[:300] or "node no pudo generar el hash")
-        return hash_file.read_text(encoding="utf-8").strip()
-    finally:
-        for f in (pwd_file, hash_file):
-            if f.exists():
-                f.unlink()
+def clear_invites(token, email):
+    r = api("GET", "/admin/invites", token=token, params={"email": email, "limit": 50})
+    if r.status_code != 200:
+        return
+    for inv in r.json().get("invites", []):
+        if inv.get("email") == email:
+            api("DELETE", f"/admin/invites/{inv['id']}", token=token)
 
 
-def pg_vars():
-    r = run(["railway", "variables", "--service", SERVICE, "--json"], timeout=60)
-    if r.returncode != 0:
-        print("❌ No se pudieron leer las variables de Railway.")
-        print(r.stderr.strip()[:300] or r.stdout.strip()[:300])
-        print("\n¿Te logueaste? Ejecutá:  railway login")
-        sys.exit(1)
-    try:
-        return json.loads(r.stdout)
-    except json.JSONDecodeError:
-        print("❌ No se pudo interpretar la salida de `railway variables`")
-        print(r.stdout[:300])
-        sys.exit(1)
-
-
-def wait_for_port(port, timeout=45):
-    deadline = time.time() + timeout
-    while time.time() < deadline:
-        try:
-            with socket.create_connection(("127.0.0.1", port), timeout=2):
-                return True
-        except OSError:
-            time.sleep(1)
-    return False
+def user_id_for(token, email):
+    users = api("GET", "/admin/users", token=token).json().get("users", [])
+    u = next((x for x in users if x.get("email") == email), None)
+    return u["id"] if u else None
 
 
 def main():
     parser = argparse.ArgumentParser(description="Rota la password del admin de Medusa en producción")
-    parser.add_argument("--password", help="Password nueva (si no, se toma del .env.production)")
+    parser.add_argument("--password", help="Password nueva")
     args = parser.parse_args()
 
-    print("=" * 60)
+    env = env_file_values()
+    email = env.get("MEDUSA_ADMIN_EMAIL") or EMAIL_DEFAULT
+    old_password = env.get("MEDUSA_ADMIN_PASSWORD", "")
+    new_password = target_password(args.password)
+
+    print("=" * 62)
     print("  Rotación de password del admin (PRODUCCIÓN)")
-    print("=" * 60)
+    print("=" * 62)
+    print(f"  Email:    {email}")
+    print(f"  Password: {'*' * len(new_password)} ({len(new_password)} caracteres)")
 
-    who = run(["railway", "whoami"], timeout=30)
-    if who.returncode != 0:
-        print("❌ El CLI de Railway no está logueado. Ejecutá primero:  railway login")
-        sys.exit(1)
-    print(f"  Sesión Railway: {who.stdout.strip()}")
-
-    password = target_password(args.password)
-    print(f"  Password nueva: {'*' * len(password)} ({len(password)} caracteres)")
-
-    vars_ = pg_vars()
-    user = vars_.get("PGUSER") or "dankoshop"
-    pgpass = vars_.get("PGPASSWORD") or ""
-    dbname = vars_.get("PGDATABASE") or vars_.get("DATABASE") or "postgres"
-    if not pgpass:
-        print("❌ No se encontró PGPASSWORD del servicio Postgres")
-        sys.exit(1)
-    print(f"  Postgres: user={user} db={dbname}")
-
-    print("\n  Abriendo túnel a Postgres...")
-    tunnel = subprocess.Popen(
-        ["railway", "connect", SERVICE, "--tunnel-only", "--port", str(LOCAL_PORT)],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
-    )
-    try:
-        if not wait_for_port(LOCAL_PORT):
-            print("❌ El túnel no levantó. Logs:")
-            out, err = tunnel.communicate(timeout=5)
-            print((out or "")[:400], (err or "")[:400])
-            sys.exit(1)
-        print(f"  ✅ Túnel en 127.0.0.1:{LOCAL_PORT}")
-
-        import psycopg2
-
-        print("\n  Generando hash y actualizando...")
-        new_hash = scrypt_hash(password)
-        conn = psycopg2.connect(
-            host="127.0.0.1", port=LOCAL_PORT, user=user,
-            password=pgpass, dbname=dbname, connect_timeout=15,
-            sslmode="require",
-        )
-        with conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "UPDATE provider_identity "
-                    "SET provider_metadata = jsonb_set(provider_metadata, '{password}', to_jsonb(%s::text), true), "
-                    "    updated_at = now() "
-                    "WHERE provider = 'emailpass'",
-                    (new_hash,),
-                )
-                print(f"  Filas actualizadas: {cur.rowcount}")
-        conn.close()
-
-        print("\n  Verificando...")
-        email = os.getenv("MEDUSA_ADMIN_EMAIL") or env_file_values().get("MEDUSA_ADMIN_EMAIL", "admin@dankoshop.com")
-        ok_new = requests.post(
-            f"{PROD_URL}/auth/user/emailpass",
-            json={"email": email, "password": password}, timeout=20,
-        ).status_code == 200
-        print(f"  Login con la NUEVA password: {'✅ 200 OK' if ok_new else '❌ falló'}")
-
-        old = env_file_values().get("MEDUSA_ADMIN_PASSWORD", "")
-        if old and old != password:
-            st = requests.post(
-                f"{PROD_URL}/auth/user/emailpass",
-                json={"email": email, "password": old}, timeout=20,
-            ).status_code
-            print(f"  Login con la VIEJA password: {'✅ 401 (rechazada)' if st == 401 else f'⚠️  HTTP {st}'}")
-
-        if ok_new:
-            print("\n" + "=" * 60)
-            print("  ✅ Password rotada en PRODUCCIÓN")
-            print("=" * 60)
-            print("  Falta actualizar Vercel:  MEDUSA_ADMIN_PASSWORD")
-            print("  (y .env.production: MEDUSA_ADMIN_PASSWORD = la nueva)")
+    # 1) Aplicar la password nueva (la identidad debe estar "claimable")
+    print("\n  1/4 Aplicando la password nueva...")
+    r = api("POST", "/auth/user/emailpass/register",
+            data={"email": email, "password": new_password})
+    if r.status_code != 200:
+        if "already exists" in r.text:
+            print("❌ La identidad todavía tiene un actor asignado.")
+            print("   Corré esto en Railway → Postgres → Console y volvé a correr el script:\n")
+            print("   UPDATE auth_identity SET app_metadata = '{}'::jsonb")
+            print("   WHERE id = (SELECT auth_identity_id FROM provider_identity")
+            print("               WHERE entity_id='" + email + "' AND provider='emailpass');")
         else:
-            print("\n❌ La password no quedó activa. Revisá el error arriba.")
-            sys.exit(1)
-    finally:
-        tunnel.terminate()
-        try:
-            tunnel.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            tunnel.kill()
+            print(f"❌ {r.status_code} {r.text[:250]}")
+        sys.exit(1)
+    identity_token = r.json()["token"]
+    print("     ✅ password nueva aplicada (la vieja ya no autentica)")
+
+    # 2) Recrear el usuario y vincularlo a la identidad
+    print("\n  2/4 Recreando el usuario admin...")
+    clear_invites(identity_token, email)
+    r = api("POST", "/admin/invites", token=identity_token, data={"email": email})
+    if r.status_code != 200:
+        print(f"❌ No se pudo crear la invitación: {r.status_code} {r.text[:200]}")
+        sys.exit(1)
+    invite_token = (r.json().get("invite") or {}).get("token")
+    if not invite_token:
+        print(f"❌ La invitación no trae token: {r.text[:200]}")
+        sys.exit(1)
+    r = api("POST", "/admin/invites/accept", token=identity_token,
+            params={"token": invite_token}, data={"email": email})
+    if r.status_code != 200:
+        print(f"❌ No se pudo aceptar la invitación: {r.status_code} {r.text[:250]}")
+        sys.exit(1)
+    print("     ✅ usuario creado y vinculado")
+
+    # 3) Verificación
+    print("\n  3/4 Verificando...")
+    ok = api("POST", "/auth/user/emailpass", data={"email": email, "password": new_password})
+    print(f"  Login con la NUEVA password: {'✅ 200 OK' if ok.status_code == 200 else '❌ ' + str(ok.status_code)}")
+    token = ok.json().get("token") if ok.status_code == 200 else None
+    if token:
+        me = api("GET", "/admin/users/me", token=token)
+        print(f"  Acceso al panel admin:      {'✅ OK' if me.status_code == 200 else '❌ ' + str(me.status_code)}")
+    if old_password and old_password != new_password:
+        st = api("POST", "/auth/user/emailpass", data={"email": email, "password": old_password})
+        print(f"  Login con la VIEJA password: {'✅ 401 (rechazada)' if st.status_code == 401 else f'⚠️  HTTP {st.status_code}'}")
+
+    # 4) Borrar el admin temporal
+    print("\n  4/4 Eliminando el admin temporal...")
+    if token:
+        temp_token = api("POST", "/auth/user/emailpass",
+                         data={"email": TEMP_EMAIL, "password": new_password})
+        if temp_token.status_code == 200:
+            temp_id = user_id_for(temp_token.json()["token"], TEMP_EMAIL)
+            if temp_id:
+                d = api("DELETE", f"/admin/users/{temp_id}", token=token)
+                print(f"     {'✅ borrado' if d.status_code == 200 else '⚠️  no se pudo borrar (' + str(d.status_code) + ')'}")
+        else:
+            print("     (no estaba, nada que borrar)")
+
+    if ok.status_code == 200:
+        print("\n" + "=" * 62)
+        print("  ✅ Password rotada en PRODUCCIÓN")
+        print("=" * 62)
+        print("  Falta actualizar en Vercel:  MEDUSA_ADMIN_PASSWORD")
+        print("  (y en .env.production: MEDUSA_ADMIN_PASSWORD = la nueva)")
+    else:
+        print("\n❌ La password no quedó activa. Revisá el error de arriba.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
