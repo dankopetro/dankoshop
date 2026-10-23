@@ -53,15 +53,28 @@ def get_admin_credentials(local=False):
 
     Lanza SystemExit con un mensaje claro si falta la contraseña.
     """
+    file_vals = _parse_env_file(ENV_FILE)
     load_env_file()
     if local:
         email = os.getenv("MEDUSA_LOCAL_ADMIN_EMAIL", "").strip() or os.getenv(
             "MEDUSA_ADMIN_EMAIL", DEFAULT_EMAIL).strip()
         password = os.getenv("MEDUSA_LOCAL_ADMIN_PASSWORD", "").strip() or os.getenv(
             "MEDUSA_ADMIN_PASSWORD", "").strip()
+        env_key = "MEDUSA_LOCAL_ADMIN_PASSWORD"
     else:
         email = os.getenv("MEDUSA_ADMIN_EMAIL", DEFAULT_EMAIL).strip()
         password = os.getenv("MEDUSA_ADMIN_PASSWORD", "").strip()
+        env_key = "MEDUSA_ADMIN_PASSWORD"
+    # Avisa si la password del entorno difiere de la del archivo (casi siempre
+    # una variable vieja exportada a mano que pisa .env.production y causa 401).
+    file_pw = file_vals.get(env_key, "").strip()
+    if file_pw and password and password != file_pw:
+        print(
+            f"⚠️  {env_key} del entorno difiere de {ENV_FILE.name}.\n"
+            f"   Si el login falla con 401, es casi seguro la password vieja.\n"
+            f"   Solución: unset {env_key} y volvé a correr.",
+            file=sys.stderr,
+        )
     if not password:
         print(
             "❌ Falta MEDUSA_ADMIN_PASSWORD.\n"
