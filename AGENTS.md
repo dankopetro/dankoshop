@@ -234,16 +234,25 @@ NODE_ENV=production
   - Ojo: en esa notebook el CLI de Railway debe ser el build **musl** (el gnu da segfault en Mint 22.3).
   - Sesión de Railway copiada a `~/.railway/config.json` (el CLI refresca el token solo).
 - ✅ Resultado: `JWT_SECRET`/`COOKIE_SECRET` activos (token forjado → 401).
-- Pendientes de seguridad restantes (orden sugerido, con builds activos):
-  1. Rotar la password de Postgres (Postgres → Database → Config → Connection →
-     Regenerate). **El `DATABASE_URL` de la API está pegado como string**, no como
-     referencia `${{Postgres.DATABASE_URL}}` → hay que actualizarlo a mano y redeployar,
-     o pasarlo a referencia para que las rotaciones futuras se apliquen solas.
-  2. Rotar Redis (mismo criterio) y `CLOUDINARY_API_SECRET`.
-  3. Verificar: `railway connect Postgres` → `SELECT rolname FROM pg_roles;` y
-     `SELECT pid, usename, client_addr, state FROM pg_stat_activity;`
-- ⛔ **NO regenerar la password de la DB sin tener el redeploy listo**: la API
-  perdería acceso a la base y la web caería hasta que se pueda redeployar.
+- ✅ **Rotación Postgres + Redis completada (22/10/2026, post-madrugada):**
+  1. `DATABASE_URL` y `REDIS_URL` de la API pasadas a **referencias**
+     (`${{ Postgres.DATABASE_URL }}` / `${{ Redis.REDIS_URL }}`) — verificado con
+     test de referencia (`TEST_REF=${{ Postgres.RAILWAY_SERVICE_NAME }}` → "Postgres").
+     Las rotaciones futuras ahora alcanzan a la API con un solo redeploy.
+  2. Redeploy de prueba con referencias → SUCCESS (health/login/web/check-stock 200).
+  3. **Regenerate** de Postgres y Redis hechos en el dashboard (botón Config →
+     Connection — Railway no lo expone por CLI; ⛔ NO usar `ALTER USER` ni editar
+     variables a mano: desincronizan DB y variable).
+  4. `railway redeploy` de la API → SUCCESS + 0 errores de auth en logs.
+  5. Auditoría post-rotación: solo rol `postgres` (sin roles extraños), sesiones
+     solo de la API con la password nueva, extensión solo `plpgsql`, 143 tablas.
+     Redis: AUTH + PONG con la password nueva vía túnel.
+  6. Ninguna password (Postgres/Redis) estuvo en git (verificado: 0 commits);
+     tampoco en archivos locales.
+- ⏳ **Pendiente: rotar `CLOUDINARY_API_SECRET`** (dashboard Cloudinary → Settings →
+  Rotate; la secret estaba hardcodeada en `upload_cloudinary.py` y en 199 commits
+  del historial — ya fuera del código actual, pero la vieja sigue activa hasta
+  rotar). Después: Railway → variable `CLOUDINARY_API_SECRET` de la API → redeploy.
 - ✅ Public Access del Postgres **eliminado** (ya no es alcanzable desde internet).
 
 ## Lo que está hecho
