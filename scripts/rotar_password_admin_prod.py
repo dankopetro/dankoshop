@@ -2,11 +2,11 @@
 """
 rotar_password_admin_prod.py - Rota la password del admin de Medusa en PRODUCCIÓN.
 
-Hace todo por la API de Medusa, salvo un paso de SQL (no hay acceso a la base
-desde afuera porque el proxy TCP de Railway está cerrado y los builds están
-pausados por el incidente del 21/10/2026).
+Hace todo por la API de Medusa, salvo un paso de SQL (el paso 1 abajo deja la
+identidad "claimable" para poder aplicar la password nueva).
 
-PASO ÚNICO (lo corrés vos en Railway → Postgres → Console):
+PASO ÚNICO (lo corrés vos en Railway → Postgres → Console, o via
+`railway connect Postgres` + psql):
 
   UPDATE auth_identity SET app_metadata = '{}'::jsonb
   WHERE id = (SELECT auth_identity_id FROM provider_identity

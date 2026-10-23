@@ -2,6 +2,17 @@ import { loadEnv, defineConfig } from '@medusajs/framework/utils'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
+// Secrets obligatorios: sin defaults públicos (el "super-secret-jwt" por defecto
+// permitia forjar tokens de admin; por eso si falta la variable, no se arranca).
+const jwtSecret = process.env.JWT_SECRET
+const cookieSecret = process.env.COOKIE_SECRET
+if (!jwtSecret || !cookieSecret) {
+  throw new Error(
+    "Faltan JWT_SECRET / COOKIE_SECRET en el entorno. " +
+    "Definilos en las variables de servicio (Railway) o en .env local."
+  )
+}
+
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -9,8 +20,8 @@ module.exports = defineConfig({
       storeCors: process.env.STORE_CORS || "http://localhost:3000,https://dankoshop.com.ar,https://www.dankoshop.com.ar,https://dankoshop.vercel.app",
       adminCors: process.env.ADMIN_CORS || "http://localhost:9000,http://localhost:7001",
       authCors: process.env.AUTH_CORS || "http://localhost:3000,http://localhost:9000,https://dankoshop.com.ar,https://www.dankoshop.com.ar,https://dankoshop.vercel.app",
-      jwtSecret: process.env.JWT_SECRET || "super-secret-jwt",
-      cookieSecret: process.env.COOKIE_SECRET || "super-secret-cookie",
+      jwtSecret,
+      cookieSecret,
     }
   },
   modules: [

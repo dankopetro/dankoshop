@@ -13,7 +13,12 @@ pnpm exec medusa db:migrate 2>&1
 
 echo "=== Checking/Creating admin user ==="
 # Try to create admin user (will fail silently if exists)
-pnpm exec medusa user --email admin@dankoshop.com --password ***PASSWORD_ROTADA*** 2>&1 || true
+# La password NUNCA se hardcodea: se toma de la env var MEDUSA_ADMIN_PASSWORD.
+if [ -n "$MEDUSA_ADMIN_PASSWORD" ]; then
+  pnpm exec medusa user --email "${MEDUSA_ADMIN_EMAIL:-admin@dankoshop.com}" --password "$MEDUSA_ADMIN_PASSWORD" 2>&1 || true
+else
+  echo "MEDUSA_ADMIN_PASSWORD no seteado: se omite la creacion del admin"
+fi
 
 echo "=== Starting server on 0.0.0.0:9000 ==="
 exec ./node_modules/.bin/medusa start

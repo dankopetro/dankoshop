@@ -54,16 +54,21 @@ module.exports = {
     console.log("=== Starting product seeding (upsert) ===")
 
     console.log("=== Ensuring admin user exists ===")
-    try {
-      await createUserAccountWorkflow(container).run({
-        input: {
-          email: "admin@dankoshop.com",
-          password: "***PASSWORD_ROTADA***",
-        },
-      })
-      console.log("Admin user created: admin@dankoshop.com")
-    } catch (e) {
-      console.log("Admin user already exists or skipped:", e.message)
+    const adminPassword = process.env.MEDUSA_ADMIN_PASSWORD
+    if (adminPassword) {
+      try {
+        await createUserAccountWorkflow(container).run({
+          input: {
+            email: process.env.MEDUSA_ADMIN_EMAIL || "admin@dankoshop.com",
+            password: adminPassword,
+          },
+        })
+        console.log("Admin user created")
+      } catch (e) {
+        console.log("Admin user already exists or skipped:", e.message)
+      }
+    } else {
+      console.log("MEDUSA_ADMIN_PASSWORD no seteado: se omite la creacion del admin")
     }
 
     const productModule = container.resolve(Modules.PRODUCT)

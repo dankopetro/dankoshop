@@ -2,6 +2,9 @@
 """
 esperar_redeploy.py - Vigila y aplica el redeploy del backend hasta que Railway lo permita.
 
+⚠️  OBSOLETO (incidente resuelto el 22/10/2026). Se conserva por si vuelve a haber
+un incidente de builds pausados; no hace falta correrlo en el flujo normal.
+
 Contexto (21/10/2026): Railway tuvo un incidente de seguridad que pausó todos los
 deploys. El backend quedó corriendo con el JWT_SECRET por defecto (público en el
 repo), lo que permite forjar tokens de admin. Las variables correctas ya están en
