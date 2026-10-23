@@ -1,15 +1,19 @@
+import { randomBytes } from "crypto"
 import { loadEnv, defineConfig } from '@medusajs/framework/utils'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
-// Secrets obligatorios: sin defaults públicos (el "super-secret-jwt" por defecto
-// permitia forjar tokens de admin; por eso si falta la variable, no se arranca).
-const jwtSecret = process.env.JWT_SECRET
-const cookieSecret = process.env.COOKIE_SECRET
-if (!jwtSecret || !cookieSecret) {
-  throw new Error(
-    "Faltan JWT_SECRET / COOKIE_SECRET en el entorno. " +
-    "Definilos en las variables de servicio (Railway) o en .env local."
+// Secrets: NUNCA defaults publicos (el "super-secret-jwt" por defecto permitia
+// forjar tokens de admin). Si faltan las variables (p.ej. en el build de Docker,
+// donde Railway no inyecta env vars), se genera un valor aleatorio por proceso:
+// imposible de adivinar, y como cambia en cada arranque invalida sesiones — por
+// eso en runtime debe venir de la env var JWT_SECRET / COOKIE_SECRET.
+const jwtSecret = process.env.JWT_SECRET || randomBytes(32).toString("hex")
+const cookieSecret = process.env.COOKIE_SECRET || randomBytes(32).toString("hex")
+if (!process.env.JWT_SECRET || !process.env.COOKIE_SECRET) {
+  console.warn(
+    "Aviso: JWT_SECRET / COOKIE_SECRET no seteados; usando valores aleatorios " +
+    "(las sesiones se invalidan al reiniciar). Setealos en las variables del servicio."
   )
 }
 
