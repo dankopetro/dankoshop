@@ -20,8 +20,10 @@ Columnas del Excel:
   8: Precio Medusa (el que se sube a Medusa)
 
 Usage:
-  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/sync_control_catalogo_a_medusa.py
-  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/sync_control_catalogo_a_medusa.py --dry-run
+  python3 scripts/sync_control_catalogo_a_medusa.py
+  python3 scripts/sync_control_catalogo_a_medusa.py --dry-run
+
+Las credenciales salen de .env.production vía medusa_auth.py.
 """
 
 import os

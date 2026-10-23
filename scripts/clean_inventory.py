@@ -3,8 +3,10 @@
 crea location 'Local Warehouse' y setea stock para SKUs específicos.
 
 Usage:
-  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/clean_inventory.py
-  MEDUSA_ADMIN_PASSWORD=<tu-password> python3 scripts/clean_inventory.py --dry-run
+  python3 scripts/clean_inventory.py
+  python3 scripts/clean_inventory.py --dry-run
+
+Las credenciales salen de .env.production vía medusa_auth.py.
 """
 
 import os

@@ -4,10 +4,11 @@ Restaurar backup de Medusa vía Admin API.
 Restaura: categorías, colecciones, canales de venta, productos, e inventario.
 
 Uso:
-  export MEDUSA_BACKEND_URL=https://dankoshop-api-production.up.railway.app
-  export MEDUSA_ADMIN_EMAIL=admin@dankoshop.com
-  export MEDUSA_ADMIN_PASSWORD=<tu-password>
   python3 scripts/restore_medusa.py data/backups/backup_20260823_211003.json
+
+Las credenciales salen de .env.production vía medusa_auth.py
+(MEDUSA_ADMIN_EMAIL / MEDUSA_ADMIN_PASSWORD). MEDUSA_BACKEND_URL es
+opcional: por defecto usa el backend de producción.
 """
 
 import os
