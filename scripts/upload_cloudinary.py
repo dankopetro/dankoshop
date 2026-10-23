@@ -2,6 +2,9 @@
 """
 Upload product images to Cloudinary.
 Run: python3 scripts/upload_cloudinary.py
+
+Credenciales via entorno o .env.production (CLOUDINARY_CLOUD_NAME,
+CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET) — nunca hardcodeadas.
 """
 
 import json
@@ -12,11 +15,27 @@ import cloudinary
 import cloudinary.uploader
 from pathlib import Path
 
-# Config
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from medusa_auth import load_env_file
+
+# Config (env vars > .env.production; sin defaults)
+load_env_file()
+CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "").strip()
+API_KEY = os.getenv("CLOUDINARY_API_KEY", "").strip()
+API_SECRET = os.getenv("CLOUDINARY_API_SECRET", "").strip()
+if not (CLOUD_NAME and API_KEY and API_SECRET):
+    print(
+        "❌ Faltan credenciales de Cloudinary (CLOUDINARY_CLOUD_NAME / "
+        "CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET).\n"
+        f"   Exportalas o agregalas a {Path(__file__).resolve().parent.parent / '.env.production'}",
+        file=sys.stderr,
+    )
+    raise SystemExit(1)
+
 cloudinary.config(
-    cloud_name="xjuisove",
-    api_key="645939449555487",
-    api_secret="DPIa5BGkcboaHCMAV1U4MY-oL6s",
+    cloud_name=CLOUD_NAME,
+    api_key=API_KEY,
+    api_secret=API_SECRET,
 )
 
 IMAGES_BASE = Path("/home/claudio/Descargas/dankoshop/data/organized_images")
