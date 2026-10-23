@@ -249,7 +249,7 @@ NODE_ENV=production
      Redis: AUTH + PONG con la password nueva vía túnel.
   6. Ninguna password (Postgres/Redis) estuvo en git (verificado: 0 commits);
      tampoco en archivos locales.
-- ✅ **Rotación Cloudinary completada (22/10/2026) — falta 1 click final:**
+- ✅ **Rotación Cloudinary completada (22/10/2026):**
   - Key vieja "root" (645939449555487 / DPIa5B…) estaba hardcodeada en
     `upload_cloudinary.py` y en 199 commits del historial.
   - Key nueva `dankoshop-backend` (387129353511947, rol **Master Admin**,
@@ -259,8 +259,8 @@ NODE_ENV=production
     `resources` y `destroy` con la key nueva (ok), y fix del delete del provider
     (commit 6480b6b: Medusa manda array `[{fileKey}]` y el public_id real
     conserva la extensión — antes crasheaba 500 y luego hacía destroy not found).
-  - ⏳ **Falta:** en Cloudinary → Settings → API Keys → poner la key vieja
-    "root" en **Disabled** (recién ahí la secret filtrada queda muerta).
+  - ✅ Key vieja "root" **Disabled** en Cloudinary (22/10/2026) — la secret
+    filtrada en el historial queda muerta.
 - ✅ Public Access del Postgres **eliminado** (ya no es alcanzable desde internet).
 
 ## Lo que está hecho
