@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "TEST-20261024222537",
+    "fecha": "24/10/2026 22:25",
+    "estado": "pendiente",
+    "metodo_pago": "transferencia",
+    "cliente": {
+      "nombre": "Prueba Telegram",
+      "email": "prueba@dankoshop.com.ar",
+      "telefono": "221-0000000",
+      "dni": "00000000",
+      "direccion": "Calle de Prueba 123",
+      "ciudad": "La Plata",
+      "provincia": "Buenos Aires",
+      "metodo_envio": "envio",
+      "zona_envio": "laplata",
+      "velocidad_envio": "estandar"
+    },
+    "items": [
+      {
+        "sku": "4853",
+        "name": "Tostadora Vitta Verde Doble",
+        "price": 21588,
+        "quantity": 1,
+        "price_lista": 23465
+      }
+    ],
+    "subtotal": 21588,
+    "envio": 0,
+    "total": 21588
+  }
+]
