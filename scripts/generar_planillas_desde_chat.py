@@ -28,14 +28,91 @@ FACTOR_VENTA = 1.072
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from procesar_chat_14_15 import (  # noqa: E402
-    extract_skus,
     find_title,
     parse_prices,
     parse_timestamp,
     split_by_timestamp,
     strip_timestamp,
+    normalize_digits,
 )
 from excel_style import style_workbook  # noqa: E402
+
+
+# Unicode math styled letters → plain ASCII (copiado de procesar_chat_14_15)
+_UNICODE_MATH = {}
+for _i, _c in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+    _UNICODE_MATH[chr(0x1D400 + _i)] = _c
+    _UNICODE_MATH[chr(0x1D468 + _i)] = _c
+    _UNICODE_MATH[chr(0x1D5A0 + _i)] = _c
+    _UNICODE_MATH[chr(0x1D5D4 + _i)] = _c
+    _UNICODE_MATH[chr(0x1D63C + _i)] = _c
+    _UNICODE_MATH[chr(0x1D670 + _i)] = _c
+for _i, _c in enumerate("abcdefghijklmnopqrstuvwxyz"):
+    _UNICODE_MATH[chr(0x1D41A + _i)] = _c
+    _UNICODE_MATH[chr(0x1D482 + _i)] = _c
+    _UNICODE_MATH[chr(0x1D5BA + _i)] = _c
+    _UNICODE_MATH[chr(0x1D5EE + _i)] = _c
+    _UNICODE_MATH[chr(0x1D656 + _i)] = _c
+    _UNICODE_MATH[chr(0x1D68A + _i)] = _c
+for _i in range(10):
+    _UNICODE_MATH[chr(0x1D7ED + _i)] = str(_i)
+
+
+def normalize_unicode_text(s):
+    return "".join(_UNICODE_MATH.get(ch, ch) for ch in s)
+
+
+def extract_skus(lines):
+    """Extrae SKUs de las líneas del chat.
+    
+    Patrones soportados:
+    - N°:XXXX / N° XXXX (alfanumérico, ej: N°: COMBO-06)
+    - SKU N°:XXXX / SKU N° XXXX (alfanumérico)
+    - (SKU N°XXXX) (dentro de paréntesis)
+    - Patrones originales: N°XXXX, [XXXX], (XXXX), #XXXX, cod XXXX
+    """
+    skus = []
+    for line in lines:
+        ln = normalize_digits(line)
+        ln = normalize_unicode_text(ln)
+        
+        # Patrones originales (solo dígitos)
+        n_match = re.findall(r"[N𝐍][°º]\s*([\d𝟎-𝟗]{3,5}(?:\s*/\s*[\d𝟎-𝟗]{3,5})*)", ln)
+        if n_match:
+            for g in n_match:
+                skus.extend([s.strip() for s in g.split("/") if s.strip()])
+            continue
+        br_match = re.findall(r"\[([\d𝟎-𝟗]{3,5}(?:\s*/\s*[\d𝟎-𝟗]{3,5})*)\]", ln)
+        for g in br_match:
+            skus.extend([s.strip() for s in g.split("/") if s.strip()])
+        pa_match = re.findall(r"\(([\d𝟎-𝟗]{3,5}(?:\s*/\s*[\d𝟎-𝟗]{3,5})*)\)", ln)
+        for g in pa_match:
+            skus.extend([s.strip() for s in g.split("/") if s.strip()])
+        ha_match = re.findall(r"#([\d𝟎-𝟗]{3,5}(?:\s*/\s*[\d𝟎-𝟗]{3,5})*)", ln)
+        for g in ha_match:
+            skus.extend([s.strip() for s in g.split("/") if s.strip()])
+        cod_match = re.findall(r"\b(?:cod|codigo|código)\.?\s*([\d𝟎-𝟗]{3,5})", ln, flags=re.IGNORECASE)
+        skus.extend(cod_match)
+
+        # Nuevos patrones para SKUs alfanuméricos (COMBO-06, etc.)
+        # N°:XXXX / N° XXXX - alfanumérico
+        n_colon_match = re.findall(r"[N𝐍][°º]:?\s*([A-Za-z0-9-]{3,})", ln)
+        skus.extend([s.strip() for s in n_colon_match if s.strip()])
+        # N° XXXX - alfanumérico (sin dos puntos)
+        n_alpha_match = re.findall(r"[N𝐍][°º]\s*([A-Za-z0-9-]{3,})", ln)
+        skus.extend([s.strip() for s in n_alpha_match if s.strip()])
+        # SKU N°:XXXX / SKU N° XXXX - alfanumérico
+        sku_n_colon_match = re.findall(r"(?i)\bSKU\s*[N𝐍][°º]:?\s*([A-Za-z0-9-]{3,})", ln)
+        skus.extend([s.strip() for s in sku_n_colon_match if s.strip()])
+        # SKU N°XXXX - alfanumérico
+        sku_n_match = re.findall(r"(?i)\bSKU\s*[N𝐍][°º]\s*([A-Za-z0-9-]{3,})", ln)
+        skus.extend([s.strip() for s in sku_n_match if s.strip()])
+        # (SKU N°XXXX) - dentro de paréntesis
+        paren_complex_match = re.findall(r"\(\s*SKU\s*[N𝐍][°º]?:?\s*([A-Za-z0-9-]{3,})\s*\)", ln, flags=re.IGNORECASE)
+        skus.extend([s.strip() for s in paren_complex_match if s.strip()])
+
+    skus = list(dict.fromkeys(skus))
+    return (skus[0] if skus else None), skus
 
 
 def norm_text(value):

@@ -90,6 +90,17 @@ python3 scripts/sync_both.py --prod-only                  # solo producción
 python3 scripts/sync_both.py --local-only                 # solo local
 python3 scripts/sync_both.py --dry-run                    # preview: qué se crearía/actualizaría (NO escribe)
 
+# Backup de producción + espejo a local (TODO automático)
+python3 scripts/backup_medusa.py
+#   1. Exporta productos/categorías/inventario/canales → data/backups/backup_*.json (gitignored)
+#   2. Auto-levanta Medusa local si está caída (./scripts/medusa-local.sh start)
+#   3. PURGA productos huérfanos de local (los que ya no existen en producción,
+#      comparando por SKU con guardia: si producción < 80% de local, no purga)
+#   4. Sincroniza imágenes Cloudinary → local (scripts/sync_imagenes_a_medusa_local.py)
+#   5. Auto-detiene Medusa local si el script la levantó él
+# ⚠️ La comparación local vs producción es POR SKU (los handles difieren:
+#    local usa descriptivos, producción numéricos — comparar por handle da falsos positivos)
+
 # Lista de precios (Excel + PDF con fotos) — abre el Excel y guardalo antes (fórmulas)
 python3 scripts/generar_lista_precios.py                  # minorista
 python3 scripts/generar_lista_precios.py --mayorista      # solo precio mayorista
@@ -105,6 +116,10 @@ docker exec dankoshop-postgres psql -U dankoshop -d dankoshop -c "SELECT 1;"
 
 # Upload imágenes a Cloudinary
 python3 scripts/upload_cloudinary.py
+
+# Sync imágenes Cloudinary → Medusa local (match por SKU)
+python3 scripts/sync_imagenes_a_medusa_local.py          # vincula faltantes
+python3 scripts/sync_imagenes_a_medusa_local.py --dry-run # preview (NO escribe)
 
 # Dedup imágenes
 python3 scripts/dedup_images.py
