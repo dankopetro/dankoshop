@@ -121,6 +121,24 @@ python3 scripts/upload_cloudinary.py
 python3 scripts/sync_imagenes_a_medusa_local.py          # vincula faltantes
 python3 scripts/sync_imagenes_a_medusa_local.py --dry-run # preview (NO escribe)
 
+# Extraer imágenes de UNA categoría a una carpeta (fuente = Medusa producción)
+python3 scripts/extraer_imagenes_categoria.py --categoria Celulares --destino /ruta/carpeta
+python3 scripts/extraer_imagenes_categoria.py --categoria Celulares --destino /ruta --dry-run
+#   ⚠️ La fuente por defecto son las imágenes ASIGNADAS en Medusa producción (correctas).
+#      NO usar --fuente local: data/products_images/ está CONTAMINADA (archivos renombrados
+#      y productos ajenos mezclados). Producción es la fuente de verdad.
+
+# Rebuild imágenes locales → espejo exacto de producción (reemplaza divergentes)
+python3 scripts/rebuild_local_images.py --dry-run   # preview de qué cambiaría
+python3 scripts/rebuild_local_images.py             # aplicar
+#   Compara thumbnails local vs producción por SKU y reemplaza los que difieren.
+#   NO toca producción. Útil tras cambios manuales o para dejar local 100% espejo.
+
+# Auditoría de imágenes (SOLO LECTURA): filename vs SKU, URLs compartidas, thumbnails faltantes
+python3 scripts/auditar_imagenes.py
+python3 scripts/auditar_imagenes.py --categoria Celulares
+python3 scripts/auditar_imagenes.py --no-descargar   # solo análisis estructural
+
 # Dedup imágenes
 python3 scripts/dedup_images.py
 ```
