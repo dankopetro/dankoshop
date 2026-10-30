@@ -65,16 +65,34 @@ def get_all_products(headers):
 
 
 def get_categories(headers):
-    """Mapa product_id -> nombre de categoría."""
-    cats = {}
+    """Mapa product_id -> nombre de categoría.
+
+    Nota: /admin/product-categories NO devuelve los products asociados
+    (expand=products da 400). La forma que funciona es listar productos
+    con ?category_id=... por cada categoría.
+    """
     rr = requests.get(
         f"{MEDUSA_PROD_URL}/admin/product-categories",
         headers=headers, params={"limit": 100}, timeout=30,
     )
     rr.raise_for_status()
+    cats = {}
     for c in rr.json().get("product_categories", []):
-        for p in c.get("products", []) or []:
-            cats[p.get("id")] = c.get("name")
+        offset = 0
+        while True:
+            rp = requests.get(
+                f"{MEDUSA_PROD_URL}/admin/products", headers=headers,
+                params={"limit": 100, "offset": offset, "category_id": c["id"]},
+                timeout=30,
+            )
+            rp.raise_for_status()
+            data = rp.json()
+            batch = data.get("products", [])
+            for p in batch:
+                cats.setdefault(p.get("id"), c.get("name"))
+            offset += 100
+            if not batch or offset >= data.get("count", 0):
+                break
     return cats
 
 
